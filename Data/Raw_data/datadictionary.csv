@@ -1,0 +1,35 @@
+﻿Date,,Date
+Time,,Time
+Sample number,,Sample number
+Location,,Location
+Type,,Type
+Treatment,,Treatment
+Size,,Size
+Species,,Species
+Plant type,,Plant type
+Height,,Height
+Width (farthest to farthest),,Width_farthest
+Width (perpendicular),,Width_perpendicular
+Branch length (avg),,Branch_length
+Branch diameter (avg),,Branch_diameter
+Basal circumference,,Basal_circ
+Stem diameter,,Stem_diameter
+Stem height,,Stem_height
+Stem density,,Stem_density
+branches per stem,,Branches_per_stem
+Leaves per branch (avg),,Leaves_per_branch
+Total leaves,,Total_leaves
+Leaf length (max),,Leaf_lmax
+Leaf length (min),,Leaf_lmin
+Leaf length (avg),,Leaf_lavg
+Leaf width (max),,Leaf_wmax
+Leaf width (min),,Leaf_wmin
+Leaf width (avg),,Leaf_wavg
+Leaf thickness (max),,Leaf_tmax
+Leaf thickness (min),,Leaf_tmin
+Leaf thickness (avg),,Leaf_tavg
+Biomass,,Biomass
+measurement location,,Measurement_location
+note,,Notes
+leaf: branch (total; biomass),,leaf: branch (total; biomass)
+leaf: branch (single branch; biomass),,leaf: branch (single branch; biomass)
