@@ -1,2 +1,1 @@
-# test
-# Sunyoung-Park-Rclass-project3
+# SunyoungPark-Rclass-project3
