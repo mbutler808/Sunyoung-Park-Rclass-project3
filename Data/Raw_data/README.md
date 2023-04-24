@@ -48,6 +48,6 @@ The code for processing the raw data is in **Sunyoung-Park-Rclass-project3 > Cod
 | Biomass | a number denoting the biomass of the dried plants (grams)|
 | measurement location | a character string denoting the location where the morphological measurements were made |
 | note | a character string with text providing additional relevant information for data |
-| leaf:branch (total; biomass) a ratio denoting the total biomass of leaf in a plant to the total biomass of branch in a plant (grams)|
-| leaf:branch (single branch; biomass) a ratio denoting the total biomass of leaf in one branch of a plant to the total biomass of the one branch in a plant (grams)|
+| leaf:branch (total; biomass) | a ratio denoting the total biomass of leaf in a plant to the total biomass of branch in a plant (grams)|
+| leaf:branch (single branch; biomass) | a ratio denoting the total biomass of leaf in one branch of a plant to the total biomass of the one branch in a plant (grams)|
 

@@ -23,4 +23,3 @@ Data cleaning is done in code, which archives of all of the cleaning steps.
 * `processeddata.rda` is the cleaned version of the data.
 * `processeddata.csv` is the cleaned version of the data.
 * `dictionary.csv` is a data dictionary for the cleaned data.
-* `orig_names.csv` contains the variable names and short names.

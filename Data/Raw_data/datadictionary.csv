@@ -1,35 +1,35 @@
-﻿Date,,Date
-Time,,Time
-Sample number,,Sample number
-Location,,Location
-Type,,Type
-Treatment,,Treatment
-Size,,Size
-Species,,Species
-Plant type,,Plant type
-Height,,Height
-Width (farthest to farthest),,Width_farthest
-Width (perpendicular),,Width_perpendicular
-Branch length (avg),,Branch_length
-Branch diameter (avg),,Branch_diameter
-Basal circumference,,Basal_circ
-Stem diameter,,Stem_diameter
-Stem height,,Stem_height
-Stem density,,Stem_density
-branches per stem,,Branches_per_stem
-Leaves per branch (avg),,Leaves_per_branch
-Total leaves,,Total_leaves
-Leaf length (max),,Leaf_lmax
-Leaf length (min),,Leaf_lmin
-Leaf length (avg),,Leaf_lavg
-Leaf width (max),,Leaf_wmax
-Leaf width (min),,Leaf_wmin
-Leaf width (avg),,Leaf_wavg
-Leaf thickness (max),,Leaf_tmax
-Leaf thickness (min),,Leaf_tmin
-Leaf thickness (avg),,Leaf_tavg
-Biomass,,Biomass
-measurement location,,Measurement_location
-note,,Notes
-leaf: branch (total; biomass),,leaf: branch (total; biomass)
-leaf: branch (single branch; biomass),,leaf: branch (single branch; biomass)
+Date," ""a date denoting when the plant morphology data of each sample was measured""",Date
+Time," ""a time denoting when the plant morphology data of each sample was measured""",Time
+Sample number," ""an integer denoting the continuous numbering sequence for each sample""",Sample number
+Location," ""a character string denoting the location each individual was found and collected""",Location
+Type," ""a character string denoting the land cover type each individual was found and collected""",Type
+Treatment," ""a character string denoting whether a plant was vegetated or unvegetated""",Treatment
+Size," ""a character string denoting the size of a plant (small, medium or large)""",Size
+Species," ""a character string denoting the plant species""",Species
+Plant type," ""a character string denoting the morphological type of a plant""",Plant type
+Height," ""a number denoting the plant height (centimeters)""",Height
+Width (farthest to farthest)," ""a number denoting the farthest width from tip to tip of a plant (centimeters)""",Width_farthest
+Width (perpendicular)," ""a number denoting the width of a plant that is perpendicular to the width (farthest to farthest) (centimeters)""",Width_perpendicular
+Branch length (avg)," ""a number denoting the average measurement of 10 branch lengths of a plant (centimeters)""",Branch_length
+Branch diameter (avg)," ""a number denoting the average measurement of 10 branch diameters of a plant (centimeter)""",Branch_diameter
+Basal circumference," ""a number denoting the basal circumference of a plant (centimeters)""",Basal_circ
+Stem diameter," ""a number denoting the diameter of the stem (the part right after roots that are aboveground) of a plant (centimeters)""",Stem_diameter
+Stem height," ""a number denoting the height of the entire stem (centimeters)""",Stem_height
+Stem density," ""an integer denoting the number of stems of a plant""",Stem_density
+branches per stem,"""an integer denoting the number of branches per stem in a plant""",Branches_per_stem
+Leaves per branch (avg),"""a number denoting the average number of leaves on 5 longest branches of a plant""",Leaves_per_branch
+Total leaves,"""an integer denoting the total number of leaves in a plant""",Total_leaves
+Leaf length (max),"""a number denoting the maximum length from the measurements of 9 leaves in a plant (centimeters)""",Leaf_lmax
+Leaf length (min),"""a number denoting the minimum length from the measurements of 9 leaves in a plant (centimeters)""",Leaf_lmin
+Leaf length (avg),"""a number denoting the average length of the measurements of 9 leaves in a plant (centimeters)""",Leaf_lavg
+Leaf width (max),"""a number denoting the maximum width from the measurements of 9 leaves in a plant(centimeters)""",Leaf_wmax
+Leaf width (min),"""a character string denoting the land cover type each individual was found and collected""",Leaf_wmin
+Leaf width (avg),"""a number denoting the average width of the measurements of 9 leaves in a plant(centimeters)""",Leaf_wavg
+Leaf thickness (max),"""a number denoting the maximum thickness from the measurements of 9 leaves in a plant(centimeters)""",Leaf_tmax
+Leaf thickness (min),"""a number denoting the minimum thickness from the measurements of 9 leaves in a plant(centimeters)""",Leaf_tmin
+Leaf thickness (avg),"""a number denoting the average thickness of the measurements of 9 leaves in a plant(centimeters)""",Leaf_tavg
+Biomass,"""a number denoting the biomass of the dried plants (grams)""",Biomass
+measurement location,"""a character string denoting the location where the morphological measurements were made""",Measurement_location
+note,"""a character string with text providing additional relevant information for data""",Notes
+leaf: branch (total; biomass),"""a ratio denoting the total biomass of leaf in a plant to the total biomass of branch in a plant (grams)""",leaf: branch (total; biomass)
+leaf: branch (single branch; biomass),"""a ratio denoting the total biomass of leaf in one branch of a plant to the total biomass of the one branch in a plant (grams)""",leaf: branch (single branch; biomass)
