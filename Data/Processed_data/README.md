@@ -4,7 +4,7 @@ This folder contains the cleaned Plant morph measurement data `processeddata.csv
 
 This dataset contains 30 data columns, as explained in the table below. 
 
-The code for processing the raw data is in **Sunyoung-Park-Rclass-project3 > Code > Processing_code, ** and runs from that working directory to produce the cleaned data. 
+The code for processing the raw data is in **Sunyoung-Park-Rclass-project3 > Code > Processing_code **, and runs from that working directory to produce the cleaned data. 
 
 The code for analyzing the clean data is in the `Analysis_code` subdirectory.
 
