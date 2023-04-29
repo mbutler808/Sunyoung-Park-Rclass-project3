@@ -1,8 +1,21 @@
+---
+title: "Cleaning R script for identifying best predictors of biomass for 13 plant species"
+author: "Sunyoung Park"
+date: "2023-04-21"
+output: textedit_document
+---
+
 ###############################
 # processing script
 #
 #this script loads the raw data, processes and cleans it 
 #and saves it as Rds file in the Processed_data folder
+
+
+# Setup
+
+This code is needed to pull the code chunks contained in `processingcode.R` into active memory:
+
 
 ## ---- packages --------
 #load needed packages. make sure they are installed.
@@ -68,12 +81,14 @@ unique(d1$Species)
 d1 <- d1[,3:32]
 
 
-# Turn any blanks or n/a's into NA
+# Some morphological measurements are missing for some species. It is because those measurements are irrelevant to certain species depending on the types of plant species (forbs, trees, and shrub) they are. 
+#Turn any blanks or n/a's into NA
+
 d1[d1==""] <- NA
 d1[d1=="n/a"] <- NA
 
 
-#coerce all the entries of the morphological measurement variables to numeric
+# coerce all the entries of the morphological measurement variables to numeric
 num <- c(8:29)
 d1[,num] <- apply(d1[,num], 2, function(x) as.numeric(as.character(x)))
 

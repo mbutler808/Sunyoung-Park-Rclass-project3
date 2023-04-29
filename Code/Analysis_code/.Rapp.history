@@ -1,0 +1,1634 @@
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}
+d1
+## ---- setup -----#
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}
+d1
+dat
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])
+spec
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
+print(shapiro.test(dat$Biomass))
+x <- rnorm(dat$Biomass)#
+qqnorm(x); qqline(x)
+ggplot(dat, aes(x=Height, y=Biomass), na.rm=TRUE) +#
+  geom_point(data=subset(dat,Species=="california sagebrush"), na.rm=TRUE)
+x
+rm(x)
+x
+ggplot(dat, aes(x=Height, y=Biomass), na.rm=TRUE) +#
+  geom_point(data=subset(dat,Species=="Artemisia californica"), na.rm=TRUE)
+ggplot(dat, aes(x=Width_perpendicular, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Artemisia californica"), na.rm=TRUE)
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Artemisia californica"), na.rm=TRUE)
+m1 <- lm(Biomass ~ Width_perpendicular + Width_farthest,#
+data= spec[["Artemisia californica"]])#
+summary(m1)#
+#
+m1 <- lm(Biomass ~ Width_perpendicular + Width_farthest + Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)#
+#
+m1 <- lm(Biomass ~ Width_perpendicular + Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+ggplot(dat, aes(x=Width_perpendicular + Width_farthest + #
+    Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Artemisia californica"), na.rm=TRUE)
+m1 <- lm(Biomass ~ Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_farthest,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_perpendicular,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+ggplot(dat, aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Artemisia californica"), na.rm=TRUE)
+m1 <- lm(Biomass ~ Width_perpendicular + Width_farthest + Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)
+m1 <- lm(Biomass ~ Density,#
+data= spec[["Chondropetalum tectorum "]])#
+summary(m1)
+m1 <- lm(Biomass ~ Density,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Stem_density,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)
+ggplot(dat, aes(x=Stem_density, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Chondropetalum tectorum"), na.rm=TRUE)
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)
+## ---- setup -----#
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )#
+## ---- header ----#
+#######################################
+# Data fitting/statistical analysis#
+#######################################
+## ---- testfornormality ----#
+#
+# This part of the code tests for normality using a Shapiro-Wilk test.#
+# The loop tests for normality in each species in the same order the dataframes are listed in spec.#
+#
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec#
+# The below is how you test for normality by species for the 13 species we are going to study. #
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}#
+#
+### not sure if there's a way to make this a table?#
+# Or this, to test for normality for each species individually one at a time. #
+#
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))#
+# From the test, we observe: #
+# Normally distributed data (p-value > 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, #Gnaphaluim spp., Rhus integrifolia, Solidago spp., Unidentified shrub#
+# Not normally distributed data (p-value < 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria #biennis, Salix spp., Unplanted weed#
+## ---- linear_regression_model_A.cordifolia ----#
+#
+# Look at each species and its morphological measurements to see which measurement(s) would be a good biomass indicator for each species. Then we can test with a regular linear regression model for normally distributed data. #
+#
+spec
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.7172 and p-value is 0.002438, which means that the model relatively explains the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Aptenia cordifolia.#
+#
+# ggplot to plot it#
+#
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE) +#
+ stat_smooth(method = "lm",#
+              formula = y ~ x,#
+              geom = "smooth")
+library(ggplot2)
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE) +#
+ stat_smooth(method = "m1",#
+              formula = y ~ x,#
+              geom = "smooth")
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE) +#
+ stat_smooth(method = "lm")
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE) +#
+ geom_smooth(method = "lm")
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE) +#
+ geom_smooth(method = "lm")
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE) +#
+ geom_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth")
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth")
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth")
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+ggplot(dat, aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(data=subset(dat,Species=="Aptenia cordifolia"), na.rm=TRUE)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+png(filename = addpath("A.cordifolia_branchlength.png", results_path))#
+ ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+png(filename = addpath("A.cordifolia_branchlength.png", results_path)) +#
+ ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ geom_smooth(method = "lm", se = FALSE)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ geom_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ geom_smooth(method = "lm", formula = y ~ x,#
+              se = FALSE)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+## ---- setup -----#
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )#
+## ---- header ----#
+#######################################
+# Data fitting/statistical analysis#
+#######################################
+## ---- testfornormality ----#
+#
+# This part of the code tests for normality using a Shapiro-Wilk test.#
+# The loop tests for normality in each species in the same order the dataframes are listed in spec.#
+#
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec#
+# The below is how you test for normality by species for the 13 species we are going to study. #
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}#
+#
+### not sure if there's a way to make this a table?#
+# Or this, to test for normality for each species individually one at a time. #
+#
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))#
+# From the test, we observe: #
+# Normally distributed data (p-value > 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, #Gnaphaluim spp., Rhus integrifolia, Solidago spp., Unidentified shrub#
+# Not normally distributed data (p-value < 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria #biennis, Salix spp., Unplanted weed#
+## ---- linear_regression_model_A.cordifolia ----#
+#
+# Look at each species and its morphological measurements to see which measurement(s) would be a good biomass indicator for each species. Then we can test with a regular linear regression model for normally distributed data. #
+#
+spec#
+#
+#Aptenia cordifolia: test for leaves per branch measurements#
+#
+m1 <- lm(Biomass ~ Leaves_per_branch,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.3025 and p-value is 0.07236, which means that the model doesn't explain the variation of the data and it is also not significant.#
+#Aptenia cordifolia: test for branch length measurements#
+#
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec [["Aptenia cordifolia"]])
+summary(m1)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ geom_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ geom_smooth(method = "lm", se = FALSE)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+require(lattice) # for plotting#
+require(magrittr) #for piping#
+require(knitr) #for formatting output
+a.cordifolia <- ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE)
+ggsave(filename = addpath("A.cordifolia_branchlength.png", results_path), a.cordifolia)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("Branch Length vs. Biomass for Aptenia cordifolia")
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("Branch Length vs. Biomass for Aptenia cordifolia", substitute(paste(italic('Aptenia cordifolia'))))
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("substitute(paste(italic('Aptenia cordifolia'))), Branch Length vs. Biomass for")
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("Branch Length vs. Biomass for Aptenia cordifolia", substitute(paste(italic('Aptenia cordifolia'))))
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("Branch Length vs. Biomass for" substitute(paste(italic("Aptenia cordifolia"))))
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))
+a.cordifolia <- ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point(na.rm=TRUE) +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))#
+#
+ggsave(filename = addpath("A.cordifolia_branchlength.png", results_path), a.cordifolia)
+m1 <- lm(Biomass ~ Width_farthest,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length") + #
+  ylab("Biomass") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))
+gplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width") + #
+  ylab("Biomass") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width") + #
+  ylab("Biomass") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))
+a.californica <- ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width") + #
+  ylab("Biomass") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))#
+ggsave(filename = addpath("a.californica_width.png", results_path), a.californica)
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))
+m1 <- lm(Biomass ~ Width_perpendicular + Width_farthest + Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_perpendicular * Width_farthest * Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+require(lattice) # for plotting#
+require(magrittr) #for piping#
+require(knitr) #for formatting output#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )#
+## ---- header ----#
+#######################################
+# Data fitting/statistical analysis#
+#######################################
+## ---- testfornormality ----#
+#
+# This part of the code tests for normality using a Shapiro-Wilk test.#
+# The loop tests for normality in each species in the same order the dataframes are listed in spec.#
+#
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec#
+# The below is how you test for normality by species for the 13 species we are going to study. #
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}#
+#
+### not sure if there's a way to make this a table?#
+# Or this, to test for normality for each species individually one at a time. #
+#
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))#
+# From the test, we observe: #
+# Normally distributed data (p-value > 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, #Gnaphaluim spp., Rhus integrifolia, Solidago spp., Unidentified shrub#
+# Not normally distributed data (p-value < 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria #biennis, Salix spp., Unplanted weed#
+## ---- linear_regression_model_A.cordifolia ----#
+#
+# Look at each species and its morphological measurements to see which measurement(s) would be a good biomass indicator for each species. Then we can test with a regular linear regression model for normally distributed data. #
+#
+spec#
+#
+#Aptenia cordifolia: test for leaves per branch measurements#
+#
+m1 <- lm(Biomass ~ Leaves_per_branch,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.3025 and p-value is 0.07236, which means that the model doesn't explain the variation of the data and it is also not significant.#
+#Aptenia cordifolia: test for branch length measurements#
+#
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.7172 and p-value is 0.002438, which means that the model relatively explains the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Aptenia cordifolia.#
+#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) +      geom_point() +#
+  stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+  xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))#
+# plot to .png file#
+#
+a.cordifolia <- ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))#
+#
+ggsave(filename = addpath("A.cordifolia_branchlength.png", results_path), a.cordifolia)#
+## ---- linear_regression_model_Artemisiacalifornica ----#
+#
+##Artemisia californica: test for width farthest measurements#
+#
+m1 <- lm(Biomass ~ Width_farthest,#
+data= spec[["Artemisia californica"]])#
+summary(m1)#
+#
+### R-squared value is 0.9594 and p-value is 0.0003998, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Artemisia californica since it has the highest R-squared value.#
+## ggplot to plot it#
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))
+a.californica <- #
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))#
+ggsave(filename = addpath("a.californica_width.png", results_path), a.californica)
+m1 <- lm(Biomass ~ Stem_density,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)#
+#
+# R-squared value is 0.9177 and p-value is 0.001661, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Chondropetalum tectorum since it has a higher R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Chondropetalum tectorum"), aes(x=Stem_density, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Stem Density (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Stem Density vs. Biomass for", substitute(paste(italic("Chondropetalum tectorum"))))#
+# plot to .png file#
+#
+c.tectorum <- #
+ggplot(data=subset(dat,Species=="Chondropetalum tectorum"), aes(x=Stem_density, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Stem Density (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Stem Density vs. Biomass for", substitute(paste(italic("Chondropetalum tectorum"))))#
+ggsave(filename = addpath("c.tectorum_density.png", results_path), c.tectorum)
+m1 <- lm(Biomass ~ Width_farthest,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_perpendicular,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Basal_circ,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Branches__per_stem,#
+data= spec[["Gnaphaluim spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Branches_per_stem,#
+data= spec[["Gnaphaluim spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_farthest,#
+data= spec[["Gnaphaluim spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_perpendicular,#
+data= spec[["Gnaphaluim spp."]])
+summary(m1)
+title: "Analysis script for "#
+author: "Sunyoung Park"#
+date: "04/22/2023"#
+output: textedit_document#
+---#
+This TextEdit file loads the cleaned data and does some initial analysis. #
+# Analysis #
+#
+In this analysis script, I am analyzing and answering #
+################################
+# Morph measurement and biomass correlation analysis script#
+##
+# This script loads the processed, cleaned data, #
+# does a simple analysis and saves the results#
+# to the results folder#
+################################
+#
+## ---- setup -----#
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+require(lattice) # for plotting#
+require(magrittr) #for piping#
+require(knitr) #for formatting output#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )#
+## ---- header ----#
+#######################################
+# Data fitting/statistical analysis#
+#######################################
+## ---- testfornormality ----#
+#
+# This part of the code tests for normality using a Shapiro-Wilk test.#
+# The loop tests for normality in each species in the same order the dataframes are listed in spec.#
+#
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec#
+# The below is how you test for normality by species for the 13 species we are going to study. #
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}#
+#
+### not sure if there's a way to make this a table?#
+# Or this, to test for normality for each species individually one at a time. #
+#
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))#
+# From the test, we observe: #
+# Normally distributed data (p-value > 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, Gnaphaluim spp., Rhus integrifolia, Solidago spp., Unidentified shrub#
+# Not normally distributed data (p-value < 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria #biennis, Salix spp., Unplanted weed#
+## ---- linear_regression_model_A.cordifolia ----#
+#
+# Look at each species and its morphological measurements to see which measurement(s) would be a good biomass indicator for each species. Then we can test with a regular linear regression model for normally distributed data. #
+#
+spec#
+#
+#Aptenia cordifolia: test for leaves per branch measurements#
+#
+m1 <- lm(Biomass ~ Leaves_per_branch,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.3025 and p-value is 0.07236, which means that the model doesn't explain the variation of the data and it is also not significant.#
+#Aptenia cordifolia: test for branch length measurements#
+#
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.7172 and p-value is 0.002438, which means that the model relatively explains the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Aptenia cordifolia.#
+#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) +      geom_point() +#
+  stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+  xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))#
+# plot to .png file#
+#
+a.cordifolia <- ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))#
+#
+ggsave(filename = addpath("A.cordifolia_branchlength.png", results_path), a.cordifolia)#
+## ---- linear_regression_model_A.californica ----#
+#
+#Artemisia californica: test for width farthest measurements#
+#
+m1 <- lm(Biomass ~ Width_farthest,#
+data= spec[["Artemisia californica"]])#
+summary(m1)#
+#
+# R-squared value is 0.9594 and p-value is 0.0003998, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Artemisia californica since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))#
+# plot to .png file#
+#
+a.californica <- #
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))#
+ggsave(filename = addpath("a.californica_width.png", results_path), a.californica)#
+## Artemisia californica: now we test if using multiple morphological characteristics as biomass indicators will increase the R-squared value.  #
+m1 <- lm(Biomass ~ Width_perpendicular + Width_farthest + Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)#
+#
+R-squared value is 0.9733 and p-value is 0.01599, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. These three morphological characteristics can be used together as better biomass indicators for Artemisia californica than one individual characteristic, since it has a higher R-squared value.#
+## ---- linear_regression_model_C.tectorum ----#
+#
+#Chondropetalum tectorum : test for stem density measurements#
+#
+m1 <- lm(Biomass ~ Stem_density,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)#
+#
+# R-squared value is 0.9177 and p-value is 0.001661, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Chondropetalum tectorum since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Chondropetalum tectorum"), aes(x=Stem_density, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Stem Density (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Stem Density vs. Biomass for", substitute(paste(italic("Chondropetalum tectorum"))))#
+# plot to .png file#
+#
+c.tectorum <- #
+ggplot(data=subset(dat,Species=="Chondropetalum tectorum"), aes(x=Stem_density, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Stem Density (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Stem Density vs. Biomass for", substitute(paste(italic("Chondropetalum tectorum"))))#
+ggsave(filename = addpath("c.tectorum_density.png", results_path), c.tectorum)#
+## ---- linear_regression_model_Gnaphalium.spp. ----#
+#
+#Gnaphalium spp. : test for #
+#
+m1 <- lm(Biomass ~ Branches_per_stem,#
+data= spec[["Gnaphalium spp."]])#
+summary(m1)#
+#
+# R-squared value is 0.8425 and p-value is 0.01788, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Gnaphalium spp. since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Gnaphaluim spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branches per stem (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branches per stem vs. Biomass for", substitute(paste(italic("Gnaphalium spp."))))#
+# plot to .png file#
+#
+Gnaphalium <-  ggplot(data=subset(dat,Species=="Gnaphalium spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branches per stem (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branches per stem vs. Biomass for", substitute(paste(italic("Gnaphalium spp."))))#
+#
+ggsave(filename = addpath("Gnaphaluim.branchperstem.png", results_path), Gnaphalium)
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+require(lattice) # for plotting#
+require(magrittr) #for piping#
+require(knitr) #for formatting output#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )#
+## ---- header ----#
+#######################################
+# Data fitting/statistical analysis#
+#######################################
+## ---- testfornormality ----#
+#
+# This part of the code tests for normality using a Shapiro-Wilk test.#
+# The loop tests for normality in each species in the same order the dataframes are listed in spec.#
+#
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec#
+# The below is how you test for normality by species for the 13 species we are going to study. #
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}#
+#
+### not sure if there's a way to make this a table?#
+# Or this, to test for normality for each species individually one at a time. #
+#
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))#
+# From the test, we observe: #
+# Normally distributed data (p-value > 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, Gnaphaluim spp., Rhus integrifolia, Solidago spp., Unidentified shrub#
+# Not normally distributed data (p-value < 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria #biennis, Salix spp., Unplanted weed#
+## ---- linear_regression_model_A.cordifolia ----#
+#
+# Look at each species and its morphological measurements to see which measurement(s) would be a good biomass indicator for each species. Then we can test with a regular linear regression model for normally distributed data. #
+#
+spec#
+#
+#Aptenia cordifolia: test for leaves per branch measurements#
+#
+m1 <- lm(Biomass ~ Leaves_per_branch,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.3025 and p-value is 0.07236, which means that the model doesn't explain the variation of the data and it is also not significant.#
+#Aptenia cordifolia: test for branch length measurements#
+#
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec [["Aptenia cordifolia"]])#
+summary(m1)#
+#
+# R-squared value is 0.7172 and p-value is 0.002438, which means that the model relatively explains the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Aptenia cordifolia.#
+#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) +      geom_point() +#
+  stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+  xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))#
+# plot to .png file#
+#
+a.cordifolia <- ggplot(data=subset(dat,Species=="Aptenia cordifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))#
+#
+ggsave(filename = addpath("A.cordifolia_branchlength.png", results_path), a.cordifolia)#
+## ---- linear_regression_model_A.californica ----#
+#
+#Artemisia californica: test for width farthest measurements#
+#
+m1 <- lm(Biomass ~ Width_farthest,#
+data= spec[["Artemisia californica"]])#
+summary(m1)#
+#
+# R-squared value is 0.9594 and p-value is 0.0003998, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Artemisia californica since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))#
+# plot to .png file#
+#
+a.californica <- #
+ggplot(data=subset(dat,Species=="Artemisia californica"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))#
+ggsave(filename = addpath("a.californica_width.png", results_path), a.californica)#
+## Artemisia californica: now we test if using multiple morphological characteristics as biomass indicators will increase the R-squared value.  #
+m1 <- lm(Biomass ~ Width_perpendicular + Width_farthest + Branches_per_stem,#
+data= spec[["Artemisia californica"]])#
+summary(m1)#
+#
+R-squared value is 0.9733 and p-value is 0.01599, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. These three morphological characteristics can be used together as better biomass indicators for Artemisia californica than one individual characteristic, since it has a higher R-squared value.#
+## ---- linear_regression_model_C.tectorum ----#
+#
+#Chondropetalum tectorum : test for stem density measurements#
+#
+m1 <- lm(Biomass ~ Stem_density,#
+data= spec[["Chondropetalum tectorum"]])#
+summary(m1)#
+#
+# R-squared value is 0.9177 and p-value is 0.001661, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Chondropetalum tectorum since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Chondropetalum tectorum"), aes(x=Stem_density, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Stem Density (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Stem Density vs. Biomass for", substitute(paste(italic("Chondropetalum tectorum"))))#
+# plot to .png file#
+#
+c.tectorum <- #
+ggplot(data=subset(dat,Species=="Chondropetalum tectorum"), aes(x=Stem_density, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Stem Density (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Stem Density vs. Biomass for", substitute(paste(italic("Chondropetalum tectorum"))))#
+ggsave(filename = addpath("c.tectorum_density.png", results_path), c.tectorum)#
+## ---- linear_regression_model_Gnaphalium.spp. ----#
+#
+#Gnaphalium spp. : test for #
+#
+m1 <- lm(Biomass ~ Branches_per_stem,#
+data= spec[["Gnaphalium spp."]])#
+summary(m1)#
+#
+# R-squared value is 0.8425 and p-value is 0.01788, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Gnaphalium spp. since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Gnaphaluim spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branches per stem (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branches per stem vs. Biomass for", substitute(paste(italic("Gnaphalium spp."))))#
+# plot to .png file#
+#
+Gnaphalium <-  ggplot(data=subset(dat,Species=="Gnaphalium spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branches per stem (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branches per stem vs. Biomass for", substitute(paste(italic("Gnaphalium spp."))))#
+#
+ggsave(filename = addpath("Gnaphalium.branchperstem.png", results_path), Gnaphalium)
+ggplot(data=subset(dat,Species=="Gnaphaluim spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branches per stem (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branches per stem vs. Biomass for", substitute(paste(italic("Gnaphalium spp."))))#
+# plot to .png file#
+#
+Gnaphalium <-  ggplot(data=subset(dat,Species=="Gnaphalium spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branches per stem (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branches per stem vs. Biomass for", substitute(paste(italic("Gnaphalium spp."))))#
+#
+ggsave(filename = addpath("Gnaphalium.branchperstem.png", results_path), Gnaphalium)
+m1 <- lm(Biomass ~ Branches_length,#
+data= spec[["Rhus integrifolia"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec[["Rhus integrifolia"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Height,#
+data= spec[["Rhus integrifolia"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Height + Branch_length,#
+data= spec[["Rhus integrifolia"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec[["Rhus integrifolia"]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Rhus integrifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length(n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Rhus integrifolia"))))
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Rhus integrifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length(n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Rhus integrifolia"))))#
+# plot to .png file#
+#
+R.integrifolia <-  ggplot(data=subset(dat,Species=="Rhus integrifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length(n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Rhus integrifolia"))))#
+ggsave(filename = addpath("R.integrifolia_branchlength.png", results_path), R.integrifolia)
+R.integrifolia <-  ggplot(data=subset(dat,Species=="Rhus integrifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length(cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Rhus integrifolia"))))#
+ggsave(filename = addpath("R.integrifolia_branchlength.png", results_path), R.integrifolia)
+R.integrifolia <-  ggplot(data=subset(dat,Species=="Rhus integrifolia"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Rhus integrifolia"))))#
+ggsave(filename = addpath("R.integrifolia_branchlength.png", results_path), R.integrifolia)
+m1 <- lm(Biomass ~ Leaf_lavg,#
+data= spec[["Solidago spp."]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Solidago spp."), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Average leaf length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Average leaf length vs. Biomass for", substitute(paste(italic("Solidago spp."))))#
+# plot to .png fil
+solidago <-  ggplot(data=subset(dat,Species=="Solidago spp."), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Average leaf length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Average leaf length vs. Biomass for", substitute(paste(italic("Solidago spp."))))#
+ggsave(filename = addpath("solidago_avgleaflength.png", results_path), solidago)
+ggplot(data=subset(dat,Species=="Solidago spp."), aes(x=Leaf_lavg, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Average leaf length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Average leaf length vs. Biomass for", substitute(paste(italic("Solidago spp."))))
+solidago <-  ggplot(data=subset(dat,Species=="Solidago spp."), aes(x=Leaf_lavg, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Average leaf length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Average leaf length vs. Biomass for", substitute(paste(italic("Solidago spp."))))#
+ggsave(filename = addpath("solidago_avgleaflength.png", results_path), solidago)
+m1 <- lm(Biomass ~ Branches_per_stem,#
+data= spec[["Unidentified shrub"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec[["Unidentified shrub"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Branch_length,#
+data= spec[["Unidentified shrub"]])#
+summary(m1)#
+#
+# R-squared value is 0.9923 and p-value is 1.431e-05, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Unidentified shrub since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Unidentified shrub"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Unidentified shrub"))))#
+# plot to .png file#
+#
+unidentifiedshrub <-  ggplot(data=subset(dat,Species=="Unidentified shrub"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Branch Length (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Unidentified shrub"))))#
+ggsave(filename = addpath("unidentifiedshrub_branchlength.png", results_path), unidentifiedshrub)
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+require(lattice) # for plotting#
+require(magrittr) #for piping#
+require(knitr) #for formatting output#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )#
+## ---- header ----#
+#######################################
+# Data fitting/statistical analysis#
+#######################################
+## ---- testfornormality ----#
+#
+# This part of the code tests for normality using a Shapiro-Wilk test.#
+# The loop tests for normality in each species in the same order the dataframes are listed in spec.#
+#
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec#
+# The below is how you test for normality by species for the 13 species we are going to study. #
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}#
+#
+### not sure if there's a way to make this a table?#
+# Or this, to test for normality for each species individually one at a time. #
+#
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
+spec
+spec[["Baccharis pilularis"]]$log <- log(spec[["Baccharis pilularis"]]$Biomass)#
+#
+spec[["Baccharis pilularis"]]$log <- log(spec[["Baccharis pilularis"]]$Biomass)#
+print(shapiro.test(spec[["Baccharis pilularis"]]$log))#
+#
+y <- rnorm(spec[["Baccharis pilularis"]]$log)#
+qqnorm(y); qqline(y)
+m1 <- lm(log ~ Width_farthest,#
+          data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Width_perpendicular,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Leaf_lmin,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Leaf_lmin + Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Baccharis pilularis"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Baccharis pilularis"))))
+b.pilularis <-  ggplot(data=subset(dat,Species=="Baccharis pilularis"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Baccharis pilularis"))))#
+ggsave(filename = addpath("b.pilularis_width.png", results_path), b.pilularis)
+ggplot(data=subset(dat,Species=="Baccharis pilularis"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Baccharis pilularis"))))#
+# plot to .png file#
+#
+b.pilularis <-  ggplot(data=subset(dat,Species=="Baccharis pilularis"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Baccharis pilularis"))))#
+ggsave(filename = addpath("b.pilularis_width.png", results_path), b.pilularis)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log ~ Width_perpendicular,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+spec[["Euphorbia spp."]]$log <- log(spec[["Euphorbia spp."]]$Biomass)#
+#
+print(shapiro.test(spec[["Euphorbia spp."]]$log))#
+#
+y <- rnorm(spec[["Euphorbia spp."]]$log)#
+qqnorm(y); qqline(y)#
+# Now that we have transformed it to normally distributed data, we can test with a regular linear regression model to find the best suitable morphological measurements as its biomass indicators.#
+# Euphorbia spp.: test for width measurements #
+#
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)#
+#
+spec[["Euphorbia spp."]]$log <- log(spec[["Euphorbia spp."]]$Biomass)#
+#
+print(shapiro.test(spec[["Euphorbia spp."]]$log))#
+#
+y <- rnorm(spec[["Euphorbia spp."]]$log)#
+qqnorm(y); qqline(y)#
+# Now that we have transformed it to normally distributed data, we can test with a regular linear regression model to find the best suitable morphological measurements as its biomass indicators.#
+# Euphorbia spp.: test for width measurements #
+#
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+spec[["Euphorbia spp."]]$log <- log(spec[["Euphorbia spp."]]$Biomass)#
+#
+print(shapiro.test(spec[["Euphorbia spp."]]$log))#
+#
+y <- rnorm(spec[["Euphorbia spp."]]$log)#
+qqnorm(y); qqline(y)#
+# Now that we have transformed it to normally distributed data, we can test with a regular linear regression model to find the best suitable morphological measurements as its biomass indicators.#
+# Euphorbia spp.: test for width measurements #
+#
+m1 <- lm(log ~ Width_perpendicular,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log ~ Branch_length,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log ~ Width_perpendicular + Branch_length,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log ~ Width_perpendicular * Branch_length,#
+    data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(biomass ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+# Analysis #
+#
+In this analysis script, I am analyzing and answering #
+################################
+# Morph measurement and biomass correlation analysis script#
+##
+# This script loads the processed, cleaned data, #
+# does a simple analysis and saves the results#
+# to the results folder#
+################################
+#
+## ---- setup -----#
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+require(lattice) # for plotting#
+require(magrittr) #for piping#
+require(knitr) #for formatting output#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec
+for (i in 1:length(spec)) {#
+  print(shapiro.test(spec[[i]]$Biomass))#
+}
+m1 <- lm(Biomass ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+spec[["Baccharis pilularis"]]$log <- log(spec[["Baccharis pilularis"]]$Biomass)#
+#
+print(shapiro.test(spec[["Baccharis pilularis"]]$log))#
+#
+y <- rnorm(spec[["Baccharis pilularis"]]$log)#
+qqnorm(y); qqline(y)
+m1 <- lm(Biomass ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+qqnorm(y); qqline(y)
+spec[["Baccharis pilularis"]]$log <- log(spec[["Baccharis pilularis"]]$Biomass)#
+#
+print(shapiro.test(spec[["Baccharis pilularis"]]$log))#
+#
+y <- rnorm(spec[["Baccharis pilularis"]]$log)#
+qqnorm(y); qqline(y)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(y ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log(y) ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Baccharis pilularis"), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Baccharis pilularis"))))
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_perpendicular + Branch_length,#
+          data = spec[["spurge"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_perpendicular + Branch_length,#
+          data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Width_perpendicular + Branch_length,#
+         data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+spec[["Euphorbia spp."]]$log <- log(spec[["Euphorbia spp."]]$Biomass)#
+#
+print(shapiro.test(spec[["Euphorbia spp."]]$log))#
+#
+y <- rnorm(spec[["Euphorbia spp."]]$log)#
+qqnorm(y); qqline(y)
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Euphorbia spp."), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Euphorbia spp."))))#
+# plot to .png file#
+#
+euphorbia <-  ggplot(data=subset(dat,Species=="Euphorbia spp."), aes(x=Width_farthest, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Width (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Width vs. Biomass for", substitute(paste(italic("Euphorbia spp."))))#
+ggsave(filename = addpath("euphorbia_width.png", results_path), euphorbia)
+m1 <- lm(log ~ Branches__per_stem,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(log ~ Branches_per_stem,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+# Euphorbia spp.: test for width measurements #
+#
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+spec[["Lactucca spp."]]$log <- log(spec[["Lactucca spp."]]$Biomass)#
+#
+print(shapiro.test(spec[["Lactucca spp."]]$log))#
+#
+y <- rnorm(spec[["Lactucca spp."]]$log)#
+qqnorm(y); qqline(y)
+m1 <- lm(log ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+spec[["Euphorbia spp."]]$log <- log(spec[["Euphorbia spp."]]$Biomass)#
+#
+print(shapiro.test(spec[["Euphorbia spp."]]$log))#
+#
+y <- rnorm(spec[["Euphorbia spp."]]$log)#
+qqnorm(y); qqline(y)#
+# Euphorbia spp.: test for width measurements #
+#
+m1 <- lm(log ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+# load needed packages. make sure they are installed#
+require(ggplot2) #for plotting#
+require(lattice) # for plotting#
+require(magrittr) #for piping#
+require(knitr) #for formatting output#
+# path to data and results #
+data_path <- "../../Data/Processed_data/"#
+#
+results_path <- "../../Results/"#
+## ---- functions ----#
+# function to paste path to output filenames#
+#
+addpath <- function( filename, path=data_path ) {#
+    location <- paste( path, filename, sep="")#
+	return( location )#
+}#
+#
+## ---- loaddata ----#
+# load data#
+dat <- readRDS( addpath("processeddata.rds", data_path) )
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
+# We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. #
+spec <- with(dat, split(dat, list(Species = Species)))#
+spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])#
+#
+spec
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphaluim spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphalium spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))#
+#
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphalium spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
+print(shapiro.test(spec[["Aptenia cordifolia"]]$Biomass))#
+print(shapiro.test(spec[["Artemisia californica"]]$Biomass))#
+print(shapiro.test(spec[["Baccharis pilularis"]]$Biomass))#
+print(shapiro.test(spec[["Chondropetalum tectorum"]]$Biomass))#
+print(shapiro.test(spec[["Euphorbia spp."]]$Biomass))#
+print(shapiro.test(spec[["Gnaphalium spp."]]$Biomass))#
+print(shapiro.test(spec[["Lactucca spp."]]$Biomass))#
+print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))#
+print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))#
+print(shapiro.test(spec[["Salix spp."]]$Biomass))#
+print(shapiro.test(spec[["Solidago spp."]]$Biomass))#
+print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))#
+print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
+m1 <- lm(Biomass ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Lactucca spp."), aes(x=Total_leaves, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Total Leaves (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Total Leaves vs. Biomass for", substitute(paste(italic("Lactucca spp."))))
+m1 <- lm(log ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+ggplot(data=subset(dat,Species=="Lactucca spp."), aes(x=Total_leaves, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Total Leaves (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Total Leaves vs. Biomass for", substitute(paste(italic("Lactucca spp."))))
+m1 <- lm(Biomass ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)#
+#
+# R-squared value is 0.9937 and p-value is 0.0001378, which means that the model does explain the variation of the data and it is also significant. The #
+# R-squared value is 0.8049 and p-value is 0.0006431, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Lactucca spp. since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Lactucca spp."), aes(x=Total_leaves, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Total Leaves (n)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Total Leaves vs. Biomass for", substitute(paste(italic("Lactucca spp."))))
+m1 <- lm(log(Biomass) ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- glm(Biomass ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+1 - (Residual Deviance/Null Deviance)
+with(summary(m1), 1 - deviance/null.deviance)
+m1 <- lm(Biomass ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Total_leaves,#
+       data = spec[["Lactucca spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Width_farthest,#
+       data = spec[["Baccharis pilularis"]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Width_farthest,#
+       data = spec[["Euphorbia spp."]])#
+summary(m1)
+m1 <- lm(Biomass ~ Total_leaves,#
+       data = spec[["Onetheria biennis"]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Total_leaves,#
+       data = spec[["Onetheria biennis"]])#
+summary(m1)
+m1 <- lm(Biomass ~ Height,#
+       data = spec[["Onetheria biennis"]])#
+summary(m1)
+m1 <- lm(log(Biomass) ~ Height,#
+       data = spec[["Onetheria biennis"]])#
+summary(m1)
+spec[["Onetheria biennis"]]$log <- log(spec[["Onetheria biennis"]]$Biomass)#
+#
+print(shapiro.test(spec[["Onetheria biennis"]]$log))#
+#
+y <- rnorm(spec[["Onetheria biennis"]]$log)#
+qqnorm(y); qqline(y)#
+# Onetheria biennis: test for width measurements #
+#
+m1 <- lm(log ~ Height,#
+       data = spec[["Onetheria biennis"]])#
+summary(m1)
+spec[["Onetheria biennis"]]$log <- log(spec[["Onetheria biennis"]]$Biomass)#
+#
+print(shapiro.test(spec[["Onetheria biennis"]]$log))#
+#
+y <- rnorm(spec[["Onetheria biennis"]]$log)#
+qqnorm(y); qqline(y)#
+# Onetheria biennis: test for height measurements #
+#
+m1 <- lm(log ~ Height,#
+       data = spec[["Onetheria biennis"]])#
+summary(m1)#
+#
+# R-squared value is 0.8165 and p-value is 0.0005163, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Onetheria biennis since it has the highest R-squared value.#
+# ggplot to plot it#
+#
+ggplot(data=subset(dat,Species=="Onetheria biennis"), aes(x=Height, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Height (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Height vs. Biomass for", substitute(paste(italic("Onetheria biennis"))))#
+# plot to .png file#
+#
+O.biennis <-  ggplot(data=subset(dat,Species=="Onetheria biennis"), aes(x=Height, y=Biomass), na.rm=TRUE) + geom_point() +#
+ stat_smooth(method = "lm", formula = y ~ x,#
+              geom = "smooth", se = FALSE) +#
+xlab("Height (cm)") + #
+  ylab("Biomass (g)") +#
+  ggtitle("Height vs. Biomass for", substitute(paste(italic("Onetheria biennis"))))#
+ggsave(filename = addpath("o.biennis_height.png", results_path), o.biennis)
