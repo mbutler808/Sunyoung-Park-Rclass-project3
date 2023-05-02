@@ -1,10 +1,3 @@
----
-title: "Cleaning R script for identifying best predictors of biomass for 13 plant species"
-author: "Sunyoung Park"
-date: "2023-04-21"
-output: textedit_document
----
-
 ###############################
 # processing script
 #
@@ -14,7 +7,7 @@ output: textedit_document
 
 # Setup
 
-This code is needed to pull the code chunks contained in `processingcode.R` into active memory:
+# This code is needed to pull the code chunks contained in `processingcode.R` into active memory:
 
 
 ## ---- packages --------
@@ -35,7 +28,7 @@ rawdata <- read.csv(data_location, check.names=FALSE)
 
 # We can look in the data dictionary for a variable explanation. I am using the paste function here to add the path to the filename.
 
-sep=“” adds no space when pasting.
+# sep=“” adds no space when pasting.
 dictionary <- read.csv(paste(data_path, "datadictionary.csv", sep=""))
 print(dictionary)
 
@@ -77,7 +70,7 @@ unique(d1$Species)
 ## ---- cleandata2 -------- 
 
 # Get rid of date and time, notes, 'Leaf: branch (total; biomass)' and 'Leaf: branch (single; biomass)' from the column
-# We don't need it for our analysis.
+# We don't need these for our analysis.
 d1 <- d1[,3:32]
 
 
@@ -88,7 +81,7 @@ d1[d1==""] <- NA
 d1[d1=="n/a"] <- NA
 
 
-# coerce all the entries of the morphological measurement variables to numeric
+# Coerce all the entries of the morphological measurement variables to numeric
 num <- c(8:29)
 d1[,num] <- apply(d1[,num], 2, function(x) as.numeric(as.character(x)))
 

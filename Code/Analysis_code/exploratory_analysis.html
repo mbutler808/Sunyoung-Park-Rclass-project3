@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sunyoung Park">
+<meta name="dcterms.date" content="2023-04-22">
+
+<title>Analysis script for identifying the best predictors of biomass for 13 plant species</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="exploratory_analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="exploratory_analysis_files/libs/quarto-html/quarto.js"></script>
+<script src="exploratory_analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="exploratory_analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="exploratory_analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="exploratory_analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="exploratory_analysis_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="exploratory_analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="exploratory_analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="exploratory_analysis_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analysis script for identifying the best predictors of biomass for 13 plant species</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sunyoung Park </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 22, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>This Quarto file loads the cleaned data and does some initial analysis.</p>
+<section id="analysis" class="level1">
+<h1>Analysis</h1>
+<p>In this analysis script, I am analyzing direct measurements of 11 different morphological characteristics and aboveground biomass to identify the best non-destructive indicators for the aboveground biomass of each of the 13 plant species.</p>
+<p>I am using regression analysis to perform my analysis.</p>
+</section>
+<section id="setup" class="level1">
+<h1>Setup</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">read_chunk</span>(<span class="st">'statistical_analysis.R'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load needed packages and filepaths.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load needed packages. make sure they are installed</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2) <span class="co">#for plotting</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(lattice) <span class="co"># for plotting</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(magrittr) <span class="co">#for piping</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(knitr) <span class="co">#for formatting output</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># path to data and results </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="st">"../../Data/Processed_data/"</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>results_path <span class="ot">&lt;-</span> <span class="st">"../../Results/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load custom functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to paste path to output filenames</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>addpath <span class="ot">&lt;-</span> <span class="cf">function</span>( filename, <span class="at">path=</span>data_path ) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    location <span class="ot">&lt;-</span> <span class="fu">paste</span>( path, filename, <span class="at">sep=</span><span class="st">""</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>( location )</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>( <span class="fu">addpath</span>(<span class="st">"processeddata.rds"</span>, data_path) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="results-of-the-data-analysis" class="level1">
+<h1>Results of the data analysis</h1>
+<p>The results were created by the <code>statistical_analysis.R</code> script and to the <code>Results</code> folder.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This part of the code tests for normality using a Shapiro-Wilk test.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The loop tests for normality in each species in the same order the dataframes are listed in spec.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">with</span>(dat, <span class="fu">split</span>(dat, <span class="fu">list</span>(<span class="at">Species =</span> Species)))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">lapply</span>(spec, <span class="cf">function</span>(x) x[, <span class="fu">colSums</span>(<span class="fu">is.na</span>(x)) <span class="sc">==</span> <span class="dv">0</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>spec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`Aptenia cordifolia`
+   Sample number Location   Type Treatment   Size            Species
+1              1      SME garden vegetated  small Aptenia cordifolia
+2              2      SME garden vegetated  small Aptenia cordifolia
+3              3      SME garden vegetated  small Aptenia cordifolia
+4              4      SME garden vegetated  large Aptenia cordifolia
+5              5      SME garden vegetated  large Aptenia cordifolia
+6              6      SME garden vegetated  large Aptenia cordifolia
+57            57    OSLER garden vegetated medium Aptenia cordifolia
+58            58    OSLER garden vegetated medium Aptenia cordifolia
+59            59    OSLER garden vegetated medium Aptenia cordifolia
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+1            17.5                14.0          4.50           0.430
+2            10.0                 7.5          3.17           0.400
+3            12.0                 9.5          3.75           0.350
+4            59.5                30.0         13.00           0.370
+5            44.5                22.0         11.00           0.460
+6            84.0                35.0         34.85           0.320
+57           68.0                39.0         20.10           0.336
+58           58.5                47.0         23.34           0.376
+59           32.0                24.0         11.35           0.446
+   Leaves_per_branch Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+1                8.4       3.5       1.5      2.48       2.3       1.1
+2                7.4       3.0       1.0      2.07       2.0       0.8
+3               10.5       3.8       1.8      2.79       2.4       1.1
+4               28.0       5.3       1.8      3.44       3.2       1.3
+5               18.2       3.5       1.5      2.61       2.0       0.8
+6               22.0       4.5       1.4      2.73       3.0       1.0
+57              17.0       4.0       1.6      2.93       2.0       1.0
+58              16.2       3.7       1.7      2.57       2.2       1.0
+59              21.2       3.2       1.5      2.41       1.8       0.9
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+1       1.79      0.27      0.16     0.210    3.34                field
+2       1.46      0.26      0.09     0.160    1.46                field
+3       1.78      0.28      0.12     0.160    1.36                field
+4       2.12      0.20      0.14     0.160   11.79                field
+5       1.60      0.27      0.11     0.180   14.45                field
+6       1.84      0.17      0.09     0.130   29.83                field
+57      1.52      0.16      0.10     0.120    6.69                field
+58      1.53      0.17      0.12     0.130   12.18                field
+59      1.36      0.24      0.14     0.207    6.75                field
+
+$`Artemisia californica`
+   Sample number Location    Type Treatment   Size               Species
+65            77      SME natural vegetated  small Artemisia californica
+66            78      SME natural vegetated  small Artemisia californica
+67            79      SME natural vegetated medium Artemisia californica
+68            80      SME natural vegetated medium Artemisia californica
+69            81      SME natural vegetated  large Artemisia californica
+77            88      SME natural vegetated  large Artemisia californica
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+65      shrub   31.0             36                28.5         18.05
+66      shrub   32.0             47                31.5         17.20
+67      shrub   52.5             50                51.0         44.80
+68      shrub   60.0             55                46.0         49.95
+69      shrub   66.0            100                88.0         53.10
+77      shrub   64.0             84                64.0         43.80
+   Branch_diameter Branches_per_stem Biomass Measurement_location
+65           0.207                60   19.59                field
+66           0.148                37   14.55                field
+67           0.236                63   92.60                field
+68           0.283                44   85.03                field
+69           0.256               196  395.36                field
+77           0.325                85  268.56                field
+
+$`Baccharis pilularis`
+   Sample number Location    Type Treatment   Size             Species
+70            82      SME natural vegetated  small Baccharis pilularis
+71            83      SME natural vegetated  small Baccharis pilularis
+72            84      SME natural vegetated medium Baccharis pilularis
+73            85      SME natural vegetated  small Baccharis pilularis
+74            86      SME natural vegetated medium Baccharis pilularis
+75            87      SME natural vegetated  large Baccharis pilularis
+76            89      SME natural vegetated  large Baccharis pilularis
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+70      shrub     45             34                  33          32.9
+71      shrub     30             20                  19          20.3
+72      shrub     54             45                  44          40.9
+73      shrub     49             35                  20          29.3
+74      shrub     48             74                  71          53.9
+75      shrub     52             82                  68          45.2
+76      shrub     71             72                  69          50.6
+   Branch_diameter Branches_per_stem Leaves_per_branch Leaf_lmax Leaf_lmin
+70           0.232                17              16.4      14.0       9.5
+71           0.204                14              12.2      10.0       7.5
+72           0.386                16              25.2      20.0       9.5
+73           0.290                10              20.6      14.0      10.0
+74           0.440                48              20.2      19.0      11.0
+75           0.466                40              26.2      16.5      11.7
+76           0.691                41              28.6      14.5       9.5
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+70     12.40        19         8      13.0      0.10      0.08     0.084
+71      8.80        12         8       9.0      0.07      0.11     0.090
+72     14.50        55        11      25.8      0.05      0.10     0.068
+73     11.90        22        14      17.8      0.08      0.06     0.070
+74     14.00        16        11      13.6      0.10      0.06     0.082
+75     14.04        47        30      39.6      0.07      0.10     0.080
+76     11.60        24        13      19.6      0.07      0.05     0.056
+   Biomass Measurement_location
+70   27.43                  lab
+71   13.95                  lab
+72   86.63                  lab
+73   28.76                  lab
+74  166.61            field/lab
+75  385.97                field
+76  102.65                field
+
+$`Chondropetalum tectorum`
+   Sample number Location      Type Treatment   Size                 Species
+60            70      SME biofilter vegetated  large Chondropetalum tectorum
+61            71      SME biofilter vegetated  small Chondropetalum tectorum
+62            72      SME biofilter vegetated  small Chondropetalum tectorum
+63            73      SME biofilter vegetated medium Chondropetalum tectorum
+64            74      SME biofilter vegetated medium Chondropetalum tectorum
+78            90      SME biofilter vegetated  large Chondropetalum tectorum
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+60      shrub  177.0            259                 160        158.90
+61      shrub  120.5             58                  50         76.30
+62      shrub  132.5            114                  24         83.80
+63      shrub  189.0            170                  86        151.25
+64      shrub  150.0            116                  62        141.40
+78      shrub  180.0            210                 132        167.90
+   Branch_diameter Basal_circ Stem_density Biomass Measurement_location
+60           0.456      132.0          145 2083.04                field
+61           0.466       65.0           40  114.86                field
+62           0.457       60.0           20   64.38                field
+63           0.418      131.0           60  761.40                field
+64           0.396      124.3          130 2059.46                field
+78           0.482      146.0          120 2350.90                field
+
+$`Euphorbia spp.`
+   Sample number Location      Type   Size        Species Plant type
+17            17    OSLER biofilter  small Euphorbia spp.       forb
+26            26    OSLER biofilter  large Euphorbia spp.       forb
+27            27    OSLER biofilter medium Euphorbia spp.       forb
+28            28      SIO biofilter  small Euphorbia spp.       forb
+29            29      SIO biofilter  small Euphorbia spp.       forb
+30            30      SIO biofilter  large Euphorbia spp.       forb
+31            31      SIO biofilter  large Euphorbia spp.       forb
+32            32      SIO biofilter medium Euphorbia spp.       forb
+33            33      SIO biofilter medium Euphorbia spp.       forb
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+17            3.5                 1.0          1.54           0.036
+26           13.0                10.0          4.42           0.074
+27            7.2                 4.5          2.73           0.054
+28            4.6                 2.8          2.13           0.053
+29            3.7                 1.3          1.30           0.058
+30           24.0                18.0         12.82           0.075
+31           12.5                12.5          5.80           0.054
+32            8.0                 6.2          2.83           0.051
+33            8.0                 3.7          2.38           0.059
+   Stem_diameter Stem_height Branches_per_stem Leaves_per_branch Leaf_lmax
+17          0.03         1.0                 5              7.80      0.50
+26          0.08         0.7                36             26.80      0.70
+27          0.05         0.4                13             16.20      0.60
+28          0.06         0.7                 4              9.75      0.40
+29          0.08         0.4                 4              6.50      0.45
+30          0.18         0.2               120             32.00      0.55
+31          0.13         0.7                43             32.20      0.40
+32          0.08         0.7                18             20.20      0.50
+33          0.14         0.2                15             13.40      0.50
+   Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin
+17      0.25      0.42      0.40      0.15      0.26      0.01      0.01
+26      0.20      0.43      0.50      0.20      0.32      0.02      0.01
+27      0.20      0.38      0.40      0.20      0.30      0.01      0.01
+28      0.20      0.31      0.40      0.15      0.27      0.02      0.01
+29      0.20      0.32      0.35      0.20      0.26      0.01      0.01
+30      0.30      0.44      0.50      0.25      0.38      0.02      0.01
+31      0.15      0.27      0.30      0.15      0.23      0.01      0.01
+32      0.20      0.34      0.40      0.15      0.26      0.01      0.01
+33      0.15      0.32      0.40      0.15      0.26      0.01      0.01
+   Leaf_tavg Biomass Measurement_location
+17     0.010    0.01                  lab
+26     0.012    0.24                  lab
+27     0.010    0.08                  lab
+28     0.013    0.01                  lab
+29     0.010    0.01                  lab
+30     0.017    1.63                  lab
+31     0.010    0.49                  lab
+32     0.010    0.13                  lab
+33     0.010    0.12                  lab
+
+$`Gnaphalium spp.`
+   Sample number Location      Type Treatment   Size         Species Plant type
+7              7    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+8              8    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+9              9    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+10            10    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+11            11    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+   Height Width_farthest Width_perpendicular Branch_length Branch_diameter
+7    23.0            4.5                 4.3          2.62           0.055
+8    28.0            3.0                 2.7          1.30           0.048
+9    20.0            4.5                 2.6          3.55           0.066
+10   15.0            6.0                 4.0          8.00           0.030
+11   18.5            9.5                 5.5          6.30           0.092
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+7           0.27       21.00            1                13           40
+8           0.19       27.50            1                10           35
+9           0.15       20.00            1                 7           60
+10          0.22        5.30            1                 3           30
+11          0.23        0.45            1                15          100
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+7        2.8       1.1      1.98       0.3       0.1      0.21      0.04
+8        3.4       1.0      2.21       0.5       0.1      0.23      0.03
+9        2.8       1.0      1.92       0.5       0.1      0.21      0.03
+10       2.4       1.0      1.27       0.2       0.1      0.12      0.02
+11       1.5       0.5      1.12       0.2       0.1      0.12      0.03
+   Leaf_tmin Leaf_tavg Biomass Measurement_location
+7       0.02     0.030    0.73                field
+8       0.10     0.024    0.50                field
+9       0.01     0.210    0.35                field
+10      0.01     0.014    0.21                field
+11      0.01     0.023    1.14                field
+
+$`Lactucca spp.`
+   Sample number Location      Type  Size       Species Plant type Height
+12            12    OSLER biofilter large Lactucca spp.       forb    2.0
+13            13    OSLER biofilter small Lactucca spp.       forb    5.0
+14            14    OSLER biofilter small Lactucca spp.       forb    3.2
+15            15    OSLER biofilter small Lactucca spp.       forb    4.0
+16            16    OSLER biofilter large Lactucca spp.       forb   29.0
+   Width_farthest Width_perpendicular Total_leaves Leaf_lmax Leaf_lmin
+12           15.0                  15           11       8.5       4.0
+13            9.0                   7            7       6.0       2.2
+14           12.0                   6            6       6.8       1.9
+15            9.5                   6            4       7.5       3.6
+16           15.0                   6           42      15.0       9.0
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+12      6.50       2.7       1.3      2.08      0.09      0.04     0.059
+13      4.10       2.0       1.2      1.56      0.05      0.02     0.027
+14      4.48       2.0       1.0      1.58      0.04      0.02     0.033
+15      6.15       1.9       1.0      1.43      0.04      0.03     0.038
+16     11.22       4.0       1.0      2.36      0.15      0.06     0.103
+   Biomass Measurement_location
+12    0.31                field
+13    0.05                field
+14    0.03                field
+15    0.03                field
+16    2.35                  lab
+
+$`Onetheria biennis`
+   Sample number Location      Type   Treatment   Size           Species
+20            20    ACTRI biofilter unvegetated  small Onetheria biennis
+21            21    ACTRI biofilter unvegetated  small Onetheria biennis
+22            22    ACTRI biofilter unvegetated  small Onetheria biennis
+23            23    ACTRI biofilter unvegetated medium Onetheria biennis
+24            24    ACTRI biofilter unvegetated medium Onetheria biennis
+25            25    ACTRI biofilter unvegetated medium Onetheria biennis
+43            43    ACTRI biofilter unvegetated  large Onetheria biennis
+44            44    ACTRI biofilter unvegetated  large Onetheria biennis
+45            45    ACTRI biofilter unvegetated  large Onetheria biennis
+   Plant type Height Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax
+20       forb    4.0            9       7.4       1.1      4.47       1.9
+21       forb    4.2            9       7.3       0.9      4.28       1.9
+22       forb    7.0           22       8.5       2.5      5.42       1.7
+23       forb    9.5           18      17.0       2.5      9.01       2.9
+24       forb   12.5           37      16.5       3.1     10.61       2.4
+25       forb    6.5           18      18.5       2.7     10.11       2.5
+43       forb   18.0           27      14.0       4.0     10.28       2.0
+44       forb   17.0           28      14.0       4.5      9.17       2.3
+45       forb   13.0           49      10.5       4.5      7.67       1.9
+   Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+20       0.2      1.17      0.06      0.02     0.039    0.09
+21       0.2      1.19      0.06      0.03     0.043    0.10
+22       0.8      1.26      0.08      0.02     0.056    0.40
+23       0.8      1.97      0.09      0.04     0.069    0.66
+24       0.6      1.51      0.08      0.06     0.070    1.22
+25       0.7      1.62      0.10      0.05     0.066    1.01
+43       0.8      1.61      0.08      0.04     0.058    5.25
+44       1.0      1.63      0.07      0.05     0.059    6.66
+45       1.1      1.60      0.06      0.04     0.054    6.20
+   Measurement_location
+20                  lab
+21                  lab
+22                  lab
+23                  lab
+24                  lab
+25                  lab
+43                  lab
+44                  lab
+45                  lab
+
+$`Rhus integrifolia`
+   Sample number Location    Type   Size           Species Plant type Height
+93           110      SIO natural  small Rhus integrifolia      shrub     53
+94           111      SIO natural medium Rhus integrifolia      shrub     80
+95           112      SIO natural  small Rhus integrifolia      shrub     55
+96           113      SIO natural  small Rhus integrifolia      shrub     37
+97           114      SIO natural  large Rhus integrifolia      shrub    144
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+93             27                  38         27.50           0.445
+94             78                  68         40.00           0.891
+95             44                  29         21.15           0.397
+96             36                  28         17.00           0.371
+97            126                 104         69.15           1.146
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+93          1.07        16.0            1                 6          104
+94          2.71        12.0            1                50          687
+95          1.28         6.5            1                11           94
+96          1.97         3.0            1                 9           56
+97          3.63         8.0            1                61          892
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+93       5.5       2.3      3.89       3.7       1.6      2.74      0.06
+94       6.4       2.4      4.79       4.3       1.6      3.17      0.10
+95       5.9       3.2      4.73       3.8       2.2      3.14      0.07
+96       5.5       2.2      3.99       3.7       1.5      2.31      0.07
+97       5.3       2.7      4.10       4.0       2.0      2.98      0.08
+   Leaf_tmin Leaf_tavg Biomass
+93      0.05     0.054   49.58
+94      0.05     0.078  556.47
+95      0.05     0.057   55.20
+96      0.03     0.056   36.56
+97      0.05     0.071 1172.31
+
+$`Salix spp.`
+   Sample number Location      Type Treatment   Size    Species Plant type
+46            46    ACTRI biofilter vegetated  small Salix spp.       tree
+47            47    ACTRI biofilter vegetated  small Salix spp.       tree
+48            48    ACTRI biofilter vegetated  small Salix spp.       tree
+49            49    ACTRI biofilter vegetated medium Salix spp.       tree
+50            50    ACTRI biofilter vegetated medium Salix spp.       tree
+51            51    ACTRI biofilter vegetated medium Salix spp.       tree
+52            52    ACTRI biofilter vegetated  large Salix spp.       tree
+79            91    ACTRI biofilter vegetated  large Salix spp.       tree
+80            92    ACTRI biofilter vegetated  large Salix spp.       tree
+   Height Stem_diameter Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+46     50          0.21       9.0       2.6      6.20       0.8      0.40
+47     42          0.17       8.0       3.3      5.88       0.5      0.20
+48     28          0.08       7.0       4.5      5.56       0.5      0.15
+49    154          0.92      11.0       4.0      7.83       1.0      0.40
+50    144          0.77      11.5       4.5      7.94       0.9      0.35
+51    116          0.60      11.0       4.0      7.47       0.6      0.30
+52    220          1.23      12.5       5.0      9.00       1.0      0.40
+79    239          1.63      13.5       6.5      9.30       1.1      0.40
+80    248          1.85      12.0       5.0      9.41       1.5      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+46      0.57      0.04      0.03     0.032    1.17                  lab
+47      0.32      0.04      0.02     0.024    0.71                  lab
+48      0.36      0.03      0.02     0.025    0.31                  lab
+49      0.67      0.07      0.04     0.053   27.27                  lab
+50      0.59      0.08      0.50     0.060   20.90                  lab
+51      0.47      0.06      0.03     0.051    9.61                  lab
+52      0.62      0.08      0.05     0.066   72.53                  lab
+79      0.89      0.06      0.02     0.046  154.68            field/lab
+80      0.90      0.06      0.03     0.042  135.22            field/lab
+
+$`Solidago spp.`
+   Sample number Location      Type Treatment   Size       Species Plant type
+81            93  Sanford biofilter vegetated  large Solidago spp.       forb
+82            94  Sanford biofilter vegetated  large Solidago spp.       forb
+83            95  Sanford biofilter vegetated medium Solidago spp.       forb
+84            96  Sanford biofilter vegetated medium Solidago spp.       forb
+85            97  Sanford biofilter vegetated  small Solidago spp.       forb
+86            98  Sanford biofilter vegetated  small Solidago spp.       forb
+   Height Width_farthest Width_perpendicular Stem_diameter Stem_height
+81   11.5           12.5                10.0          0.08         0.4
+82    9.0           11.0                 7.0          0.12         4.5
+83    6.5            8.0                 5.0          0.07         1.5
+84    8.5            8.5                 4.5          0.09         3.0
+85    4.5            4.0                 3.5          0.09         0.8
+86    5.5            4.5                 2.0          0.09         2.3
+   Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg
+81            9      11.0       4.0      7.59       3.0       0.9      2.13
+82            9       8.0       3.0      5.64       2.3       0.7      1.57
+83           10       6.0       1.4      4.18       1.5       0.2      1.08
+84            8       6.0       0.9      3.64       1.2       0.2      0.75
+85            5       4.2       3.0      3.22       1.4       0.7      1.04
+86            5       5.2       2.7      3.90       1.9       1.1      1.56
+   Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+81      0.05      0.03     0.032    0.47
+82      0.03      0.02     0.027    0.25
+83      0.02      0.01     0.019    0.14
+84      0.03      0.01     0.019    0.07
+85      0.03      0.02     0.024    0.04
+86      0.04      0.02     0.030    0.09
+
+$`Unidentified shrub`
+   Sample number Location      Type Treatment   Size            Species
+18            18    OSLER    garden vegetated medium Unidentified shrub
+19            19    OSLER    garden vegetated medium Unidentified shrub
+53            53    OSLER    garden vegetated medium Unidentified shrub
+54            54    OSLER biofilter vegetated  small Unidentified shrub
+55            55    OSLER biofilter vegetated  small Unidentified shrub
+56            56    OSLER biofilter vegetated  small Unidentified shrub
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+18      shrub   74.5          137.0                74.0         80.80
+19      shrub   87.0           94.0                81.0         76.35
+53      shrub   80.5          100.5                94.5         73.05
+54      shrub   50.5           87.0                61.0         52.20
+55      shrub   61.0           96.0                72.0         68.95
+56      shrub   66.0           96.0                82.0         57.65
+   Branch_diameter Basal_circ Branches_per_stem Biomass Measurement_location
+18           0.117      148.0               725  302.54            field/lab
+19           0.078       85.0               900  261.54            field/lab
+53           0.088       69.5               900  274.96                field
+54           0.078       58.0               300   96.98                field
+55           0.072       47.0               500  193.03                field
+56           0.051       37.5               350  138.54                field
+
+$`Unplanted weed`
+   Sample number Location      Type   Treatment   Size        Species
+34            34    ACTRI biofilter unvegetated  large Unplanted weed
+35            35    ACTRI biofilter unvegetated medium Unplanted weed
+36            36    ACTRI biofilter unvegetated  large Unplanted weed
+37            37    ACTRI biofilter unvegetated  large Unplanted weed
+38            38    ACTRI biofilter unvegetated  small Unplanted weed
+39            39    ACTRI biofilter unvegetated  small Unplanted weed
+40            40    ACTRI biofilter unvegetated  small Unplanted weed
+41            41    ACTRI biofilter unvegetated medium Unplanted weed
+42            42    ACTRI biofilter unvegetated medium Unplanted weed
+87           100      SIO biofilter   vegetated  small Unplanted weed
+88           101      SIO biofilter   vegetated  large Unplanted weed
+89           102      SIO biofilter   vegetated medium Unplanted weed
+90           103      SIO biofilter   vegetated  large Unplanted weed
+91           104      SIO biofilter   vegetated medium Unplanted weed
+92           105      SIO biofilter   vegetated  small Unplanted weed
+   Plant type Height Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+34       forb   18.0       2.4      0.90      1.60      1.00      0.40
+35       forb    7.5       1.7      0.70      1.09      1.00      0.40
+36       forb   17.0       2.5      0.60      1.49      0.80      0.30
+37       forb   16.0       1.6      0.80      1.13      0.60      0.40
+38       forb    6.0       0.8      0.25      0.57      0.40      0.20
+39       forb    6.0       0.9      0.40      0.67      0.50      0.25
+40       forb    5.5       0.8      0.20      0.56      0.50      0.15
+41       forb    8.0       1.9      0.55      1.16      0.65      0.30
+42       forb   10.5       1.7      0.50      1.07      0.80      0.25
+87       forb    5.0       4.5      1.80      3.10      0.70      0.25
+88       forb    5.0       4.5      1.70      3.20      1.00      0.40
+89       forb    2.5       3.5      1.50      2.38      0.90      0.40
+90       forb    5.0       3.8      2.00      2.71      0.90      0.50
+91       forb    5.0       4.0      2.20      3.00      1.50      0.30
+92       forb    3.0       3.0      1.40      2.18      0.90      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+34      0.68      0.01      0.01     0.010    0.24
+35      0.56      0.01      0.01     0.010    0.01
+36      0.56      0.01      0.01     0.010    0.15
+37      0.49      0.01      0.01     0.010    0.12
+38      0.29      0.01      0.01     0.010    0.02
+39      0.36      0.01      0.01     0.010    0.01
+40      0.32      0.01      0.01     0.010    0.00
+41      0.49      0.01      0.01     0.010    0.02
+42      0.49      0.01      0.01     0.010    0.05
+87      0.53      0.03      0.01     0.022    0.08
+88      0.71      0.04      0.02     0.031    0.21
+89      0.58      0.03      0.02     0.027    0.51
+90      0.70      0.03      0.02     0.023    0.39
+91      0.76      0.04      0.02     0.024    0.18
+92      0.58      0.03      0.01     0.024    0.13</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The below is how you test for normality by species for the 13 species we are going to study. </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(spec)) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[i]]<span class="sc">$</span>Biomass))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.84968, p-value = 0.07392
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.85006, p-value = 0.1576
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.79028, p-value = 0.03278
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.83149, p-value = 0.1106
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.61953, p-value = 0.0001622
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.94689, p-value = 0.715
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.63367, p-value = 0.001693
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.76286, p-value = 0.007639
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.77621, p-value = 0.05113
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.78122, p-value = 0.01244
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.84275, p-value = 0.1374
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.9273, p-value = 0.5595
+
+
+    Shapiro-Wilk normality test
+
+data:  spec[[i]]$Biomass
+W = 0.85126, p-value = 0.01809</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### I'm not sure if there's a way to make this a table?</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or this, to test for normality for each species individually one at a time. </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Aptenia cordifolia"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Aptenia cordifolia"]]$Biomass
+W = 0.84968, p-value = 0.07392</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Artemisia californica"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Artemisia californica"]]$Biomass
+W = 0.85006, p-value = 0.1576</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Baccharis pilularis"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Baccharis pilularis"]]$Biomass
+W = 0.79028, p-value = 0.03278</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Chondropetalum tectorum"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Chondropetalum tectorum"]]$Biomass
+W = 0.83149, p-value = 0.1106</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Euphorbia spp."</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Euphorbia spp."]]$Biomass
+W = 0.61953, p-value = 0.0001622</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Gnaphalium spp."</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Gnaphalium spp."]]$Biomass
+W = 0.94689, p-value = 0.715</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Lactucca spp."</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Lactucca spp."]]$Biomass
+W = 0.63367, p-value = 0.001693</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Onetheria biennis"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Onetheria biennis"]]$Biomass
+W = 0.76286, p-value = 0.007639</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Rhus integrifolia"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Rhus integrifolia"]]$Biomass
+W = 0.77621, p-value = 0.05113</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Salix spp."</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Salix spp."]]$Biomass
+W = 0.78122, p-value = 0.01244</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Solidago spp."</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Solidago spp."]]$Biomass
+W = 0.84275, p-value = 0.1374</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Unidentified shrub"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Unidentified shrub"]]$Biomass
+W = 0.9273, p-value = 0.5595</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Unplanted weed"</span>]]<span class="sc">$</span>Biomass))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Unplanted weed"]]$Biomass
+W = 0.85126, p-value = 0.01809</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From the test, we observe: </span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Normally distributed data (p-value &gt; 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, Gnaphaluim spp., Rhus integrifolia, Solidago spp., Unidentified shrub</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Not normally distributed data (p-value &lt; 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria biennis, Salix spp., Unplanted weed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="aptenia-cordifolia" class="level1">
+<h1>1. Aptenia cordifolia</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at each species and its morphological measurements to see which measurement(s) would be a good biomass indicator for each species. Then we can test with a regular linear regression model for normally distributed data. </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>spec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`Aptenia cordifolia`
+   Sample number Location   Type Treatment   Size            Species
+1              1      SME garden vegetated  small Aptenia cordifolia
+2              2      SME garden vegetated  small Aptenia cordifolia
+3              3      SME garden vegetated  small Aptenia cordifolia
+4              4      SME garden vegetated  large Aptenia cordifolia
+5              5      SME garden vegetated  large Aptenia cordifolia
+6              6      SME garden vegetated  large Aptenia cordifolia
+57            57    OSLER garden vegetated medium Aptenia cordifolia
+58            58    OSLER garden vegetated medium Aptenia cordifolia
+59            59    OSLER garden vegetated medium Aptenia cordifolia
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+1            17.5                14.0          4.50           0.430
+2            10.0                 7.5          3.17           0.400
+3            12.0                 9.5          3.75           0.350
+4            59.5                30.0         13.00           0.370
+5            44.5                22.0         11.00           0.460
+6            84.0                35.0         34.85           0.320
+57           68.0                39.0         20.10           0.336
+58           58.5                47.0         23.34           0.376
+59           32.0                24.0         11.35           0.446
+   Leaves_per_branch Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+1                8.4       3.5       1.5      2.48       2.3       1.1
+2                7.4       3.0       1.0      2.07       2.0       0.8
+3               10.5       3.8       1.8      2.79       2.4       1.1
+4               28.0       5.3       1.8      3.44       3.2       1.3
+5               18.2       3.5       1.5      2.61       2.0       0.8
+6               22.0       4.5       1.4      2.73       3.0       1.0
+57              17.0       4.0       1.6      2.93       2.0       1.0
+58              16.2       3.7       1.7      2.57       2.2       1.0
+59              21.2       3.2       1.5      2.41       1.8       0.9
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+1       1.79      0.27      0.16     0.210    3.34                field
+2       1.46      0.26      0.09     0.160    1.46                field
+3       1.78      0.28      0.12     0.160    1.36                field
+4       2.12      0.20      0.14     0.160   11.79                field
+5       1.60      0.27      0.11     0.180   14.45                field
+6       1.84      0.17      0.09     0.130   29.83                field
+57      1.52      0.16      0.10     0.120    6.69                field
+58      1.53      0.17      0.12     0.130   12.18                field
+59      1.36      0.24      0.14     0.207    6.75                field
+
+$`Artemisia californica`
+   Sample number Location    Type Treatment   Size               Species
+65            77      SME natural vegetated  small Artemisia californica
+66            78      SME natural vegetated  small Artemisia californica
+67            79      SME natural vegetated medium Artemisia californica
+68            80      SME natural vegetated medium Artemisia californica
+69            81      SME natural vegetated  large Artemisia californica
+77            88      SME natural vegetated  large Artemisia californica
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+65      shrub   31.0             36                28.5         18.05
+66      shrub   32.0             47                31.5         17.20
+67      shrub   52.5             50                51.0         44.80
+68      shrub   60.0             55                46.0         49.95
+69      shrub   66.0            100                88.0         53.10
+77      shrub   64.0             84                64.0         43.80
+   Branch_diameter Branches_per_stem Biomass Measurement_location
+65           0.207                60   19.59                field
+66           0.148                37   14.55                field
+67           0.236                63   92.60                field
+68           0.283                44   85.03                field
+69           0.256               196  395.36                field
+77           0.325                85  268.56                field
+
+$`Baccharis pilularis`
+   Sample number Location    Type Treatment   Size             Species
+70            82      SME natural vegetated  small Baccharis pilularis
+71            83      SME natural vegetated  small Baccharis pilularis
+72            84      SME natural vegetated medium Baccharis pilularis
+73            85      SME natural vegetated  small Baccharis pilularis
+74            86      SME natural vegetated medium Baccharis pilularis
+75            87      SME natural vegetated  large Baccharis pilularis
+76            89      SME natural vegetated  large Baccharis pilularis
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+70      shrub     45             34                  33          32.9
+71      shrub     30             20                  19          20.3
+72      shrub     54             45                  44          40.9
+73      shrub     49             35                  20          29.3
+74      shrub     48             74                  71          53.9
+75      shrub     52             82                  68          45.2
+76      shrub     71             72                  69          50.6
+   Branch_diameter Branches_per_stem Leaves_per_branch Leaf_lmax Leaf_lmin
+70           0.232                17              16.4      14.0       9.5
+71           0.204                14              12.2      10.0       7.5
+72           0.386                16              25.2      20.0       9.5
+73           0.290                10              20.6      14.0      10.0
+74           0.440                48              20.2      19.0      11.0
+75           0.466                40              26.2      16.5      11.7
+76           0.691                41              28.6      14.5       9.5
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+70     12.40        19         8      13.0      0.10      0.08     0.084
+71      8.80        12         8       9.0      0.07      0.11     0.090
+72     14.50        55        11      25.8      0.05      0.10     0.068
+73     11.90        22        14      17.8      0.08      0.06     0.070
+74     14.00        16        11      13.6      0.10      0.06     0.082
+75     14.04        47        30      39.6      0.07      0.10     0.080
+76     11.60        24        13      19.6      0.07      0.05     0.056
+   Biomass Measurement_location
+70   27.43                  lab
+71   13.95                  lab
+72   86.63                  lab
+73   28.76                  lab
+74  166.61            field/lab
+75  385.97                field
+76  102.65                field
+
+$`Chondropetalum tectorum`
+   Sample number Location      Type Treatment   Size                 Species
+60            70      SME biofilter vegetated  large Chondropetalum tectorum
+61            71      SME biofilter vegetated  small Chondropetalum tectorum
+62            72      SME biofilter vegetated  small Chondropetalum tectorum
+63            73      SME biofilter vegetated medium Chondropetalum tectorum
+64            74      SME biofilter vegetated medium Chondropetalum tectorum
+78            90      SME biofilter vegetated  large Chondropetalum tectorum
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+60      shrub  177.0            259                 160        158.90
+61      shrub  120.5             58                  50         76.30
+62      shrub  132.5            114                  24         83.80
+63      shrub  189.0            170                  86        151.25
+64      shrub  150.0            116                  62        141.40
+78      shrub  180.0            210                 132        167.90
+   Branch_diameter Basal_circ Stem_density Biomass Measurement_location
+60           0.456      132.0          145 2083.04                field
+61           0.466       65.0           40  114.86                field
+62           0.457       60.0           20   64.38                field
+63           0.418      131.0           60  761.40                field
+64           0.396      124.3          130 2059.46                field
+78           0.482      146.0          120 2350.90                field
+
+$`Euphorbia spp.`
+   Sample number Location      Type   Size        Species Plant type
+17            17    OSLER biofilter  small Euphorbia spp.       forb
+26            26    OSLER biofilter  large Euphorbia spp.       forb
+27            27    OSLER biofilter medium Euphorbia spp.       forb
+28            28      SIO biofilter  small Euphorbia spp.       forb
+29            29      SIO biofilter  small Euphorbia spp.       forb
+30            30      SIO biofilter  large Euphorbia spp.       forb
+31            31      SIO biofilter  large Euphorbia spp.       forb
+32            32      SIO biofilter medium Euphorbia spp.       forb
+33            33      SIO biofilter medium Euphorbia spp.       forb
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+17            3.5                 1.0          1.54           0.036
+26           13.0                10.0          4.42           0.074
+27            7.2                 4.5          2.73           0.054
+28            4.6                 2.8          2.13           0.053
+29            3.7                 1.3          1.30           0.058
+30           24.0                18.0         12.82           0.075
+31           12.5                12.5          5.80           0.054
+32            8.0                 6.2          2.83           0.051
+33            8.0                 3.7          2.38           0.059
+   Stem_diameter Stem_height Branches_per_stem Leaves_per_branch Leaf_lmax
+17          0.03         1.0                 5              7.80      0.50
+26          0.08         0.7                36             26.80      0.70
+27          0.05         0.4                13             16.20      0.60
+28          0.06         0.7                 4              9.75      0.40
+29          0.08         0.4                 4              6.50      0.45
+30          0.18         0.2               120             32.00      0.55
+31          0.13         0.7                43             32.20      0.40
+32          0.08         0.7                18             20.20      0.50
+33          0.14         0.2                15             13.40      0.50
+   Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin
+17      0.25      0.42      0.40      0.15      0.26      0.01      0.01
+26      0.20      0.43      0.50      0.20      0.32      0.02      0.01
+27      0.20      0.38      0.40      0.20      0.30      0.01      0.01
+28      0.20      0.31      0.40      0.15      0.27      0.02      0.01
+29      0.20      0.32      0.35      0.20      0.26      0.01      0.01
+30      0.30      0.44      0.50      0.25      0.38      0.02      0.01
+31      0.15      0.27      0.30      0.15      0.23      0.01      0.01
+32      0.20      0.34      0.40      0.15      0.26      0.01      0.01
+33      0.15      0.32      0.40      0.15      0.26      0.01      0.01
+   Leaf_tavg Biomass Measurement_location
+17     0.010    0.01                  lab
+26     0.012    0.24                  lab
+27     0.010    0.08                  lab
+28     0.013    0.01                  lab
+29     0.010    0.01                  lab
+30     0.017    1.63                  lab
+31     0.010    0.49                  lab
+32     0.010    0.13                  lab
+33     0.010    0.12                  lab
+
+$`Gnaphalium spp.`
+   Sample number Location      Type Treatment   Size         Species Plant type
+7              7    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+8              8    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+9              9    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+10            10    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+11            11    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+   Height Width_farthest Width_perpendicular Branch_length Branch_diameter
+7    23.0            4.5                 4.3          2.62           0.055
+8    28.0            3.0                 2.7          1.30           0.048
+9    20.0            4.5                 2.6          3.55           0.066
+10   15.0            6.0                 4.0          8.00           0.030
+11   18.5            9.5                 5.5          6.30           0.092
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+7           0.27       21.00            1                13           40
+8           0.19       27.50            1                10           35
+9           0.15       20.00            1                 7           60
+10          0.22        5.30            1                 3           30
+11          0.23        0.45            1                15          100
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+7        2.8       1.1      1.98       0.3       0.1      0.21      0.04
+8        3.4       1.0      2.21       0.5       0.1      0.23      0.03
+9        2.8       1.0      1.92       0.5       0.1      0.21      0.03
+10       2.4       1.0      1.27       0.2       0.1      0.12      0.02
+11       1.5       0.5      1.12       0.2       0.1      0.12      0.03
+   Leaf_tmin Leaf_tavg Biomass Measurement_location
+7       0.02     0.030    0.73                field
+8       0.10     0.024    0.50                field
+9       0.01     0.210    0.35                field
+10      0.01     0.014    0.21                field
+11      0.01     0.023    1.14                field
+
+$`Lactucca spp.`
+   Sample number Location      Type  Size       Species Plant type Height
+12            12    OSLER biofilter large Lactucca spp.       forb    2.0
+13            13    OSLER biofilter small Lactucca spp.       forb    5.0
+14            14    OSLER biofilter small Lactucca spp.       forb    3.2
+15            15    OSLER biofilter small Lactucca spp.       forb    4.0
+16            16    OSLER biofilter large Lactucca spp.       forb   29.0
+   Width_farthest Width_perpendicular Total_leaves Leaf_lmax Leaf_lmin
+12           15.0                  15           11       8.5       4.0
+13            9.0                   7            7       6.0       2.2
+14           12.0                   6            6       6.8       1.9
+15            9.5                   6            4       7.5       3.6
+16           15.0                   6           42      15.0       9.0
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+12      6.50       2.7       1.3      2.08      0.09      0.04     0.059
+13      4.10       2.0       1.2      1.56      0.05      0.02     0.027
+14      4.48       2.0       1.0      1.58      0.04      0.02     0.033
+15      6.15       1.9       1.0      1.43      0.04      0.03     0.038
+16     11.22       4.0       1.0      2.36      0.15      0.06     0.103
+   Biomass Measurement_location
+12    0.31                field
+13    0.05                field
+14    0.03                field
+15    0.03                field
+16    2.35                  lab
+
+$`Onetheria biennis`
+   Sample number Location      Type   Treatment   Size           Species
+20            20    ACTRI biofilter unvegetated  small Onetheria biennis
+21            21    ACTRI biofilter unvegetated  small Onetheria biennis
+22            22    ACTRI biofilter unvegetated  small Onetheria biennis
+23            23    ACTRI biofilter unvegetated medium Onetheria biennis
+24            24    ACTRI biofilter unvegetated medium Onetheria biennis
+25            25    ACTRI biofilter unvegetated medium Onetheria biennis
+43            43    ACTRI biofilter unvegetated  large Onetheria biennis
+44            44    ACTRI biofilter unvegetated  large Onetheria biennis
+45            45    ACTRI biofilter unvegetated  large Onetheria biennis
+   Plant type Height Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax
+20       forb    4.0            9       7.4       1.1      4.47       1.9
+21       forb    4.2            9       7.3       0.9      4.28       1.9
+22       forb    7.0           22       8.5       2.5      5.42       1.7
+23       forb    9.5           18      17.0       2.5      9.01       2.9
+24       forb   12.5           37      16.5       3.1     10.61       2.4
+25       forb    6.5           18      18.5       2.7     10.11       2.5
+43       forb   18.0           27      14.0       4.0     10.28       2.0
+44       forb   17.0           28      14.0       4.5      9.17       2.3
+45       forb   13.0           49      10.5       4.5      7.67       1.9
+   Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+20       0.2      1.17      0.06      0.02     0.039    0.09
+21       0.2      1.19      0.06      0.03     0.043    0.10
+22       0.8      1.26      0.08      0.02     0.056    0.40
+23       0.8      1.97      0.09      0.04     0.069    0.66
+24       0.6      1.51      0.08      0.06     0.070    1.22
+25       0.7      1.62      0.10      0.05     0.066    1.01
+43       0.8      1.61      0.08      0.04     0.058    5.25
+44       1.0      1.63      0.07      0.05     0.059    6.66
+45       1.1      1.60      0.06      0.04     0.054    6.20
+   Measurement_location
+20                  lab
+21                  lab
+22                  lab
+23                  lab
+24                  lab
+25                  lab
+43                  lab
+44                  lab
+45                  lab
+
+$`Rhus integrifolia`
+   Sample number Location    Type   Size           Species Plant type Height
+93           110      SIO natural  small Rhus integrifolia      shrub     53
+94           111      SIO natural medium Rhus integrifolia      shrub     80
+95           112      SIO natural  small Rhus integrifolia      shrub     55
+96           113      SIO natural  small Rhus integrifolia      shrub     37
+97           114      SIO natural  large Rhus integrifolia      shrub    144
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+93             27                  38         27.50           0.445
+94             78                  68         40.00           0.891
+95             44                  29         21.15           0.397
+96             36                  28         17.00           0.371
+97            126                 104         69.15           1.146
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+93          1.07        16.0            1                 6          104
+94          2.71        12.0            1                50          687
+95          1.28         6.5            1                11           94
+96          1.97         3.0            1                 9           56
+97          3.63         8.0            1                61          892
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+93       5.5       2.3      3.89       3.7       1.6      2.74      0.06
+94       6.4       2.4      4.79       4.3       1.6      3.17      0.10
+95       5.9       3.2      4.73       3.8       2.2      3.14      0.07
+96       5.5       2.2      3.99       3.7       1.5      2.31      0.07
+97       5.3       2.7      4.10       4.0       2.0      2.98      0.08
+   Leaf_tmin Leaf_tavg Biomass
+93      0.05     0.054   49.58
+94      0.05     0.078  556.47
+95      0.05     0.057   55.20
+96      0.03     0.056   36.56
+97      0.05     0.071 1172.31
+
+$`Salix spp.`
+   Sample number Location      Type Treatment   Size    Species Plant type
+46            46    ACTRI biofilter vegetated  small Salix spp.       tree
+47            47    ACTRI biofilter vegetated  small Salix spp.       tree
+48            48    ACTRI biofilter vegetated  small Salix spp.       tree
+49            49    ACTRI biofilter vegetated medium Salix spp.       tree
+50            50    ACTRI biofilter vegetated medium Salix spp.       tree
+51            51    ACTRI biofilter vegetated medium Salix spp.       tree
+52            52    ACTRI biofilter vegetated  large Salix spp.       tree
+79            91    ACTRI biofilter vegetated  large Salix spp.       tree
+80            92    ACTRI biofilter vegetated  large Salix spp.       tree
+   Height Stem_diameter Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+46     50          0.21       9.0       2.6      6.20       0.8      0.40
+47     42          0.17       8.0       3.3      5.88       0.5      0.20
+48     28          0.08       7.0       4.5      5.56       0.5      0.15
+49    154          0.92      11.0       4.0      7.83       1.0      0.40
+50    144          0.77      11.5       4.5      7.94       0.9      0.35
+51    116          0.60      11.0       4.0      7.47       0.6      0.30
+52    220          1.23      12.5       5.0      9.00       1.0      0.40
+79    239          1.63      13.5       6.5      9.30       1.1      0.40
+80    248          1.85      12.0       5.0      9.41       1.5      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+46      0.57      0.04      0.03     0.032    1.17                  lab
+47      0.32      0.04      0.02     0.024    0.71                  lab
+48      0.36      0.03      0.02     0.025    0.31                  lab
+49      0.67      0.07      0.04     0.053   27.27                  lab
+50      0.59      0.08      0.50     0.060   20.90                  lab
+51      0.47      0.06      0.03     0.051    9.61                  lab
+52      0.62      0.08      0.05     0.066   72.53                  lab
+79      0.89      0.06      0.02     0.046  154.68            field/lab
+80      0.90      0.06      0.03     0.042  135.22            field/lab
+
+$`Solidago spp.`
+   Sample number Location      Type Treatment   Size       Species Plant type
+81            93  Sanford biofilter vegetated  large Solidago spp.       forb
+82            94  Sanford biofilter vegetated  large Solidago spp.       forb
+83            95  Sanford biofilter vegetated medium Solidago spp.       forb
+84            96  Sanford biofilter vegetated medium Solidago spp.       forb
+85            97  Sanford biofilter vegetated  small Solidago spp.       forb
+86            98  Sanford biofilter vegetated  small Solidago spp.       forb
+   Height Width_farthest Width_perpendicular Stem_diameter Stem_height
+81   11.5           12.5                10.0          0.08         0.4
+82    9.0           11.0                 7.0          0.12         4.5
+83    6.5            8.0                 5.0          0.07         1.5
+84    8.5            8.5                 4.5          0.09         3.0
+85    4.5            4.0                 3.5          0.09         0.8
+86    5.5            4.5                 2.0          0.09         2.3
+   Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg
+81            9      11.0       4.0      7.59       3.0       0.9      2.13
+82            9       8.0       3.0      5.64       2.3       0.7      1.57
+83           10       6.0       1.4      4.18       1.5       0.2      1.08
+84            8       6.0       0.9      3.64       1.2       0.2      0.75
+85            5       4.2       3.0      3.22       1.4       0.7      1.04
+86            5       5.2       2.7      3.90       1.9       1.1      1.56
+   Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+81      0.05      0.03     0.032    0.47
+82      0.03      0.02     0.027    0.25
+83      0.02      0.01     0.019    0.14
+84      0.03      0.01     0.019    0.07
+85      0.03      0.02     0.024    0.04
+86      0.04      0.02     0.030    0.09
+
+$`Unidentified shrub`
+   Sample number Location      Type Treatment   Size            Species
+18            18    OSLER    garden vegetated medium Unidentified shrub
+19            19    OSLER    garden vegetated medium Unidentified shrub
+53            53    OSLER    garden vegetated medium Unidentified shrub
+54            54    OSLER biofilter vegetated  small Unidentified shrub
+55            55    OSLER biofilter vegetated  small Unidentified shrub
+56            56    OSLER biofilter vegetated  small Unidentified shrub
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+18      shrub   74.5          137.0                74.0         80.80
+19      shrub   87.0           94.0                81.0         76.35
+53      shrub   80.5          100.5                94.5         73.05
+54      shrub   50.5           87.0                61.0         52.20
+55      shrub   61.0           96.0                72.0         68.95
+56      shrub   66.0           96.0                82.0         57.65
+   Branch_diameter Basal_circ Branches_per_stem Biomass Measurement_location
+18           0.117      148.0               725  302.54            field/lab
+19           0.078       85.0               900  261.54            field/lab
+53           0.088       69.5               900  274.96                field
+54           0.078       58.0               300   96.98                field
+55           0.072       47.0               500  193.03                field
+56           0.051       37.5               350  138.54                field
+
+$`Unplanted weed`
+   Sample number Location      Type   Treatment   Size        Species
+34            34    ACTRI biofilter unvegetated  large Unplanted weed
+35            35    ACTRI biofilter unvegetated medium Unplanted weed
+36            36    ACTRI biofilter unvegetated  large Unplanted weed
+37            37    ACTRI biofilter unvegetated  large Unplanted weed
+38            38    ACTRI biofilter unvegetated  small Unplanted weed
+39            39    ACTRI biofilter unvegetated  small Unplanted weed
+40            40    ACTRI biofilter unvegetated  small Unplanted weed
+41            41    ACTRI biofilter unvegetated medium Unplanted weed
+42            42    ACTRI biofilter unvegetated medium Unplanted weed
+87           100      SIO biofilter   vegetated  small Unplanted weed
+88           101      SIO biofilter   vegetated  large Unplanted weed
+89           102      SIO biofilter   vegetated medium Unplanted weed
+90           103      SIO biofilter   vegetated  large Unplanted weed
+91           104      SIO biofilter   vegetated medium Unplanted weed
+92           105      SIO biofilter   vegetated  small Unplanted weed
+   Plant type Height Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+34       forb   18.0       2.4      0.90      1.60      1.00      0.40
+35       forb    7.5       1.7      0.70      1.09      1.00      0.40
+36       forb   17.0       2.5      0.60      1.49      0.80      0.30
+37       forb   16.0       1.6      0.80      1.13      0.60      0.40
+38       forb    6.0       0.8      0.25      0.57      0.40      0.20
+39       forb    6.0       0.9      0.40      0.67      0.50      0.25
+40       forb    5.5       0.8      0.20      0.56      0.50      0.15
+41       forb    8.0       1.9      0.55      1.16      0.65      0.30
+42       forb   10.5       1.7      0.50      1.07      0.80      0.25
+87       forb    5.0       4.5      1.80      3.10      0.70      0.25
+88       forb    5.0       4.5      1.70      3.20      1.00      0.40
+89       forb    2.5       3.5      1.50      2.38      0.90      0.40
+90       forb    5.0       3.8      2.00      2.71      0.90      0.50
+91       forb    5.0       4.0      2.20      3.00      1.50      0.30
+92       forb    3.0       3.0      1.40      2.18      0.90      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+34      0.68      0.01      0.01     0.010    0.24
+35      0.56      0.01      0.01     0.010    0.01
+36      0.56      0.01      0.01     0.010    0.15
+37      0.49      0.01      0.01     0.010    0.12
+38      0.29      0.01      0.01     0.010    0.02
+39      0.36      0.01      0.01     0.010    0.01
+40      0.32      0.01      0.01     0.010    0.00
+41      0.49      0.01      0.01     0.010    0.02
+42      0.49      0.01      0.01     0.010    0.05
+87      0.53      0.03      0.01     0.022    0.08
+88      0.71      0.04      0.02     0.031    0.21
+89      0.58      0.03      0.02     0.027    0.51
+90      0.70      0.03      0.02     0.023    0.39
+91      0.76      0.04      0.02     0.024    0.18
+92      0.58      0.03      0.01     0.024    0.13</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aptenia cordifolia: test for leaves per branch measurements</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Leaves_per_branch,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec [[<span class="st">"Aptenia cordifolia"</span>]])</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Leaves_per_branch, data = spec[["Aptenia cordifolia"]])
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.3032 -3.4771 -0.8517  2.6995 15.6246 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)        -3.7166     6.8401  -0.543   0.6037  
+Leaves_per_branch   0.8146     0.3853   2.114   0.0724 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.435 on 7 degrees of freedom
+Multiple R-squared:  0.3897,    Adjusted R-squared:  0.3025 
+F-statistic: 4.469 on 1 and 7 DF,  p-value: 0.07236</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.3025 and p-value is 0.07236, which means that the model doesn't explain the variation of the data and it is also not significant.</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Aptenia cordifolia: test for branch length measurements</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Branch_length,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec [[<span class="st">"Aptenia cordifolia"</span>]])</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Branch_length, data = spec[["Aptenia cordifolia"]])
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.6174 -1.1459 -0.4419  2.6851  6.8106 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)    -0.4209     2.7119  -0.155  0.88104   
+Branch_length   0.7328     0.1587   4.616  0.00244 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.732 on 7 degrees of freedom
+Multiple R-squared:  0.7527,    Adjusted R-squared:  0.7174 
+F-statistic: 21.31 on 1 and 7 DF,  p-value: 0.002438</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.7172 and p-value is 0.002438, which means that the model relatively explains the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Aptenia cordifolia.</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Aptenia cordifolia"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branch_length, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Branch Length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branch Length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Aptenia cordifolia"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_A.cordifolia-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>a.cordifolia <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Aptenia cordifolia"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branch_length, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Branch Length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branch Length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Aptenia cordifolia"</span>))))</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"1_A.cordifolia_branchlength.png"</span>, results_path), a.cordifolia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="artemisia-californica" class="level1">
+<h1>2. Artemisia californica</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Artemisia californica: test for width farthest measurements</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Width_farthest,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec[[<span class="st">"Artemisia californica"</span>]])</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Width_farthest, data = spec[["Artemisia californica"]])
+
+Residuals:
+    65     66     67     68     69     77 
+ 32.79 -39.58  20.11 -18.07  16.81 -12.05 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    -233.5606    36.9719  -6.317  0.00321 ** 
+Width_farthest    6.1211     0.5607  10.917  0.00040 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 30.82 on 4 degrees of freedom
+Multiple R-squared:  0.9675,    Adjusted R-squared:  0.9594 
+F-statistic: 119.2 on 1 and 4 DF,  p-value: 0.0003998</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.9594 and p-value is 0.0003998, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Artemisia californica since it has the highest R-squared value.</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Artemisia californica"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Width_farthest, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Width (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Width vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Artemisia californica"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_A.californica-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>a.californica <span class="ot">&lt;-</span> </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Artemisia californica"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Width_farthest, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Width (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Width vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Artemisia californica"</span>))))</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"2_A.californica_width.png"</span>, results_path), a.californica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Artemisia californica: now we test if using multiple morphological characteristics as biomass indicators will increase the R-squared value.  </span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Width_perpendicular <span class="sc">+</span> Width_farthest <span class="sc">+</span> Branches_per_stem,</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec[[<span class="st">"Artemisia californica"</span>]])</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Width_perpendicular + Width_farthest + 
+    Branches_per_stem, data = spec[["Artemisia californica"]])
+
+Residuals:
+     65      66      67      68      69      77 
+ 17.957 -21.611   1.044  -7.767  -7.963  18.340 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)         -208.1826    34.6727  -6.004   0.0266 *
+Width_perpendicular    1.6085     2.0780   0.774   0.5199  
+Width_farthest         3.7322     1.5813   2.360   0.1422  
+Branches_per_stem      0.4935     0.4259   1.159   0.3662  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 25.01 on 2 degrees of freedom
+Multiple R-squared:  0.9893,    Adjusted R-squared:  0.9733 
+F-statistic: 61.71 on 3 and 2 DF,  p-value: 0.01599</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.9733 and p-value is 0.01599, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. These three morphological characteristics can be used together as better biomass indicators for Artemisia californica than one individual characteristic, since it has a higher R-squared value.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="chondropetalum-tectorum" class="level1">
+<h1>3. Chondropetalum tectorum</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chondropetalum tectorum : test for stem density measurements</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Stem_density,</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec[[<span class="st">"Chondropetalum tectorum"</span>]])</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Stem_density, data = spec[["Chondropetalum tectorum"]])
+
+Residuals:
+     60      61      62      63      64      78 
+-300.23 -237.75   98.57   22.00  -33.71  451.12 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -420.980    252.172  -1.669  0.17036   
+Stem_density   19.340      2.566   7.535  0.00166 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 300.6 on 4 degrees of freedom
+Multiple R-squared:  0.9342,    Adjusted R-squared:  0.9177 
+F-statistic: 56.78 on 1 and 4 DF,  p-value: 0.001661</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.9177 and p-value is 0.001661, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Chondropetalum tectorum since it has the highest R-squared value.</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Chondropetalum tectorum"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Stem_density, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Stem Density (n)"</span>) <span class="sc">+</span> </span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Stem Density vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Chondropetalum tectorum"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_C.tectorum-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>c.tectorum <span class="ot">&lt;-</span> </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Chondropetalum tectorum"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Stem_density, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Stem Density (n)"</span>) <span class="sc">+</span> </span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Stem Density vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Chondropetalum tectorum"</span>))))</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"3_C.tectorum_density.png"</span>, results_path), c.tectorum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="gnaphalium-spp." class="level1">
+<h1>4. Gnaphalium spp.</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gnaphalium spp. : test for branch per stem measurements</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Branches_per_stem,</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec[[<span class="st">"Gnaphalium spp."</span>]])</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Branches_per_stem, data = spec[["Gnaphalium spp."]])
+
+Residuals:
+       7        8        9       10       11 
+-0.09989 -0.11469 -0.04950  0.09743  0.16664 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)       -0.10263    0.15925  -0.644   0.5651  
+Branches_per_stem  0.07173    0.01516   4.733   0.0179 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1447 on 3 degrees of freedom
+Multiple R-squared:  0.8819,    Adjusted R-squared:  0.8425 
+F-statistic:  22.4 on 1 and 3 DF,  p-value: 0.01788</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.8425 and p-value is 0.01788, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Gnaphalium spp. since it has the highest R-squared value.</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Gnaphalium spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branches_per_stem, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Branches per stem (n)"</span>) <span class="sc">+</span> </span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branches per stem vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Gnaphalium spp."</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_Gnaphalium.spp.-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>gnaphalium <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Gnaphalium spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branches_per_stem, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Branches per stem (n)"</span>) <span class="sc">+</span> </span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branches per stem vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Gnaphalium spp."</span>))))</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"4_Gnaphalium_branchperstem.png"</span>, results_path), gnaphalium)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="rhus-integrifolia" class="level1">
+<h1>5. Rhus integrifolia</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rhus integrifolia : test for branch length measurements</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Branch_length,</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec[[<span class="st">"Rhus integrifolia"</span>]])</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Branch_length, data = spec[["Rhus integrifolia"]])
+
+Residuals:
+      93       94       95       96       97 
+-150.573   64.978    3.047   81.131    1.417 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)   -440.792     99.849  -4.415  0.02157 * 
+Branch_length   23.307      2.516   9.263  0.00266 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 105.7 on 3 degrees of freedom
+Multiple R-squared:  0.9662,    Adjusted R-squared:  0.955 
+F-statistic: 85.81 on 1 and 3 DF,  p-value: 0.002662</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.955 and p-value is 0.002662, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Rhus integrifolia since it has the highest R-squared value.</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Rhus integrifolia"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branch_length, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Branch Length(n)"</span>) <span class="sc">+</span> </span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branch Length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Rhus integrifolia"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_R.integrifolia-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>R.integrifolia <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Rhus integrifolia"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branch_length, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Branch Length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branch Length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Rhus integrifolia"</span>))))</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"5_R.integrifolia_branchlength.png"</span>, results_path), R.integrifolia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="solidago-spp." class="level1">
+<h1>6. Solidago spp.</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solidago spp. : test for average leaf length measurements</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Leaf_lavg,</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec[[<span class="st">"Solidago spp."</span>]])</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Leaf_lavg, data = spec[["Solidago spp."]])
+
+Residuals:
+       81        82        83        84        85        86 
+ 0.009338 -0.019370  0.013854 -0.003173  0.008029 -0.008678 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.283905   0.019046  -14.91 0.000118 ***
+Leaf_lavg    0.098098   0.003865   25.38 1.43e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.01418 on 4 degrees of freedom
+Multiple R-squared:  0.9938,    Adjusted R-squared:  0.9923 
+F-statistic: 644.3 on 1 and 4 DF,  p-value: 1.431e-05</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.9923 and p-value is 1.431e-05, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Solidago spp. since it has the highest R-squared value.</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Solidago spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Leaf_lavg, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Average leaf length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Average leaf length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Solidago spp."</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_Solidago.spp.-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>solidago <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Solidago spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Leaf_lavg, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Average leaf length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Average leaf length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Solidago spp."</span>))))</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"6_Solidago_avgleaflength.png"</span>, results_path), solidago)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+<p>#7. Unidentified shrub</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unidentified shrub  : test for branch length measurements</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Branch_length,</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span> spec[[<span class="st">"Unidentified shrub"</span>]])</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Branch_length, data = spec[["Unidentified shrub"]])
+
+Residuals:
+       18        19        53        54        55        56 
+  0.07725  -8.79901  28.44310   0.97549 -23.88974   3.19292 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -280.8179    53.1754  -5.281 0.006166 ** 
+Branch_length    7.2188     0.7716   9.356 0.000727 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 19.16 on 4 degrees of freedom
+Multiple R-squared:  0.9563,    Adjusted R-squared:  0.9454 
+F-statistic: 87.53 on 1 and 4 DF,  p-value: 0.0007269</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.9454 and p-value is 0.0007269, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Unidentified shrub since it has the highest R-squared value.</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Unidentified shrub"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branch_length, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Branch Length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branch Length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Unidentified shrub"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_unidentifiedshrub-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>unidentifiedshrub <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Unidentified shrub"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Branch_length, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Branch Length (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Branch Length vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Unidentified shrub"</span>))))</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"7_unidentifiedshrub_branchlength.png"</span>, results_path), unidentifiedshrub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="baccharis-pilularis" class="level1">
+<h1>8. Baccharis pilularis</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For non-normally distributed data (where the response variable, biomass, is not normally distributed), we use a generalized linear model (glm). </span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We can also use a log transformation to transform the data to a more normally distributed dataset.</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="co"># For our analysis, we will use a log transformation before. </span></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>spec[[<span class="st">"Baccharis pilularis"</span>]]<span class="sc">$</span>log <span class="ot">&lt;-</span> <span class="fu">log</span>(spec[[<span class="st">"Baccharis pilularis"</span>]]<span class="sc">$</span>Biomass)</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Baccharis pilularis"</span>]]<span class="sc">$</span>log))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Baccharis pilularis"]]$log
+W = 0.96225, p-value = 0.8378</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(spec[[<span class="st">"Baccharis pilularis"</span>]]<span class="sc">$</span>log)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(y); <span class="fu">qqline</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_B.pilularis-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Baccharis pilularis: test for width measurements </span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log <span class="sc">~</span> Width_farthest,</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> spec[[<span class="st">"Baccharis pilularis"</span>]])</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log ~ Width_farthest, data = spec[["Baccharis pilularis"]])
+
+Residuals:
+      70       71       72       73       74       75       76 
+-0.08158 -0.11216  0.56119 -0.08034 -0.12207  0.34913 -0.51417 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    1.825384   0.368178   4.958 0.004256 ** 
+Width_farthest 0.046113   0.006539   7.052 0.000886 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3852 on 5 degrees of freedom
+Multiple R-squared:  0.9086,    Adjusted R-squared:  0.8904 
+F-statistic: 49.73 on 1 and 5 DF,  p-value: 0.0008862</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.8904 and p-value is 0.0008862, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Baccharis pilularis since it has the highest R-squared value.</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Baccharis pilularis"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Width_farthest, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Width (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Width vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Baccharis pilularis"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_B.pilularis-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>b.pilularis <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Baccharis pilularis"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Width_farthest, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Width (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Width vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Baccharis pilularis"</span>))))</span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"8_B.pilularis_width.png"</span>, results_path), b.pilularis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="euphorbia-spp." class="level1">
+<h1>9. Euphorbia spp.</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Euphorbia spp.: test for width measurements </span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Width_farthest,</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> spec[[<span class="st">"Euphorbia spp."</span>]])</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Width_farthest, data = spec[["Euphorbia spp."]])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.33747 -0.06636 -0.04936  0.14139  0.21409 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    -0.413415   0.109768  -3.766 0.007017 ** 
+Width_farthest  0.076222   0.009804   7.775 0.000109 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1794 on 7 degrees of freedom
+Multiple R-squared:  0.8962,    Adjusted R-squared:  0.8814 
+F-statistic: 60.44 on 1 and 7 DF,  p-value: 0.0001094</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.8814 and p-value is 0.0001094, which means that the model does explain the variation of the data (fits the regression model). Even though the dataset was not normally distributed, the R-squared value is greater without a log transformation.  </span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Euphorbia spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Width_farthest, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Width (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Width vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Euphorbia spp."</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_Euphorbia.spp.-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>euphorbia <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Euphorbia spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Width_farthest, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Width (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Width vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Euphorbia spp."</span>))))</span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"9_Euphorbia_width.png"</span>, results_path), euphorbia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="lactucca-spp." class="level1">
+<h1>10. Lactucca spp.</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lactucca spp.: test for width measurements </span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Biomass <span class="sc">~</span> Total_leaves,</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> spec[[<span class="st">"Lactucca spp."</span>]])</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Biomass ~ Total_leaves, data = spec[["Lactucca spp."]])
+
+Residuals:
+      12       13       14       15       16 
+-0.05320 -0.05881 -0.01521  0.11198  0.01524 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -0.336378   0.050391  -6.675 0.006855 ** 
+Total_leaves  0.063598   0.002528  25.153 0.000138 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.0802 on 3 degrees of freedom
+Multiple R-squared:  0.9953,    Adjusted R-squared:  0.9937 
+F-statistic: 632.7 on 1 and 3 DF,  p-value: 0.0001378</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.9937 and p-value is 0.0001378, which means that the model does explain the variation of the data (fits the regression model). Even though the dataset was not normally distributed, the R-squared value is greater without a log transformation.  </span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Lactucca spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Total_leaves, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb93-10"><a href="#cb93-10" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Total Leaves (n)"</span>) <span class="sc">+</span> </span>
+<span id="cb93-11"><a href="#cb93-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb93-12"><a href="#cb93-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Leaves vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Lactucca spp."</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_Lactucca.spp.-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>lactucca <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Lactucca spp."</span>), <span class="fu">aes</span>(<span class="at">x=</span>Total_leaves, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Total Leaves (n)"</span>) <span class="sc">+</span> </span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Leaves vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Lactucca spp."</span>))))</span>
+<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-10"><a href="#cb94-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-11"><a href="#cb94-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"10_Lactucca_totalleaves.png"</span>, results_path), lactucca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+<section id="onetheria-biennis" class="level1">
+<h1>11. Onetheria biennis</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>spec[[<span class="st">"Onetheria biennis"</span>]]<span class="sc">$</span>log <span class="ot">&lt;-</span> <span class="fu">log</span>(spec[[<span class="st">"Onetheria biennis"</span>]]<span class="sc">$</span>Biomass)</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">shapiro.test</span>(spec[[<span class="st">"Onetheria biennis"</span>]]<span class="sc">$</span>log))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  spec[["Onetheria biennis"]]$log
+W = 0.90442, p-value = 0.2787</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(spec[[<span class="st">"Onetheria biennis"</span>]]<span class="sc">$</span>log)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(y); <span class="fu">qqline</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_O.biennis-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Onetheria biennis: test for height measurements </span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(log <span class="sc">~</span> Height,</span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> spec[[<span class="st">"Onetheria biennis"</span>]])</span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log ~ Height, data = spec[["Onetheria biennis"]])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.56859 -0.52104 -0.16588  0.05594  1.12670 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -2.99552    0.54091  -5.538 0.000871 ***
+Height       0.28904    0.04778   6.049 0.000516 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7072 on 7 degrees of freedom
+Multiple R-squared:  0.8394,    Adjusted R-squared:  0.8165 
+F-statistic: 36.59 on 1 and 7 DF,  p-value: 0.0005163</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared value is 0.8165 and p-value is 0.0005163, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Onetheria biennis since it has the highest R-squared value.</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot to plot it</span></span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Onetheria biennis"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Height, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb101-8"><a href="#cb101-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb101-9"><a href="#cb101-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb101-10"><a href="#cb101-10" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Height (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb101-11"><a href="#cb101-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb101-12"><a href="#cb101-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Height vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Onetheria biennis"</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="exploratory_analysis_files/figure-html/linear_regression_model_O.biennis-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot to .png file</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>o.biennis <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(dat,Species<span class="sc">==</span><span class="st">"Onetheria biennis"</span>), <span class="fu">aes</span>(<span class="at">x=</span>Height, <span class="at">y=</span>Biomass), <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">geom =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"Height (cm)"</span>) <span class="sc">+</span> </span>
+<span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Biomass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Height vs. Biomass for"</span>, <span class="fu">substitute</span>(<span class="fu">paste</span>(<span class="fu">italic</span>(<span class="st">"Onetheria biennis"</span>))))</span>
+<span id="cb102-9"><a href="#cb102-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-10"><a href="#cb102-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb102-11"><a href="#cb102-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">addpath</span>(<span class="st">"11_O.biennis_height.png"</span>, results_path), o.biennis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

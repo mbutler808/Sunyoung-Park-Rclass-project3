@@ -1,19 +1,9 @@
-title: ""Cleaning R script for identifying best predictors of biomass for 13 plant species""
-author: "Sunyoung Park"
-date: "04/22/2023"
-output: textedit_document
----
-
-  
-This TextEdit file loads the cleaned data and does some initial analysis. 
-
 
 # Analysis 
 
 # In this analysis script, I am analyzing direct measurements of 11 different morphological characteristics and aboveground biomass to identify the best non-destructive indicators for the aboveground biomass of each of the 13 plant species.  
 
 # I am using regression analysis to perform my analysis. 
-
 
 
 ###############################
@@ -82,7 +72,7 @@ for (i in 1:length(spec)) {
   
 }
 
-### not sure if there's a way to make this a table?
+### I'm not sure if there's a way to make this a table?
 
 
 # Or this, to test for normality for each species individually one at a time. 
@@ -117,7 +107,7 @@ print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
 
 spec
 
-#Aptenia cordifolia: test for leaves per branch measurements
+# Aptenia cordifolia: test for leaves per branch measurements
 
 m1 <- lm(Biomass ~ Leaves_per_branch,
 data= spec [["Aptenia cordifolia"]])
@@ -126,7 +116,7 @@ summary(m1)
 # R-squared value is 0.3025 and p-value is 0.07236, which means that the model doesn't explain the variation of the data and it is also not significant.
 
 
-#Aptenia cordifolia: test for branch length measurements
+# Aptenia cordifolia: test for branch length measurements
 
 m1 <- lm(Biomass ~ Branch_length,
 data= spec [["Aptenia cordifolia"]])
@@ -153,14 +143,14 @@ xlab("Branch Length (cm)") +
   ylab("Biomass (g)") +
   ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Aptenia cordifolia"))))
 
-ggsave(filename = addpath("A.cordifolia_branchlength.png", results_path), a.cordifolia)
+ggsave(filename = addpath("1_A.cordifolia_branchlength.png", results_path), a.cordifolia)
 
 
 
 
 ## ---- linear_regression_model_A.californica ----
 
-#Artemisia californica: test for width farthest measurements
+# Artemisia californica: test for width farthest measurements
 
 m1 <- lm(Biomass ~ Width_farthest,
 data= spec[["Artemisia californica"]])
@@ -189,7 +179,7 @@ xlab("Width (cm)") +
   ylab("Biomass (g)") +
   ggtitle("Width vs. Biomass for", substitute(paste(italic("Artemisia californica"))))
             
-ggsave(filename = addpath("a.californica_width.png", results_path), a.californica)
+ggsave(filename = addpath("2_A.californica_width.png", results_path), a.californica)
 
 
 
@@ -208,7 +198,7 @@ summary(m1)
 
 ## ---- linear_regression_model_C.tectorum ----
 
-#Chondropetalum tectorum : test for stem density measurements
+# Chondropetalum tectorum : test for stem density measurements
 
 m1 <- lm(Biomass ~ Stem_density,
 data= spec[["Chondropetalum tectorum"]])
@@ -237,14 +227,14 @@ xlab("Stem Density (n)") +
   ylab("Biomass (g)") +
   ggtitle("Stem Density vs. Biomass for", substitute(paste(italic("Chondropetalum tectorum"))))
             
-ggsave(filename = addpath("c.tectorum_density.png", results_path), c.tectorum)
+ggsave(filename = addpath("3_C.tectorum_density.png", results_path), c.tectorum)
 
 
 
 
 ## ---- linear_regression_model_Gnaphalium.spp. ----
 
-#Gnaphalium spp. : test for branch per stem measurements
+# Gnaphalium spp. : test for branch per stem measurements
 
 m1 <- lm(Biomass ~ Branches_per_stem,
 data= spec[["Gnaphalium spp."]])
@@ -255,7 +245,7 @@ summary(m1)
 
 # ggplot to plot it
 
-ggplot(data=subset(dat,Species=="Gnaphaluim spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +
+ggplot(data=subset(dat,Species=="Gnaphalium spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +
  stat_smooth(method = "lm", formula = y ~ x,
               geom = "smooth", se = FALSE) +
 xlab("Branches per stem (n)") + 
@@ -265,20 +255,20 @@ xlab("Branches per stem (n)") +
 
 # plot to .png file
 
-Gnaphalium <-  ggplot(data=subset(dat,Species=="Gnaphalium spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +
+gnaphalium <-  ggplot(data=subset(dat,Species=="Gnaphalium spp."), aes(x=Branches_per_stem, y=Biomass), na.rm=TRUE) + geom_point() +
  stat_smooth(method = "lm", formula = y ~ x,
               geom = "smooth", se = FALSE) +
 xlab("Branches per stem (n)") + 
   ylab("Biomass (g)") +
   ggtitle("Branches per stem vs. Biomass for", substitute(paste(italic("Gnaphalium spp."))))
 
-ggsave(filename = addpath("Gnaphalium_branchperstem.png", results_path), Gnaphalium)
+ggsave(filename = addpath("4_Gnaphalium_branchperstem.png", results_path), gnaphalium)
 
 
 
 ## ---- linear_regression_model_R.integrifolia ----
 
-#R.integrifolia : test for branch length measurements
+# Rhus integrifolia : test for branch length measurements
 
 m1 <- lm(Biomass ~ Branch_length,
 data= spec[["Rhus integrifolia"]])
@@ -307,7 +297,7 @@ xlab("Branch Length (cm)") +
   ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Rhus integrifolia"))))
 
 
-ggsave(filename = addpath("R.integrifolia_branchlength.png", results_path), R.integrifolia)
+ggsave(filename = addpath("5_R.integrifolia_branchlength.png", results_path), R.integrifolia)
 
 
 
@@ -315,7 +305,7 @@ ggsave(filename = addpath("R.integrifolia_branchlength.png", results_path), R.in
 
 
 
-## ---- linear_regression_model_solidago ----
+## ---- linear_regression_model_Solidago.spp. ----
 
 # Solidago spp. : test for average leaf length measurements
 
@@ -346,7 +336,7 @@ xlab("Average leaf length (cm)") +
   ggtitle("Average leaf length vs. Biomass for", substitute(paste(italic("Solidago spp."))))
             
 
-ggsave(filename = addpath("solidago_avgleaflength.png", results_path), solidago)
+ggsave(filename = addpath("6_Solidago_avgleaflength.png", results_path), solidago)
 
 
 
@@ -386,17 +376,19 @@ xlab("Branch Length (cm)") +
   ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Unidentified shrub"))))
 
 
-ggsave(filename = addpath("unidentifiedshrub_branchlength.png", results_path), unidentifiedshrub)
+ggsave(filename = addpath("7_unidentifiedshrub_branchlength.png", results_path), unidentifiedshrub)
 
+
+
+
+
+## ---- linear_regression_model_B.pilularis ----
 
 
 # For non-normally distributed data (where the response variable, biomass, is not normally distributed), we use a generalized linear model (glm). 
 # We can also use a log transformation to transform the data to a more normally distributed dataset.
 # For our analysis, we will use a log transformation before. 
 
-
-
-## ---- linear_regression_model_B.pilularis ----
 
 
 spec[["Baccharis pilularis"]]$log <- log(spec[["Baccharis pilularis"]]$Biomass)
@@ -439,13 +431,13 @@ xlab("Width (cm)") +
   ggtitle("Width vs. Biomass for", substitute(paste(italic("Baccharis pilularis"))))
 
 
-ggsave(filename = addpath("b.pilularis_width.png", results_path), b.pilularis)
+ggsave(filename = addpath("8_B.pilularis_width.png", results_path), b.pilularis)
 
 
 
 
 
-## ---- linear_regression_model_Euphorbia ----
+## ---- linear_regression_model_Euphorbia.spp.----
 
 
 # Euphorbia spp.: test for width measurements 
@@ -478,7 +470,7 @@ xlab("Width (cm)") +
   ggtitle("Width vs. Biomass for", substitute(paste(italic("Euphorbia spp."))))
 
 
-ggsave(filename = addpath("euphorbia_width.png", results_path), euphorbia)
+ggsave(filename = addpath("9_Euphorbia_width.png", results_path), euphorbia)
 
 
 
@@ -486,7 +478,7 @@ ggsave(filename = addpath("euphorbia_width.png", results_path), euphorbia)
 
 
 
-## ---- linear_regression_model_Lactucca ----
+## ---- linear_regression_model_Lactucca.spp. ----
 
 
 # Lactucca spp.: test for width measurements 
@@ -511,7 +503,7 @@ xlab("Total Leaves (n)") +
 
 # plot to .png file
 
-Lactucca <-  ggplot(data=subset(dat,Species=="Lactucca spp."), aes(x=Total_leaves, y=Biomass), na.rm=TRUE) + geom_point() +
+lactucca <-  ggplot(data=subset(dat,Species=="Lactucca spp."), aes(x=Total_leaves, y=Biomass), na.rm=TRUE) + geom_point() +
  stat_smooth(method = "lm", formula = y ~ x,
               geom = "smooth", se = FALSE) +
 xlab("Total Leaves (n)") + 
@@ -519,7 +511,7 @@ xlab("Total Leaves (n)") +
   ggtitle("Total Leaves vs. Biomass for", substitute(paste(italic("Lactucca spp."))))
 
 
-ggsave(filename = addpath("lactucca_totalleaves.png", results_path), lactucca)
+ggsave(filename = addpath("10_Lactucca_totalleaves.png", results_path), lactucca)
 
 
 
@@ -562,7 +554,7 @@ xlab("Height (cm)") +
 
 # plot to .png file
 
-O.biennis <-  ggplot(data=subset(dat,Species=="Onetheria biennis"), aes(x=Height, y=Biomass), na.rm=TRUE) + geom_point() +
+o.biennis <-  ggplot(data=subset(dat,Species=="Onetheria biennis"), aes(x=Height, y=Biomass), na.rm=TRUE) + geom_point() +
  stat_smooth(method = "lm", formula = y ~ x,
               geom = "smooth", se = FALSE) +
 xlab("Height (cm)") + 
@@ -570,7 +562,7 @@ xlab("Height (cm)") +
   ggtitle("Height vs. Biomass for", substitute(paste(italic("Onetheria biennis"))))
 
 
-ggsave(filename = addpath("o.biennis_height.png", results_path), o.biennis)
+ggsave(filename = addpath("11_O.biennis_height.png", results_path), o.biennis)
 
 
 

@@ -1,0 +1,84 @@
+---
+title: "Cleaning R script for identifying the best predictors of biomass for 13 plant species"
+author: "Sunyoung Park"
+date: "2023-04-21"
+output: html_document
+---
+
+# Processing script (data cleaning) with code pulled in from script
+
+This quarto file documents the data cleaning of the raw data `plant_measurement_raw.csv` in the raw data folder `../../Data/Raw_data/`. The clean data file is named `processeddata.rds` and also saved in `.csv` formats.
+
+To run this code, run `quarto preview processingfile.qmd` from the Processing code directory `project_root/Code/Processing_code`.  Alternatively, you can prepend the relative path to the file from your current working directory. To generate the `.html` output, change  `quarto preview` to `quarto render`.
+
+# Setup
+
+This code is needed to pull the code chunks contained in `processingcode.R` into active memory:
+
+```{r, include=FALSE, cache=FALSE}
+knitr::read_chunk('processingcode.R')
+```
+
+Load needed packages (from the `packages` code chunk):
+
+```{r, packages, message = FALSE, warning = FALSE}
+```
+
+
+# Data loading
+
+```{r, loaddata1.1}
+```
+
+I am using check.names=F because these names have spaces and parentheses and I want to preserve the original names.
+
+```{r, loaddata1.2}
+```
+
+```{r, loaddata1.3}
+```
+
+
+# Explore Data
+
+
+```{r, exploredata}
+```
+
+```{r, exploredata2}
+```
+
+
+# Cleaning
+
+
+```{r, cleandata1}
+```
+
+```{r, cleandata2}
+```
+
+```{r, cleandata3}
+```
+
+```{r, cleandata4}
+```
+
+
+# Save data
+
+
+```{r, savedata}
+```
+
+
+```{r, savedata2}
+```
+
+
+
+
+
+
+
+

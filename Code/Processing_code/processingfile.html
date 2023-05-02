@@ -1,0 +1,3133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sunyoung Park">
+<meta name="dcterms.date" content="2023-04-21">
+
+<title>Cleaning R script for identifying best predictors of biomass for 13 plant species</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="processingfile_files/libs/clipboard/clipboard.min.js"></script>
+<script src="processingfile_files/libs/quarto-html/quarto.js"></script>
+<script src="processingfile_files/libs/quarto-html/popper.min.js"></script>
+<script src="processingfile_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="processingfile_files/libs/quarto-html/anchor.min.js"></script>
+<link href="processingfile_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="processingfile_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="processingfile_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="processingfile_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="processingfile_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cleaning R script for identifying best predictors of biomass for 13 plant species</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sunyoung Park </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 21, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="processing-script-data-cleaning-with-code-pulled-in-from-script" class="level1">
+<h1>Processing script (data cleaning) with code pulled in from script</h1>
+<p>This quarto file documents the data cleaning of the raw data <code>plant_measurement_raw.csv</code> in the raw data folder <code>../../Data/Raw_data/</code>. The clean data file is named <code>processeddata.rds</code> and also saved in <code>.csv</code> formats.</p>
+<p>To run this code, run <code>quarto preview processingfile.qmd</code> from the Processing code directory <code>project_root/Code/Processing_code</code>. Alternatively, you can prepend the relative path to the file from your current working directory. To generate the <code>.html</code> output, change <code>quarto preview</code> to <code>quarto render</code>.</p>
+</section>
+<section id="setup" class="level1">
+<h1>Setup</h1>
+<p>This code is needed to pull the code chunks contained in <code>processingcode.R</code> into active memory:</p>
+<p>Load needed packages (from the <code>packages</code> code chunk):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load needed packages. make sure they are installed.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr) <span class="co">#for data processing/cleaning</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidyr) <span class="co">#for data processing/cleaning</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(skimr) <span class="co">#for nice visualization of data </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-loading" class="level1">
+<h1>Data loading</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_location <span class="ot">&lt;-</span> <span class="st">"../../Data/Raw_data/plant_measurement_raw.csv"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> <span class="st">"../../Data/Raw_data/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I am using check.names=F because these names have spaces and parentheses and I want to preserve the original names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rawdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(data_location, <span class="at">check.names=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We can look in the data dictionary for a variable explanation. I am using the paste function here to add the path to the filename.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sep=“” adds no space when pasting.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>dictionary <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">paste</span>(data_path, <span class="st">"datadictionary.csv"</span>, <span class="at">sep=</span><span class="st">""</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dictionary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                    Date
+1                                   Time
+2                          Sample number
+3                               Location
+4                                   Type
+5                              Treatment
+6                                   Size
+7                                Species
+8                             Plant type
+9                                 Height
+10          Width (farthest to farthest)
+11                 Width (perpendicular)
+12                   Branch length (avg)
+13                 Branch diameter (avg)
+14                   Basal circumference
+15                         Stem diameter
+16                           Stem height
+17                          Stem density
+18                     branches per stem
+19               Leaves per branch (avg)
+20                          Total leaves
+21                     Leaf length (max)
+22                     Leaf length (min)
+23                     Leaf length (avg)
+24                      Leaf width (max)
+25                      Leaf width (min)
+26                      Leaf width (avg)
+27                  Leaf thickness (max)
+28                  Leaf thickness (min)
+29                  Leaf thickness (avg)
+30                               Biomass
+31                  measurement location
+32                                  note
+33         leaf: branch (total; biomass)
+34 leaf: branch (single branch; biomass)
+                                                    X..a.date.denoting.when.the.plant.morphology.data.of.each.sample.was.measured.
+1                                                     "a time denoting when the plant morphology data of each sample was measured"
+2                                                          "an integer denoting the continuous numbering sequence for each sample"
+3                                               "a character string denoting the location each individual was found and collected"
+4                                        "a character string denoting the land cover type each individual was found and collected"
+5                                                       "a character string denoting whether a plant was vegetated or unvegetated"
+6                                                       "a character string denoting the size of a plant (small, medium or large)"
+7                                                                                  "a character string denoting the plant species"
+8                                                                  "a character string denoting the morphological type of a plant"
+9                                                                               "a number denoting the plant height (centimeters)"
+10                                                 "a number denoting the farthest width from tip to tip of a plant (centimeters)"
+11                "a number denoting the width of a plant that is perpendicular to the width (farthest to farthest) (centimeters)"
+12                                       "a number denoting the average measurement of 10 branch lengths of a plant (centimeters)"
+13                                      "a number denoting the average measurement of 10 branch diameters of a plant (centimeter)"
+14                                                            "a number denoting the basal circumference of a plant (centimeters)"
+15         "a number denoting the diameter of the stem (the part right after roots that are aboveground) of a plant (centimeters)"
+16                                                                 "a number denoting the height of the entire stem (centimeters)"
+17                                                                            "an integer denoting the number of stems of a plant"
+18                                                                "an integer denoting the number of branches per stem in a plant"
+19                                               "a number denoting the average number of leaves on 5 longest branches of a plant"
+20                                                                     "an integer denoting the total number of leaves in a plant"
+21                               "a number denoting the maximum length from the measurements of 9 leaves in a plant (centimeters)"
+22                               "a number denoting the minimum length from the measurements of 9 leaves in a plant (centimeters)"
+23                                 "a number denoting the average length of the measurements of 9 leaves in a plant (centimeters)"
+24                                 "a number denoting the maximum width from the measurements of 9 leaves in a plant(centimeters)"
+25                                       "a character string denoting the land cover type each individual was found and collected"
+26                                   "a number denoting the average width of the measurements of 9 leaves in a plant(centimeters)"
+27                             "a number denoting the maximum thickness from the measurements of 9 leaves in a plant(centimeters)"
+28                             "a number denoting the minimum thickness from the measurements of 9 leaves in a plant(centimeters)"
+29                               "a number denoting the average thickness of the measurements of 9 leaves in a plant(centimeters)"
+30                                                                     "a number denoting the biomass of the dried plants (grams)"
+31                                       "a character string denoting the location where the morphological measurements were made"
+32                                               "a character string with text providing additional relevant information for data"
+33                       "a ratio denoting the total biomass of leaf in a plant to the total biomass of branch in a plant (grams)"
+34 "a ratio denoting the total biomass of leaf in one branch of a plant to the total biomass of the one branch in a plant (grams)"
+                                  Date.1
+1                                   Time
+2                          Sample number
+3                               Location
+4                                   Type
+5                              Treatment
+6                                   Size
+7                                Species
+8                             Plant type
+9                                 Height
+10                        Width_farthest
+11                   Width_perpendicular
+12                         Branch_length
+13                       Branch_diameter
+14                            Basal_circ
+15                         Stem_diameter
+16                           Stem_height
+17                          Stem_density
+18                     Branches_per_stem
+19                     Leaves_per_branch
+20                          Total_leaves
+21                             Leaf_lmax
+22                             Leaf_lmin
+23                             Leaf_lavg
+24                             Leaf_wmax
+25                             Leaf_wmin
+26                             Leaf_wavg
+27                             Leaf_tmax
+28                             Leaf_tmin
+29                             Leaf_tavg
+30                               Biomass
+31                  Measurement_location
+32                                 Notes
+33         leaf: branch (total; biomass)
+34 leaf: branch (single branch; biomass)</code></pre>
+</div>
+</div>
+</section>
+<section id="explore-data" class="level1">
+<h1>Explore Data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Different ways to look at the data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(rawdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 100
+Columns: 35
+$ Date                                    &lt;chr&gt; "10/31/18", "10/31/18", "10/31…
+$ Time                                    &lt;chr&gt; "9:00 AM", "9:30 AM", "9:30 AM…
+$ `Sample number`                         &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,…
+$ Location                                &lt;chr&gt; "SME", "SME", "SME", "SME", "S…
+$ Type                                    &lt;chr&gt; "garden", "garden", "garden", …
+$ Treatment                               &lt;chr&gt; "vegetated", "vegetated", "veg…
+$ Size                                    &lt;chr&gt; "small", "small", "small", "la…
+$ Species                                 &lt;chr&gt; "Aptenia cordifolia", "Aptenia…
+$ `Plant type`                            &lt;chr&gt; "forb", "forb", "forb", "forb"…
+$ Height                                  &lt;chr&gt; "4.5", "6", "8.5", "", "", "",…
+$ Width_farthest                          &lt;chr&gt; "17.5", "10", "12", "59.5", "4…
+$ Width_perpendicular                     &lt;chr&gt; "14", "7.5", "9.5", "30", "22"…
+$ Branch_length                           &lt;chr&gt; "4.5", "3.17", "3.75", "13", "…
+$ Branch_diameter                         &lt;chr&gt; "0.43", "0.4", "0.35", "0.37",…
+$ Basal_circ                              &lt;chr&gt; "0.44", "10", "11", "0.94", "0…
+$ Stem_diameter                           &lt;chr&gt; "0.44", "", "", "1", "0.96", "…
+$ Stem_height                             &lt;chr&gt; "22", "", "", "15", "3", "2", …
+$ Stem_density                            &lt;chr&gt; "1", "6", "4", "1", "1", "1", …
+$ Branches__per_stem                      &lt;chr&gt; "6 (living), 1 (dead)", "", ""…
+$ Leaves_per_branch                       &lt;chr&gt; "8.4", "7.4", "10.5", "28", "1…
+$ Total_leaves                            &lt;chr&gt; "", "", "", "", "", "", "40", …
+$ Leaf_lmax                               &lt;chr&gt; "3.5", "3", "3.8", "5.3", "3.5…
+$ Leaf_lmin                               &lt;chr&gt; "1.5", "1", "1.8", "1.8", "1.5…
+$ Leaf_lavg                               &lt;chr&gt; "2.48", "2.07", "2.79", "3.44"…
+$ Leaf_wmax                               &lt;chr&gt; "2.3", "2", "2.4", "3.2", "2",…
+$ Leaf_wmin                               &lt;chr&gt; "1.1", "0.8", "1.1", "1.3", "0…
+$ Leaf_wavg                               &lt;chr&gt; "1.79", "1.46", "1.78", "2.12"…
+$ Leaf_tmax                               &lt;chr&gt; "0.27", "0.26", "0.28", "0.2",…
+$ Leaf_tmin                               &lt;chr&gt; "0.16", "0.09", "0.12", "0.14"…
+$ Leaf_tavg                               &lt;chr&gt; "0.21", "0.16", "0.16", "0.16"…
+$ Biomass                                 &lt;dbl&gt; 3.34, 1.46, 1.36, 11.79, 14.45…
+$ Measurement_location                    &lt;chr&gt; "field", "field", "field", "fi…
+$ Notes                                   &lt;chr&gt; "", "", "", "", "", "", "", ""…
+$ `leaf: branch (total; biomass)`         &lt;chr&gt; "", "", "", "", "", "", "", ""…
+$ `leaf: branch (single branch; biomass)` &lt;chr&gt; "", "", "", "", "", "", "", ""…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rawdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Date               Time           Sample number      Location        
+ Length:100         Length:100         Min.   :  1.00   Length:100        
+ Class :character   Class :character   1st Qu.: 25.75   Class :character  
+ Mode  :character   Mode  :character   Median : 50.50   Mode  :character  
+                                       Mean   : 55.93                     
+                                       3rd Qu.: 87.25                     
+                                       Max.   :122.00                     
+     Type            Treatment             Size             Species         
+ Length:100         Length:100         Length:100         Length:100        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+  Plant type           Height          Width_farthest     Width_perpendicular
+ Length:100         Length:100         Length:100         Length:100         
+ Class :character   Class :character   Class :character   Class :character   
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character   
+                                                                             
+                                                                             
+                                                                             
+ Branch_length      Branch_diameter     Basal_circ        Stem_diameter     
+ Length:100         Length:100         Length:100         Length:100        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+ Stem_height        Stem_density       Branches__per_stem Leaves_per_branch 
+ Length:100         Length:100         Length:100         Length:100        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+ Total_leaves        Leaf_lmax          Leaf_lmin          Leaf_lavg        
+ Length:100         Length:100         Length:100         Length:100        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+  Leaf_wmax          Leaf_wmin          Leaf_wavg          Leaf_tmax        
+ Length:100         Length:100         Length:100         Length:100        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+  Leaf_tmin          Leaf_tavg            Biomass          Measurement_location
+ Length:100         Length:100         Min.   :   0.0000   Length:100          
+ Class :character   Class :character   1st Qu.:   0.1725   Class :character    
+ Mode  :character   Mode  :character   Median :   1.9900   Mode  :character    
+                                       Mean   : 137.8472                       
+                                       3rd Qu.:  85.4300                       
+                                       Max.   :2350.9000                       
+    Notes           leaf: branch (total; biomass)
+ Length:100         Length:100                   
+ Class :character   Class :character             
+ Mode  :character   Mode  :character             
+                                                 
+                                                 
+                                                 
+ leaf: branch (single branch; biomass)
+ Length:100                           
+ Class :character                     
+ Mode  :character                     
+                                      
+                                      
+                                      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rawdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Date     Time Sample number Location   Type Treatment  Size
+1 10/31/18  9:00 AM             1      SME garden vegetated small
+2 10/31/18  9:30 AM             2      SME garden vegetated small
+3 10/31/18  9:30 AM             3      SME garden vegetated small
+4 10/31/18 10:04 AM             4      SME garden vegetated large
+5 10/31/18 10:35 AM             5      SME garden vegetated large
+6 10/31/18 11:30 AM             6      SME garden vegetated large
+             Species Plant type Height Width_farthest Width_perpendicular
+1 Aptenia cordifolia       forb    4.5           17.5                  14
+2 Aptenia cordifolia       forb      6             10                 7.5
+3 Aptenia cordifolia       forb    8.5             12                 9.5
+4 Aptenia cordifolia       forb                  59.5                  30
+5 Aptenia cordifolia       forb                  44.5                  22
+6 Aptenia cordifolia       forb                    84                  35
+  Branch_length Branch_diameter Basal_circ Stem_diameter Stem_height
+1           4.5            0.43       0.44          0.44          22
+2          3.17             0.4         10                          
+3          3.75            0.35         11                          
+4            13            0.37       0.94             1          15
+5            11            0.46       0.96          0.96           3
+6         34.85            0.32       1.66          1.66           2
+  Stem_density   Branches__per_stem Leaves_per_branch Total_leaves Leaf_lmax
+1            1 6 (living), 1 (dead)               8.4                    3.5
+2            6                                    7.4                      3
+3            4                                   10.5                    3.8
+4            1                   12                28                    5.3
+5            1          18, 5(dead)              18.2                    3.5
+6            1                   27                22                    4.5
+  Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin
+1       1.5      2.48       2.3       1.1      1.79      0.27      0.16
+2         1      2.07         2       0.8      1.46      0.26      0.09
+3       1.8      2.79       2.4       1.1      1.78      0.28      0.12
+4       1.8      3.44       3.2       1.3      2.12       0.2      0.14
+5       1.5      2.61         2       0.8       1.6      0.27      0.11
+6       1.4      2.73         3         1      1.84      0.17      0.09
+  Leaf_tavg Biomass Measurement_location Notes leaf: branch (total; biomass)
+1      0.21    3.34                field                                    
+2      0.16    1.46                field                                    
+3      0.16    1.36                field                                    
+4      0.16   11.79                field                                    
+5      0.18   14.45                field                                    
+6      0.13   29.83                field                                    
+  leaf: branch (single branch; biomass)
+1                                      
+2                                      
+3                                      
+4                                      
+5                                      
+6                                      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(rawdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">rawdata</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Date</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Location</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Type</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Treatment</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Size</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Species</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Plant type</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Height</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Width_farthest</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Width_perpendicular</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Branch_length</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Branch_diameter</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Basal_circ</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stem_diameter</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stem_height</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stem_density</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Branches__per_stem</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaves_per_branch</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Total_leaves</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_lmax</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_lmin</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_lavg</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_wmax</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_wmin</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_wavg</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_tmax</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_tmin</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_tavg</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Measurement_location</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Notes</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">leaf: branch (total; biomass)</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">leaf: branch (single branch; biomass)</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sample number</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">55.93</td>
+<td style="text-align: right;">35.16</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25.75</td>
+<td style="text-align: right;">50.50</td>
+<td style="text-align: right;">87.25</td>
+<td style="text-align: right;">122.0</td>
+<td style="text-align: left;">▇▇▅▇▅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Biomass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">137.85</td>
+<td style="text-align: right;">397.51</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">1.99</td>
+<td style="text-align: right;">85.43</td>
+<td style="text-align: right;">2350.9</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We temporarily change the variable names to short names in this script for convenience. </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>longnames <span class="ot">&lt;-</span> <span class="fu">names</span>(rawdata)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rawdata) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Date"</span>, <span class="st">"Time"</span>, <span class="st">"Sample number"</span>, <span class="st">"Location"</span>, <span class="st">"Type"</span>, <span class="st">"Treatment"</span>, <span class="st">"Size"</span>, <span class="st">"Species"</span>, <span class="st">"Plant type"</span>, <span class="st">"Height"</span>, <span class="st">"Width_farthest"</span>, <span class="st">"Width_perpendicular"</span>, <span class="st">"Branch_length"</span>, <span class="st">"Branch_diameter"</span>, <span class="st">"Basal_circ"</span>, <span class="st">"Stem_diameter"</span>, <span class="st">"Stem_height"</span>, <span class="st">"Stem_density"</span>, <span class="st">"Branches_per_stem"</span>, <span class="st">"Leaves_per_branch"</span>, <span class="st">"Total_leaves"</span>, <span class="st">"Leaf_lmax"</span>, <span class="st">"Leaf_lmin"</span>, <span class="st">"Leaf_lavg"</span>, <span class="st">"Leaf_wmax"</span>, <span class="st">"Leaf_wmin"</span>, <span class="st">"Leaf_wavg"</span>, <span class="st">"Leaf_tmax"</span>, <span class="st">"Leaf_tmin"</span>, <span class="st">"Leaf_tavg"</span>, <span class="st">"Biomass"</span>, <span class="st">"Measurement_location"</span>, <span class="st">"Note"</span>, <span class="st">"leaf: branch (total; biomass)"</span>, <span class="st">"leaf: branch (single branch; biomass)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cleaning" class="level1">
+<h1>Cleaning</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We check to make sure there is 14 species of plants for the dataset.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(rawdata<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Aptenia cordifolia"      "Gnaphalium spp."        
+ [3] "Lactucca spp."           "Euphorbia spp."         
+ [5] "Unidentified shrub"      "Onetheria biennis"      
+ [7] "Unplanted weed"          "Salix spp."             
+ [9] "Chondropetalum tectorum" "Artemisia californica"  
+[11] "Baccharis pilularis"     "Solidago spp."          
+[13] "Rhus integrifolia"       "Festuca Mairei"         </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Letʻs save rawdata as d1, and modify d1 so we can compare versions. </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> rawdata</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(d1<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Aptenia cordifolia"      "Gnaphalium spp."        
+ [3] "Lactucca spp."           "Euphorbia spp."         
+ [5] "Unidentified shrub"      "Onetheria biennis"      
+ [7] "Unplanted weed"          "Salix spp."             
+ [9] "Chondropetalum tectorum" "Artemisia californica"  
+[11] "Baccharis pilularis"     "Solidago spp."          
+[13] "Rhus integrifolia"       "Festuca Mairei"         </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get rid of date and time, notes, 'Leaf: branch (total; biomass)' and 'Leaf: branch (single; biomass)' from the column</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We don't need these for our analysis.</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> d1[,<span class="dv">3</span><span class="sc">:</span><span class="dv">32</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Some morphological measurements are missing for some species. It is because those measurements are irrelevant to certain species depending on the types of plant species (forbs, trees, and shrub) they are. </span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Turn any blanks or n/a's into NA</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>d1[d1<span class="sc">==</span><span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>d1[d1<span class="sc">==</span><span class="st">"n/a"</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Coerce all the entries of the morphological measurement variables to numeric</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>num <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">29</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>d1[,num] <span class="ot">&lt;-</span> <span class="fu">apply</span>(d1[,num], <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in FUN(newX[, i], ...): NAs introduced by coercion</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(d1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">d1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 11%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Location</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Type</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Treatment</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Size</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Species</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Plant type</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Measurement_location</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sample number</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">55.93</td>
+<td style="text-align: right;">35.16</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">25.75</td>
+<td style="text-align: right;">50.50</td>
+<td style="text-align: right;">87.25</td>
+<td style="text-align: right;">122.00</td>
+<td style="text-align: left;">▇▇▅▇▅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Height</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">47.79</td>
+<td style="text-align: right;">58.22</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">6.50</td>
+<td style="text-align: right;">25.50</td>
+<td style="text-align: right;">60.25</td>
+<td style="text-align: right;">248.00</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Width_farthest</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">45.41</td>
+<td style="text-align: right;">50.14</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">9.00</td>
+<td style="text-align: right;">22.25</td>
+<td style="text-align: right;">75.00</td>
+<td style="text-align: right;">259.00</td>
+<td style="text-align: left;">▇▃▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Width_perpendicular</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">33.35</td>
+<td style="text-align: right;">34.92</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">6.15</td>
+<td style="text-align: right;">18.50</td>
+<td style="text-align: right;">53.50</td>
+<td style="text-align: right;">160.00</td>
+<td style="text-align: left;">▇▂▂▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Branch_length</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">37.27</td>
+<td style="text-align: right;">39.52</td>
+<td style="text-align: right;">1.30</td>
+<td style="text-align: right;">5.92</td>
+<td style="text-align: right;">26.10</td>
+<td style="text-align: right;">51.80</td>
+<td style="text-align: right;">167.90</td>
+<td style="text-align: left;">▇▃▂▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Branch_diameter</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">1.15</td>
+<td style="text-align: left;">▇▆▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Basal_circ</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">56.10</td>
+<td style="text-align: right;">48.60</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">12.25</td>
+<td style="text-align: right;">47.00</td>
+<td style="text-align: right;">94.10</td>
+<td style="text-align: right;">148.00</td>
+<td style="text-align: left;">▇▆▃▂▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stem_diameter</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">1.11</td>
+<td style="text-align: right;">3.63</td>
+<td style="text-align: left;">▇▃▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stem_height</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">7.37</td>
+<td style="text-align: right;">9.65</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">1.07</td>
+<td style="text-align: right;">3.50</td>
+<td style="text-align: right;">8.97</td>
+<td style="text-align: right;">47.40</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Stem_density</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">114.35</td>
+<td style="text-align: right;">403.91</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2150.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Branches_per_stem</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">94.47</td>
+<td style="text-align: right;">206.96</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">11.00</td>
+<td style="text-align: right;">16.00</td>
+<td style="text-align: right;">48.00</td>
+<td style="text-align: right;">900.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaves_per_branch</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">17.54</td>
+<td style="text-align: right;">8.06</td>
+<td style="text-align: right;">4.50</td>
+<td style="text-align: right;">10.25</td>
+<td style="text-align: right;">16.40</td>
+<td style="text-align: right;">23.60</td>
+<td style="text-align: right;">32.20</td>
+<td style="text-align: left;">▆▃▇▃▅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total_leaves</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">64.82</td>
+<td style="text-align: right;">162.03</td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">22.00</td>
+<td style="text-align: right;">44.00</td>
+<td style="text-align: right;">892.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_lmax</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">6.58</td>
+<td style="text-align: right;">5.25</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">2.65</td>
+<td style="text-align: right;">5.30</td>
+<td style="text-align: right;">10.25</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: left;">▇▅▂▂▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_lmin</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">2.76</td>
+<td style="text-align: right;">2.77</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">3.80</td>
+<td style="text-align: right;">11.70</td>
+<td style="text-align: left;">▇▃▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_lavg</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">4.69</td>
+<td style="text-align: right;">3.83</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">1.76</td>
+<td style="text-align: right;">3.64</td>
+<td style="text-align: right;">7.53</td>
+<td style="text-align: right;">14.50</td>
+<td style="text-align: left;">▇▅▂▂▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_wmax</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">3.85</td>
+<td style="text-align: right;">8.87</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">1.50</td>
+<td style="text-align: right;">2.40</td>
+<td style="text-align: right;">55.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_wmin</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">1.75</td>
+<td style="text-align: right;">4.29</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">30.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_wavg</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">2.73</td>
+<td style="text-align: right;">6.11</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">1.71</td>
+<td style="text-align: right;">39.60</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_tmax</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: left;">▇▃▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leaf_tmin</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leaf_tavg</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: left;">▇▅▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Biomass</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">137.85</td>
+<td style="text-align: right;">397.51</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">1.99</td>
+<td style="text-align: right;">85.43</td>
+<td style="text-align: right;">2350.90</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We turn species into a categorical variable.</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>d1<span class="sc">$</span>Species <span class="ot">&lt;-</span> <span class="fu">as.character</span>(d1<span class="sc">$</span>Species)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># We want to separate the measurements by species so we can look at morph measurements that correlate with the biomass of each species. </span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. </span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">with</span>(d1, <span class="fu">split</span>(d1, <span class="fu">list</span>(<span class="at">Species =</span> Species)))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">lapply</span>(spec, <span class="cf">function</span>(x) x[, <span class="fu">colSums</span>(<span class="fu">is.na</span>(x)) <span class="sc">==</span> <span class="dv">0</span>])</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>spec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`Aptenia cordifolia`
+   Sample number Location   Type Treatment   Size            Species
+1              1      SME garden vegetated  small Aptenia cordifolia
+2              2      SME garden vegetated  small Aptenia cordifolia
+3              3      SME garden vegetated  small Aptenia cordifolia
+4              4      SME garden vegetated  large Aptenia cordifolia
+5              5      SME garden vegetated  large Aptenia cordifolia
+6              6      SME garden vegetated  large Aptenia cordifolia
+57            57    OSLER garden vegetated medium Aptenia cordifolia
+58            58    OSLER garden vegetated medium Aptenia cordifolia
+59            59    OSLER garden vegetated medium Aptenia cordifolia
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+1            17.5                14.0          4.50           0.430
+2            10.0                 7.5          3.17           0.400
+3            12.0                 9.5          3.75           0.350
+4            59.5                30.0         13.00           0.370
+5            44.5                22.0         11.00           0.460
+6            84.0                35.0         34.85           0.320
+57           68.0                39.0         20.10           0.336
+58           58.5                47.0         23.34           0.376
+59           32.0                24.0         11.35           0.446
+   Leaves_per_branch Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+1                8.4       3.5       1.5      2.48       2.3       1.1
+2                7.4       3.0       1.0      2.07       2.0       0.8
+3               10.5       3.8       1.8      2.79       2.4       1.1
+4               28.0       5.3       1.8      3.44       3.2       1.3
+5               18.2       3.5       1.5      2.61       2.0       0.8
+6               22.0       4.5       1.4      2.73       3.0       1.0
+57              17.0       4.0       1.6      2.93       2.0       1.0
+58              16.2       3.7       1.7      2.57       2.2       1.0
+59              21.2       3.2       1.5      2.41       1.8       0.9
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+1       1.79      0.27      0.16     0.210    3.34                field
+2       1.46      0.26      0.09     0.160    1.46                field
+3       1.78      0.28      0.12     0.160    1.36                field
+4       2.12      0.20      0.14     0.160   11.79                field
+5       1.60      0.27      0.11     0.180   14.45                field
+6       1.84      0.17      0.09     0.130   29.83                field
+57      1.52      0.16      0.10     0.120    6.69                field
+58      1.53      0.17      0.12     0.130   12.18                field
+59      1.36      0.24      0.14     0.207    6.75                field
+
+$`Artemisia californica`
+   Sample number Location    Type Treatment   Size               Species
+65            77      SME natural vegetated  small Artemisia californica
+66            78      SME natural vegetated  small Artemisia californica
+67            79      SME natural vegetated medium Artemisia californica
+68            80      SME natural vegetated medium Artemisia californica
+69            81      SME natural vegetated  large Artemisia californica
+77            88      SME natural vegetated  large Artemisia californica
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+65      shrub   31.0             36                28.5         18.05
+66      shrub   32.0             47                31.5         17.20
+67      shrub   52.5             50                51.0         44.80
+68      shrub   60.0             55                46.0         49.95
+69      shrub   66.0            100                88.0         53.10
+77      shrub   64.0             84                64.0         43.80
+   Branch_diameter Branches_per_stem Biomass Measurement_location
+65           0.207                60   19.59                field
+66           0.148                37   14.55                field
+67           0.236                63   92.60                field
+68           0.283                44   85.03                field
+69           0.256               196  395.36                field
+77           0.325                85  268.56                field
+
+$`Baccharis pilularis`
+   Sample number Location    Type Treatment   Size             Species
+70            82      SME natural vegetated  small Baccharis pilularis
+71            83      SME natural vegetated  small Baccharis pilularis
+72            84      SME natural vegetated medium Baccharis pilularis
+73            85      SME natural vegetated  small Baccharis pilularis
+74            86      SME natural vegetated medium Baccharis pilularis
+75            87      SME natural vegetated  large Baccharis pilularis
+76            89      SME natural vegetated  large Baccharis pilularis
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+70      shrub     45             34                  33          32.9
+71      shrub     30             20                  19          20.3
+72      shrub     54             45                  44          40.9
+73      shrub     49             35                  20          29.3
+74      shrub     48             74                  71          53.9
+75      shrub     52             82                  68          45.2
+76      shrub     71             72                  69          50.6
+   Branch_diameter Branches_per_stem Leaves_per_branch Leaf_lmax Leaf_lmin
+70           0.232                17              16.4      14.0       9.5
+71           0.204                14              12.2      10.0       7.5
+72           0.386                16              25.2      20.0       9.5
+73           0.290                10              20.6      14.0      10.0
+74           0.440                48              20.2      19.0      11.0
+75           0.466                40              26.2      16.5      11.7
+76           0.691                41              28.6      14.5       9.5
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+70     12.40        19         8      13.0      0.10      0.08     0.084
+71      8.80        12         8       9.0      0.07      0.11     0.090
+72     14.50        55        11      25.8      0.05      0.10     0.068
+73     11.90        22        14      17.8      0.08      0.06     0.070
+74     14.00        16        11      13.6      0.10      0.06     0.082
+75     14.04        47        30      39.6      0.07      0.10     0.080
+76     11.60        24        13      19.6      0.07      0.05     0.056
+   Biomass Measurement_location
+70   27.43                  lab
+71   13.95                  lab
+72   86.63                  lab
+73   28.76                  lab
+74  166.61            field/lab
+75  385.97                field
+76  102.65                field
+
+$`Chondropetalum tectorum`
+   Sample number Location      Type Treatment   Size                 Species
+60            70      SME biofilter vegetated  large Chondropetalum tectorum
+61            71      SME biofilter vegetated  small Chondropetalum tectorum
+62            72      SME biofilter vegetated  small Chondropetalum tectorum
+63            73      SME biofilter vegetated medium Chondropetalum tectorum
+64            74      SME biofilter vegetated medium Chondropetalum tectorum
+78            90      SME biofilter vegetated  large Chondropetalum tectorum
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+60      shrub  177.0            259                 160        158.90
+61      shrub  120.5             58                  50         76.30
+62      shrub  132.5            114                  24         83.80
+63      shrub  189.0            170                  86        151.25
+64      shrub  150.0            116                  62        141.40
+78      shrub  180.0            210                 132        167.90
+   Branch_diameter Basal_circ Stem_density Biomass Measurement_location
+60           0.456      132.0          145 2083.04                field
+61           0.466       65.0           40  114.86                field
+62           0.457       60.0           20   64.38                field
+63           0.418      131.0           60  761.40                field
+64           0.396      124.3          130 2059.46                field
+78           0.482      146.0          120 2350.90                field
+
+$`Euphorbia spp.`
+   Sample number Location      Type   Size        Species Plant type
+17            17    OSLER biofilter  small Euphorbia spp.       forb
+26            26    OSLER biofilter  large Euphorbia spp.       forb
+27            27    OSLER biofilter medium Euphorbia spp.       forb
+28            28      SIO biofilter  small Euphorbia spp.       forb
+29            29      SIO biofilter  small Euphorbia spp.       forb
+30            30      SIO biofilter  large Euphorbia spp.       forb
+31            31      SIO biofilter  large Euphorbia spp.       forb
+32            32      SIO biofilter medium Euphorbia spp.       forb
+33            33      SIO biofilter medium Euphorbia spp.       forb
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+17            3.5                 1.0          1.54           0.036
+26           13.0                10.0          4.42           0.074
+27            7.2                 4.5          2.73           0.054
+28            4.6                 2.8          2.13           0.053
+29            3.7                 1.3          1.30           0.058
+30           24.0                18.0         12.82           0.075
+31           12.5                12.5          5.80           0.054
+32            8.0                 6.2          2.83           0.051
+33            8.0                 3.7          2.38           0.059
+   Stem_diameter Stem_height Branches_per_stem Leaves_per_branch Leaf_lmax
+17          0.03         1.0                 5              7.80      0.50
+26          0.08         0.7                36             26.80      0.70
+27          0.05         0.4                13             16.20      0.60
+28          0.06         0.7                 4              9.75      0.40
+29          0.08         0.4                 4              6.50      0.45
+30          0.18         0.2               120             32.00      0.55
+31          0.13         0.7                43             32.20      0.40
+32          0.08         0.7                18             20.20      0.50
+33          0.14         0.2                15             13.40      0.50
+   Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin
+17      0.25      0.42      0.40      0.15      0.26      0.01      0.01
+26      0.20      0.43      0.50      0.20      0.32      0.02      0.01
+27      0.20      0.38      0.40      0.20      0.30      0.01      0.01
+28      0.20      0.31      0.40      0.15      0.27      0.02      0.01
+29      0.20      0.32      0.35      0.20      0.26      0.01      0.01
+30      0.30      0.44      0.50      0.25      0.38      0.02      0.01
+31      0.15      0.27      0.30      0.15      0.23      0.01      0.01
+32      0.20      0.34      0.40      0.15      0.26      0.01      0.01
+33      0.15      0.32      0.40      0.15      0.26      0.01      0.01
+   Leaf_tavg Biomass Measurement_location
+17     0.010    0.01                  lab
+26     0.012    0.24                  lab
+27     0.010    0.08                  lab
+28     0.013    0.01                  lab
+29     0.010    0.01                  lab
+30     0.017    1.63                  lab
+31     0.010    0.49                  lab
+32     0.010    0.13                  lab
+33     0.010    0.12                  lab
+
+$`Festuca Mairei`
+    Sample number Location   Type Treatment  Size        Species Plant type
+98            120  Sanford garden vegetated small Festuca Mairei       forb
+99            121  Sanford garden vegetated small Festuca Mairei       forb
+100           122  Sanford garden vegetated small Festuca Mairei       forb
+    Height Width_farthest Width_perpendicular Branch_length Branch_diameter
+98    46.8          100.6                94.0         47.09           0.044
+99    41.9           98.4                90.5         45.59           0.032
+100   45.1           95.9                95.3         43.71           0.037
+    Basal_circ Stem_density Biomass
+98       137.8         2150  475.82
+99       103.2         1350  235.33
+100      106.0         1200  270.69
+
+$`Gnaphalium spp.`
+   Sample number Location      Type Treatment   Size         Species Plant type
+7              7    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+8              8    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+9              9    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+10            10    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+11            11    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+   Height Width_farthest Width_perpendicular Branch_length Branch_diameter
+7    23.0            4.5                 4.3          2.62           0.055
+8    28.0            3.0                 2.7          1.30           0.048
+9    20.0            4.5                 2.6          3.55           0.066
+10   15.0            6.0                 4.0          8.00           0.030
+11   18.5            9.5                 5.5          6.30           0.092
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+7           0.27       21.00            1                13           40
+8           0.19       27.50            1                10           35
+9           0.15       20.00            1                 7           60
+10          0.22        5.30            1                 3           30
+11          0.23        0.45            1                15          100
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+7        2.8       1.1      1.98       0.3       0.1      0.21      0.04
+8        3.4       1.0      2.21       0.5       0.1      0.23      0.03
+9        2.8       1.0      1.92       0.5       0.1      0.21      0.03
+10       2.4       1.0      1.27       0.2       0.1      0.12      0.02
+11       1.5       0.5      1.12       0.2       0.1      0.12      0.03
+   Leaf_tmin Leaf_tavg Biomass Measurement_location
+7       0.02     0.030    0.73                field
+8       0.10     0.024    0.50                field
+9       0.01     0.210    0.35                field
+10      0.01     0.014    0.21                field
+11      0.01     0.023    1.14                field
+
+$`Lactucca spp.`
+   Sample number Location      Type  Size       Species Plant type Height
+12            12    OSLER biofilter large Lactucca spp.       forb    2.0
+13            13    OSLER biofilter small Lactucca spp.       forb    5.0
+14            14    OSLER biofilter small Lactucca spp.       forb    3.2
+15            15    OSLER biofilter small Lactucca spp.       forb    4.0
+16            16    OSLER biofilter large Lactucca spp.       forb   29.0
+   Width_farthest Width_perpendicular Total_leaves Leaf_lmax Leaf_lmin
+12           15.0                  15           11       8.5       4.0
+13            9.0                   7            7       6.0       2.2
+14           12.0                   6            6       6.8       1.9
+15            9.5                   6            4       7.5       3.6
+16           15.0                   6           42      15.0       9.0
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+12      6.50       2.7       1.3      2.08      0.09      0.04     0.059
+13      4.10       2.0       1.2      1.56      0.05      0.02     0.027
+14      4.48       2.0       1.0      1.58      0.04      0.02     0.033
+15      6.15       1.9       1.0      1.43      0.04      0.03     0.038
+16     11.22       4.0       1.0      2.36      0.15      0.06     0.103
+   Biomass Measurement_location
+12    0.31                field
+13    0.05                field
+14    0.03                field
+15    0.03                field
+16    2.35                  lab
+
+$`Onetheria biennis`
+   Sample number Location      Type   Treatment   Size           Species
+20            20    ACTRI biofilter unvegetated  small Onetheria biennis
+21            21    ACTRI biofilter unvegetated  small Onetheria biennis
+22            22    ACTRI biofilter unvegetated  small Onetheria biennis
+23            23    ACTRI biofilter unvegetated medium Onetheria biennis
+24            24    ACTRI biofilter unvegetated medium Onetheria biennis
+25            25    ACTRI biofilter unvegetated medium Onetheria biennis
+43            43    ACTRI biofilter unvegetated  large Onetheria biennis
+44            44    ACTRI biofilter unvegetated  large Onetheria biennis
+45            45    ACTRI biofilter unvegetated  large Onetheria biennis
+   Plant type Height Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax
+20       forb    4.0            9       7.4       1.1      4.47       1.9
+21       forb    4.2            9       7.3       0.9      4.28       1.9
+22       forb    7.0           22       8.5       2.5      5.42       1.7
+23       forb    9.5           18      17.0       2.5      9.01       2.9
+24       forb   12.5           37      16.5       3.1     10.61       2.4
+25       forb    6.5           18      18.5       2.7     10.11       2.5
+43       forb   18.0           27      14.0       4.0     10.28       2.0
+44       forb   17.0           28      14.0       4.5      9.17       2.3
+45       forb   13.0           49      10.5       4.5      7.67       1.9
+   Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+20       0.2      1.17      0.06      0.02     0.039    0.09
+21       0.2      1.19      0.06      0.03     0.043    0.10
+22       0.8      1.26      0.08      0.02     0.056    0.40
+23       0.8      1.97      0.09      0.04     0.069    0.66
+24       0.6      1.51      0.08      0.06     0.070    1.22
+25       0.7      1.62      0.10      0.05     0.066    1.01
+43       0.8      1.61      0.08      0.04     0.058    5.25
+44       1.0      1.63      0.07      0.05     0.059    6.66
+45       1.1      1.60      0.06      0.04     0.054    6.20
+   Measurement_location
+20                  lab
+21                  lab
+22                  lab
+23                  lab
+24                  lab
+25                  lab
+43                  lab
+44                  lab
+45                  lab
+
+$`Rhus integrifolia`
+   Sample number Location    Type   Size           Species Plant type Height
+93           110      SIO natural  small Rhus integrifolia      shrub     53
+94           111      SIO natural medium Rhus integrifolia      shrub     80
+95           112      SIO natural  small Rhus integrifolia      shrub     55
+96           113      SIO natural  small Rhus integrifolia      shrub     37
+97           114      SIO natural  large Rhus integrifolia      shrub    144
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+93             27                  38         27.50           0.445
+94             78                  68         40.00           0.891
+95             44                  29         21.15           0.397
+96             36                  28         17.00           0.371
+97            126                 104         69.15           1.146
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+93          1.07        16.0            1                 6          104
+94          2.71        12.0            1                50          687
+95          1.28         6.5            1                11           94
+96          1.97         3.0            1                 9           56
+97          3.63         8.0            1                61          892
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+93       5.5       2.3      3.89       3.7       1.6      2.74      0.06
+94       6.4       2.4      4.79       4.3       1.6      3.17      0.10
+95       5.9       3.2      4.73       3.8       2.2      3.14      0.07
+96       5.5       2.2      3.99       3.7       1.5      2.31      0.07
+97       5.3       2.7      4.10       4.0       2.0      2.98      0.08
+   Leaf_tmin Leaf_tavg Biomass
+93      0.05     0.054   49.58
+94      0.05     0.078  556.47
+95      0.05     0.057   55.20
+96      0.03     0.056   36.56
+97      0.05     0.071 1172.31
+
+$`Salix spp.`
+   Sample number Location      Type Treatment   Size    Species Plant type
+46            46    ACTRI biofilter vegetated  small Salix spp.       tree
+47            47    ACTRI biofilter vegetated  small Salix spp.       tree
+48            48    ACTRI biofilter vegetated  small Salix spp.       tree
+49            49    ACTRI biofilter vegetated medium Salix spp.       tree
+50            50    ACTRI biofilter vegetated medium Salix spp.       tree
+51            51    ACTRI biofilter vegetated medium Salix spp.       tree
+52            52    ACTRI biofilter vegetated  large Salix spp.       tree
+79            91    ACTRI biofilter vegetated  large Salix spp.       tree
+80            92    ACTRI biofilter vegetated  large Salix spp.       tree
+   Height Stem_diameter Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+46     50          0.21       9.0       2.6      6.20       0.8      0.40
+47     42          0.17       8.0       3.3      5.88       0.5      0.20
+48     28          0.08       7.0       4.5      5.56       0.5      0.15
+49    154          0.92      11.0       4.0      7.83       1.0      0.40
+50    144          0.77      11.5       4.5      7.94       0.9      0.35
+51    116          0.60      11.0       4.0      7.47       0.6      0.30
+52    220          1.23      12.5       5.0      9.00       1.0      0.40
+79    239          1.63      13.5       6.5      9.30       1.1      0.40
+80    248          1.85      12.0       5.0      9.41       1.5      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+46      0.57      0.04      0.03     0.032    1.17                  lab
+47      0.32      0.04      0.02     0.024    0.71                  lab
+48      0.36      0.03      0.02     0.025    0.31                  lab
+49      0.67      0.07      0.04     0.053   27.27                  lab
+50      0.59      0.08      0.50     0.060   20.90                  lab
+51      0.47      0.06      0.03     0.051    9.61                  lab
+52      0.62      0.08      0.05     0.066   72.53                  lab
+79      0.89      0.06      0.02     0.046  154.68            field/lab
+80      0.90      0.06      0.03     0.042  135.22            field/lab
+
+$`Solidago spp.`
+   Sample number Location      Type Treatment   Size       Species Plant type
+81            93  Sanford biofilter vegetated  large Solidago spp.       forb
+82            94  Sanford biofilter vegetated  large Solidago spp.       forb
+83            95  Sanford biofilter vegetated medium Solidago spp.       forb
+84            96  Sanford biofilter vegetated medium Solidago spp.       forb
+85            97  Sanford biofilter vegetated  small Solidago spp.       forb
+86            98  Sanford biofilter vegetated  small Solidago spp.       forb
+   Height Width_farthest Width_perpendicular Stem_diameter Stem_height
+81   11.5           12.5                10.0          0.08         0.4
+82    9.0           11.0                 7.0          0.12         4.5
+83    6.5            8.0                 5.0          0.07         1.5
+84    8.5            8.5                 4.5          0.09         3.0
+85    4.5            4.0                 3.5          0.09         0.8
+86    5.5            4.5                 2.0          0.09         2.3
+   Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg
+81            9      11.0       4.0      7.59       3.0       0.9      2.13
+82            9       8.0       3.0      5.64       2.3       0.7      1.57
+83           10       6.0       1.4      4.18       1.5       0.2      1.08
+84            8       6.0       0.9      3.64       1.2       0.2      0.75
+85            5       4.2       3.0      3.22       1.4       0.7      1.04
+86            5       5.2       2.7      3.90       1.9       1.1      1.56
+   Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+81      0.05      0.03     0.032    0.47
+82      0.03      0.02     0.027    0.25
+83      0.02      0.01     0.019    0.14
+84      0.03      0.01     0.019    0.07
+85      0.03      0.02     0.024    0.04
+86      0.04      0.02     0.030    0.09
+
+$`Unidentified shrub`
+   Sample number Location      Type Treatment   Size            Species
+18            18    OSLER    garden vegetated medium Unidentified shrub
+19            19    OSLER    garden vegetated medium Unidentified shrub
+53            53    OSLER    garden vegetated medium Unidentified shrub
+54            54    OSLER biofilter vegetated  small Unidentified shrub
+55            55    OSLER biofilter vegetated  small Unidentified shrub
+56            56    OSLER biofilter vegetated  small Unidentified shrub
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+18      shrub   74.5          137.0                74.0         80.80
+19      shrub   87.0           94.0                81.0         76.35
+53      shrub   80.5          100.5                94.5         73.05
+54      shrub   50.5           87.0                61.0         52.20
+55      shrub   61.0           96.0                72.0         68.95
+56      shrub   66.0           96.0                82.0         57.65
+   Branch_diameter Basal_circ Branches_per_stem Biomass Measurement_location
+18           0.117      148.0               725  302.54            field/lab
+19           0.078       85.0               900  261.54            field/lab
+53           0.088       69.5               900  274.96                field
+54           0.078       58.0               300   96.98                field
+55           0.072       47.0               500  193.03                field
+56           0.051       37.5               350  138.54                field
+
+$`Unplanted weed`
+   Sample number Location      Type   Treatment   Size        Species
+34            34    ACTRI biofilter unvegetated  large Unplanted weed
+35            35    ACTRI biofilter unvegetated medium Unplanted weed
+36            36    ACTRI biofilter unvegetated  large Unplanted weed
+37            37    ACTRI biofilter unvegetated  large Unplanted weed
+38            38    ACTRI biofilter unvegetated  small Unplanted weed
+39            39    ACTRI biofilter unvegetated  small Unplanted weed
+40            40    ACTRI biofilter unvegetated  small Unplanted weed
+41            41    ACTRI biofilter unvegetated medium Unplanted weed
+42            42    ACTRI biofilter unvegetated medium Unplanted weed
+87           100      SIO biofilter   vegetated  small Unplanted weed
+88           101      SIO biofilter   vegetated  large Unplanted weed
+89           102      SIO biofilter   vegetated medium Unplanted weed
+90           103      SIO biofilter   vegetated  large Unplanted weed
+91           104      SIO biofilter   vegetated medium Unplanted weed
+92           105      SIO biofilter   vegetated  small Unplanted weed
+   Plant type Height Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+34       forb   18.0       2.4      0.90      1.60      1.00      0.40
+35       forb    7.5       1.7      0.70      1.09      1.00      0.40
+36       forb   17.0       2.5      0.60      1.49      0.80      0.30
+37       forb   16.0       1.6      0.80      1.13      0.60      0.40
+38       forb    6.0       0.8      0.25      0.57      0.40      0.20
+39       forb    6.0       0.9      0.40      0.67      0.50      0.25
+40       forb    5.5       0.8      0.20      0.56      0.50      0.15
+41       forb    8.0       1.9      0.55      1.16      0.65      0.30
+42       forb   10.5       1.7      0.50      1.07      0.80      0.25
+87       forb    5.0       4.5      1.80      3.10      0.70      0.25
+88       forb    5.0       4.5      1.70      3.20      1.00      0.40
+89       forb    2.5       3.5      1.50      2.38      0.90      0.40
+90       forb    5.0       3.8      2.00      2.71      0.90      0.50
+91       forb    5.0       4.0      2.20      3.00      1.50      0.30
+92       forb    3.0       3.0      1.40      2.18      0.90      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+34      0.68      0.01      0.01     0.010    0.24
+35      0.56      0.01      0.01     0.010    0.01
+36      0.56      0.01      0.01     0.010    0.15
+37      0.49      0.01      0.01     0.010    0.12
+38      0.29      0.01      0.01     0.010    0.02
+39      0.36      0.01      0.01     0.010    0.01
+40      0.32      0.01      0.01     0.010    0.00
+41      0.49      0.01      0.01     0.010    0.02
+42      0.49      0.01      0.01     0.010    0.05
+87      0.53      0.03      0.01     0.022    0.08
+88      0.71      0.04      0.02     0.031    0.21
+89      0.58      0.03      0.02     0.027    0.51
+90      0.70      0.03      0.02     0.023    0.39
+91      0.76      0.04      0.02     0.024    0.18
+92      0.58      0.03      0.01     0.024    0.13</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at each species and their morph measurements</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Since Festuca Mairei only has three samples, we are going to eliminate it from the sample species, due to not enough sample size.</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>Rows <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">grepl</span>(<span class="st">"Festuca Mairei"</span>, d1<span class="sc">$</span>Species))</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> d1[<span class="sc">-</span><span class="fu">c</span>(Rows),]</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>d1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sample number Location      Type   Treatment   Size                 Species
+1              1      SME    garden   vegetated  small      Aptenia cordifolia
+2              2      SME    garden   vegetated  small      Aptenia cordifolia
+3              3      SME    garden   vegetated  small      Aptenia cordifolia
+4              4      SME    garden   vegetated  large      Aptenia cordifolia
+5              5      SME    garden   vegetated  large      Aptenia cordifolia
+6              6      SME    garden   vegetated  large      Aptenia cordifolia
+7              7    OSLER biofilter   vegetated medium         Gnaphalium spp.
+8              8    OSLER biofilter   vegetated medium         Gnaphalium spp.
+9              9    OSLER biofilter   vegetated  small         Gnaphalium spp.
+10            10    OSLER biofilter   vegetated  small         Gnaphalium spp.
+11            11    OSLER biofilter   vegetated medium         Gnaphalium spp.
+12            12    OSLER biofilter        &lt;NA&gt;  large           Lactucca spp.
+13            13    OSLER biofilter        &lt;NA&gt;  small           Lactucca spp.
+14            14    OSLER biofilter        &lt;NA&gt;  small           Lactucca spp.
+15            15    OSLER biofilter        &lt;NA&gt;  small           Lactucca spp.
+16            16    OSLER biofilter        &lt;NA&gt;  large           Lactucca spp.
+17            17    OSLER biofilter   vegetated  small          Euphorbia spp.
+18            18    OSLER    garden   vegetated medium      Unidentified shrub
+19            19    OSLER    garden   vegetated medium      Unidentified shrub
+20            20    ACTRI biofilter unvegetated  small       Onetheria biennis
+21            21    ACTRI biofilter unvegetated  small       Onetheria biennis
+22            22    ACTRI biofilter unvegetated  small       Onetheria biennis
+23            23    ACTRI biofilter unvegetated medium       Onetheria biennis
+24            24    ACTRI biofilter unvegetated medium       Onetheria biennis
+25            25    ACTRI biofilter unvegetated medium       Onetheria biennis
+26            26    OSLER biofilter   vegetated  large          Euphorbia spp.
+27            27    OSLER biofilter   vegetated medium          Euphorbia spp.
+28            28      SIO biofilter        &lt;NA&gt;  small          Euphorbia spp.
+29            29      SIO biofilter        &lt;NA&gt;  small          Euphorbia spp.
+30            30      SIO biofilter        &lt;NA&gt;  large          Euphorbia spp.
+31            31      SIO biofilter        &lt;NA&gt;  large          Euphorbia spp.
+32            32      SIO biofilter        &lt;NA&gt; medium          Euphorbia spp.
+33            33      SIO biofilter        &lt;NA&gt; medium          Euphorbia spp.
+34            34    ACTRI biofilter unvegetated  large          Unplanted weed
+35            35    ACTRI biofilter unvegetated medium          Unplanted weed
+36            36    ACTRI biofilter unvegetated  large          Unplanted weed
+37            37    ACTRI biofilter unvegetated  large          Unplanted weed
+38            38    ACTRI biofilter unvegetated  small          Unplanted weed
+39            39    ACTRI biofilter unvegetated  small          Unplanted weed
+40            40    ACTRI biofilter unvegetated  small          Unplanted weed
+41            41    ACTRI biofilter unvegetated medium          Unplanted weed
+42            42    ACTRI biofilter unvegetated medium          Unplanted weed
+43            43    ACTRI biofilter unvegetated  large       Onetheria biennis
+44            44    ACTRI biofilter unvegetated  large       Onetheria biennis
+45            45    ACTRI biofilter unvegetated  large       Onetheria biennis
+46            46    ACTRI biofilter   vegetated  small              Salix spp.
+47            47    ACTRI biofilter   vegetated  small              Salix spp.
+48            48    ACTRI biofilter   vegetated  small              Salix spp.
+49            49    ACTRI biofilter   vegetated medium              Salix spp.
+50            50    ACTRI biofilter   vegetated medium              Salix spp.
+51            51    ACTRI biofilter   vegetated medium              Salix spp.
+52            52    ACTRI biofilter   vegetated  large              Salix spp.
+53            53    OSLER    garden   vegetated medium      Unidentified shrub
+54            54    OSLER biofilter   vegetated  small      Unidentified shrub
+55            55    OSLER biofilter   vegetated  small      Unidentified shrub
+56            56    OSLER biofilter   vegetated  small      Unidentified shrub
+57            57    OSLER    garden   vegetated medium      Aptenia cordifolia
+58            58    OSLER    garden   vegetated medium      Aptenia cordifolia
+59            59    OSLER    garden   vegetated medium      Aptenia cordifolia
+60            70      SME biofilter   vegetated  large Chondropetalum tectorum
+61            71      SME biofilter   vegetated  small Chondropetalum tectorum
+62            72      SME biofilter   vegetated  small Chondropetalum tectorum
+63            73      SME biofilter   vegetated medium Chondropetalum tectorum
+64            74      SME biofilter   vegetated medium Chondropetalum tectorum
+65            77      SME   natural   vegetated  small   Artemisia californica
+66            78      SME   natural   vegetated  small   Artemisia californica
+67            79      SME   natural   vegetated medium   Artemisia californica
+68            80      SME   natural   vegetated medium   Artemisia californica
+69            81      SME   natural   vegetated  large   Artemisia californica
+70            82      SME   natural   vegetated  small     Baccharis pilularis
+71            83      SME   natural   vegetated  small     Baccharis pilularis
+72            84      SME   natural   vegetated medium     Baccharis pilularis
+73            85      SME   natural   vegetated  small     Baccharis pilularis
+74            86      SME   natural   vegetated medium     Baccharis pilularis
+75            87      SME   natural   vegetated  large     Baccharis pilularis
+76            89      SME   natural   vegetated  large     Baccharis pilularis
+77            88      SME   natural   vegetated  large   Artemisia californica
+78            90      SME biofilter   vegetated  large Chondropetalum tectorum
+79            91    ACTRI biofilter   vegetated  large              Salix spp.
+80            92    ACTRI biofilter   vegetated  large              Salix spp.
+81            93  Sanford biofilter   vegetated  large           Solidago spp.
+82            94  Sanford biofilter   vegetated  large           Solidago spp.
+83            95  Sanford biofilter   vegetated medium           Solidago spp.
+84            96  Sanford biofilter   vegetated medium           Solidago spp.
+85            97  Sanford biofilter   vegetated  small           Solidago spp.
+86            98  Sanford biofilter   vegetated  small           Solidago spp.
+87           100      SIO biofilter   vegetated  small          Unplanted weed
+88           101      SIO biofilter   vegetated  large          Unplanted weed
+89           102      SIO biofilter   vegetated medium          Unplanted weed
+90           103      SIO biofilter   vegetated  large          Unplanted weed
+91           104      SIO biofilter   vegetated medium          Unplanted weed
+92           105      SIO biofilter   vegetated  small          Unplanted weed
+93           110      SIO   natural        &lt;NA&gt;  small       Rhus integrifolia
+94           111      SIO   natural        &lt;NA&gt; medium       Rhus integrifolia
+95           112      SIO   natural        &lt;NA&gt;  small       Rhus integrifolia
+96           113      SIO   natural        &lt;NA&gt;  small       Rhus integrifolia
+97           114      SIO   natural        &lt;NA&gt;  large       Rhus integrifolia
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+1        forb    4.5           17.5                14.0          4.50
+2        forb    6.0           10.0                 7.5          3.17
+3        forb    8.5           12.0                 9.5          3.75
+4        forb     NA           59.5                30.0         13.00
+5        forb     NA           44.5                22.0         11.00
+6        forb     NA           84.0                35.0         34.85
+7        forb   23.0            4.5                 4.3          2.62
+8        forb   28.0            3.0                 2.7          1.30
+9        forb   20.0            4.5                 2.6          3.55
+10       forb   15.0            6.0                 4.0          8.00
+11       forb   18.5            9.5                 5.5          6.30
+12       forb    2.0           15.0                15.0            NA
+13       forb    5.0            9.0                 7.0            NA
+14       forb    3.2           12.0                 6.0            NA
+15       forb    4.0            9.5                 6.0            NA
+16       forb   29.0           15.0                 6.0         11.00
+17       forb    3.0            3.5                 1.0          1.54
+18      shrub   74.5          137.0                74.0         80.80
+19      shrub   87.0           94.0                81.0         76.35
+20       forb    4.0            9.0                 6.5            NA
+21       forb    4.2            8.8                 8.3            NA
+22       forb    7.0           12.2                11.0            NA
+23       forb    9.5           20.5                17.0            NA
+24       forb   12.5           24.0                21.0            NA
+25       forb    6.5           14.0                13.5            NA
+26       forb     NA           13.0                10.0          4.42
+27       forb     NA            7.2                 4.5          2.73
+28       forb     NA            4.6                 2.8          2.13
+29       forb     NA            3.7                 1.3          1.30
+30       forb     NA           24.0                18.0         12.82
+31       forb     NA           12.5                12.5          5.80
+32       forb     NA            8.0                 6.2          2.83
+33       forb     NA            8.0                 3.7          2.38
+34       forb   18.0            9.0                 8.0          3.71
+35       forb    7.5             NA                  NA            NA
+36       forb   17.0             NA                  NA          3.47
+37       forb   16.0             NA                  NA          3.53
+38       forb    6.0             NA                  NA            NA
+39       forb    6.0             NA                  NA            NA
+40       forb    5.5             NA                  NA            NA
+41       forb    8.0             NA                  NA            NA
+42       forb   10.5             NA                  NA            NA
+43       forb   18.0             NA                  NA            NA
+44       forb   17.0             NA                  NA            NA
+45       forb   13.0             NA                  NA            NA
+46       tree   50.0             NA                  NA            NA
+47       tree   42.0             NA                  NA            NA
+48       tree   28.0             NA                  NA            NA
+49       tree  154.0             NA                  NA         29.80
+50       tree  144.0             NA                  NA         28.67
+51       tree  116.0             NA                  NA          7.10
+52       tree  220.0             NA                  NA         24.70
+53      shrub   80.5          100.5                94.5         73.05
+54      shrub   50.5           87.0                61.0         52.20
+55      shrub   61.0           96.0                72.0         68.95
+56      shrub   66.0           96.0                82.0         57.65
+57       &lt;NA&gt;    9.0           68.0                39.0         20.10
+58       &lt;NA&gt;    3.0           58.5                47.0         23.34
+59       &lt;NA&gt;     NA           32.0                24.0         11.35
+60      shrub  177.0          259.0               160.0        158.90
+61      shrub  120.5           58.0                50.0         76.30
+62      shrub  132.5          114.0                24.0         83.80
+63      shrub  189.0          170.0                86.0        151.25
+64      shrub  150.0          116.0                62.0        141.40
+65      shrub   31.0           36.0                28.5         18.05
+66      shrub   32.0           47.0                31.5         17.20
+67      shrub   52.5           50.0                51.0         44.80
+68      shrub   60.0           55.0                46.0         49.95
+69      shrub   66.0          100.0                88.0         53.10
+70      shrub   45.0           34.0                33.0         32.90
+71      shrub   30.0           20.0                19.0         20.30
+72      shrub   54.0           45.0                44.0         40.90
+73      shrub   49.0           35.0                20.0         29.30
+74      shrub   48.0           74.0                71.0         53.90
+75      shrub   52.0           82.0                68.0         45.20
+76      shrub   71.0           72.0                69.0         50.60
+77      shrub   64.0           84.0                64.0         43.80
+78      shrub  180.0          210.0               132.0        167.90
+79       tree  239.0             NA                  NA        103.50
+80       tree  248.0             NA                  NA         61.77
+81       forb   11.5           12.5                10.0            NA
+82       forb    9.0           11.0                 7.0            NA
+83       forb    6.5            8.0                 5.0            NA
+84       forb    8.5            8.5                 4.5            NA
+85       forb    4.5            4.0                 3.5            NA
+86       forb    5.5            4.5                 2.0            NA
+87       forb    5.0            5.0                 4.5            NA
+88       forb    5.0           12.5                11.0            NA
+89       forb    2.5            9.0                 5.5            NA
+90       forb    5.0           11.0                10.5            NA
+91       forb    5.0            7.5                 7.5            NA
+92       forb    3.0            6.0                 6.0            NA
+93      shrub   53.0           27.0                38.0         27.50
+94      shrub   80.0           78.0                68.0         40.00
+95      shrub   55.0           44.0                29.0         21.15
+96      shrub   37.0           36.0                28.0         17.00
+97      shrub  144.0          126.0               104.0         69.15
+   Branch_diameter Basal_circ Stem_diameter Stem_height Stem_density
+1            0.430       0.44          0.44       22.00            1
+2            0.400      10.00            NA          NA            6
+3            0.350      11.00            NA          NA            4
+4            0.370       0.94          1.00       15.00            1
+5            0.460       0.96          0.96        3.00            1
+6            0.320       1.66          1.66        2.00            1
+7            0.055         NA          0.27       21.00            1
+8            0.048         NA          0.19       27.50            1
+9            0.066         NA          0.15       20.00            1
+10           0.030         NA          0.22        5.30            1
+11           0.092         NA          0.23        0.45            1
+12              NA      59.00            NA          NA           NA
+13              NA      12.50            NA          NA           NA
+14              NA      12.00            NA          NA           NA
+15              NA       6.50            NA          NA           NA
+16           0.420         NA            NA          NA           NA
+17           0.036         NA          0.03        1.00           NA
+18           0.117     148.00            NA          NA           NA
+19           0.078      85.00            NA          NA           NA
+20              NA         NA          0.18        1.30            1
+21              NA         NA          0.21        0.90            1
+22              NA         NA            NA          NA            1
+23              NA         NA          0.70        1.80            1
+24              NA         NA          0.66        1.00            1
+25              NA         NA          0.83        2.30            1
+26           0.074         NA          0.08        0.70           NA
+27           0.054         NA          0.05        0.40           NA
+28           0.053         NA          0.06        0.70            1
+29           0.058         NA          0.08        0.40            1
+30           0.075         NA          0.18        0.20           NA
+31           0.054         NA          0.13        0.70           NA
+32           0.051         NA          0.08        0.70            1
+33           0.059         NA          0.14        0.20            1
+34           0.070         NA          0.02       13.00            1
+35              NA         NA          0.07        7.00           NA
+36           0.052         NA          0.15       12.00            1
+37           0.051         NA          0.12        8.90            1
+38              NA         NA          0.03        5.50           NA
+39              NA         NA          0.04        5.50           NA
+40              NA         NA          0.04        5.30           NA
+41              NA         NA          0.05        6.50           NA
+42              NA         NA          0.08        9.50            1
+43              NA         NA          1.13          NA           NA
+44              NA         NA          1.59          NA           NA
+45              NA         NA          2.30          NA           NA
+46              NA         NA          0.21       47.40           NA
+47              NA         NA          0.17       37.00           NA
+48              NA         NA          0.08       22.50           NA
+49           0.169         NA          0.92          NA           NA
+50           0.209         NA          0.77          NA           NA
+51           0.111         NA          0.60          NA           NA
+52           0.230         NA          1.23          NA           NA
+53           0.088      69.50            NA          NA           NA
+54           0.078      58.00            NA          NA           NA
+55           0.072      47.00            NA          NA           NA
+56           0.051      37.50            NA          NA           NA
+57           0.336         NA          0.27        6.00           NA
+58           0.376         NA          0.38        9.00           NA
+59           0.446         NA          0.90        5.00           NA
+60           0.456     132.00            NA          NA          145
+61           0.466      65.00            NA          NA           40
+62           0.457      60.00            NA          NA           20
+63           0.418     131.00            NA          NA           60
+64           0.396     124.30            NA          NA          130
+65           0.207         NA          1.66        1.50            1
+66           0.148         NA          2.40        2.00            1
+67           0.236      36.00          2.95        1.50            1
+68           0.283      30.20            NA          NA            1
+69           0.256     115.50            NA          NA            1
+70           0.232      13.00          1.31        2.50           NA
+71           0.204       8.00          0.83          NA           NA
+72           0.386      13.50          2.76        4.00           NA
+73           0.290         NA          1.17          NA           NA
+74           0.440      30.50          1.30          NA           NA
+75           0.466      72.50            NA          NA           NA
+76           0.691      31.00            NA          NA           NA
+77           0.325      48.00            NA          NA           NA
+78           0.482     146.00            NA          NA          120
+79           0.483         NA          1.63          NA            1
+80           0.368         NA          1.85          NA            1
+81              NA         NA          0.08        0.40           NA
+82              NA         NA          0.12        4.50           NA
+83              NA         NA          0.07        1.50           NA
+84              NA         NA          0.09        3.00           NA
+85              NA         NA          0.09        0.80           NA
+86              NA         NA          0.09        2.30           NA
+87              NA         NA          0.13          NA           NA
+88              NA         NA          1.10          NA           NA
+89              NA         NA          0.08          NA           NA
+90              NA         NA          0.19          NA           NA
+91              NA         NA          0.12          NA           NA
+92              NA         NA            NA          NA           NA
+93           0.445         NA          1.07       16.00            1
+94           0.891         NA          2.71       12.00            1
+95           0.397         NA          1.28        6.50            1
+96           0.371         NA          1.97        3.00            1
+97           1.146         NA          3.63        8.00            1
+   Branches_per_stem Leaves_per_branch Total_leaves Leaf_lmax Leaf_lmin
+1                 NA              8.40           NA      3.50      1.50
+2                 NA              7.40           NA      3.00      1.00
+3                 NA             10.50           NA      3.80      1.80
+4                 12             28.00           NA      5.30      1.80
+5                 NA             18.20           NA      3.50      1.50
+6                 27             22.00           NA      4.50      1.40
+7                 13                NA           40      2.80      1.10
+8                 10                NA           35      3.40      1.00
+9                  7                NA           60      2.80      1.00
+10                 3                NA           30      2.40      1.00
+11                15                NA          100      1.50      0.50
+12                NA                NA           11      8.50      4.00
+13                NA                NA            7      6.00      2.20
+14                NA                NA            6      6.80      1.90
+15                NA                NA            4      7.50      3.60
+16                 2              4.50           42     15.00      9.00
+17                 5              7.80           NA      0.50      0.25
+18               725                NA           NA        NA        NA
+19               900                NA           NA        NA        NA
+20                NA                NA            9      7.40      1.10
+21                NA                NA            9      7.30      0.90
+22                NA                NA           22      8.50      2.50
+23                NA                NA           18     17.00      2.50
+24                NA                NA           37     16.50      3.10
+25                NA                NA           18     18.50      2.70
+26                36             26.80           NA      0.70      0.20
+27                13             16.20           NA      0.60      0.20
+28                 4              9.75           NA      0.40      0.20
+29                 4              6.50           NA      0.45      0.20
+30               120             32.00           NA      0.55      0.30
+31                43             32.20           NA      0.40      0.15
+32                18             20.20           NA      0.50      0.20
+33                15             13.40           NA      0.50      0.15
+34                16             17.80           NA      2.40      0.90
+35                NA                NA           14      1.70      0.70
+36                16              7.80           NA      2.50      0.60
+37                11             10.00           NA      1.60      0.80
+38                NA                NA           17      0.80      0.25
+39                NA                NA           16      0.90      0.40
+40                NA                NA           12      0.80      0.20
+41                NA                NA           16      1.90      0.55
+42                NA                NA           23      1.70      0.50
+43                NA                NA           27     14.00      4.00
+44                NA                NA           28     14.00      4.50
+45                NA                NA           49     10.50      4.50
+46                NA                NA           25      9.00      2.60
+47                NA                NA           13      8.00      3.30
+48                NA                NA            8      7.00      4.50
+49                18             16.40           NA     11.00      4.00
+50                 9              8.80           NA     11.50      4.50
+51                 7             11.40           NA     11.00      4.00
+52                16             15.60           NA     12.50      5.00
+53               900                NA           NA        NA        NA
+54               300                NA           NA        NA        NA
+55               500                NA           NA        NA        NA
+56               350                NA           NA        NA        NA
+57                12             17.00           NA      4.00      1.60
+58                32             16.20           NA      3.70      1.70
+59                16             21.20           NA      3.20      1.50
+60                NA                NA           NA        NA        NA
+61                NA                NA           NA        NA        NA
+62                NA                NA           NA        NA        NA
+63                NA                NA           NA        NA        NA
+64                NA                NA           NA        NA        NA
+65                60                NA           NA        NA        NA
+66                37                NA           NA        NA        NA
+67                63                NA           NA        NA        NA
+68                44                NA           NA        NA        NA
+69               196                NA           NA        NA        NA
+70                17             16.40           NA     14.00      9.50
+71                14             12.20           NA     10.00      7.50
+72                16             25.20           NA     20.00      9.50
+73                10             20.60           NA     14.00     10.00
+74                48             20.20           NA     19.00     11.00
+75                40             26.20           NA     16.50     11.70
+76                41             28.60           NA     14.50      9.50
+77                85                NA           NA        NA        NA
+78                NA                NA           NA        NA        NA
+79                 6             29.83           NA     13.50      6.50
+80                18             28.60           NA     12.00      5.00
+81                NA                NA            9     11.00      4.00
+82                NA                NA            9      8.00      3.00
+83                NA                NA           10      6.00      1.40
+84                NA                NA            8      6.00      0.90
+85                NA                NA            5      4.20      3.00
+86                NA                NA            5      5.20      2.70
+87                NA                NA           17      4.50      1.80
+88                NA                NA           95      4.50      1.70
+89                NA                NA           54      3.50      1.50
+90                NA                NA           99      3.80      2.00
+91                NA                NA           33      4.00      2.20
+92                NA                NA           44      3.00      1.40
+93                 6                NA          104      5.50      2.30
+94                50                NA          687      6.40      2.40
+95                11                NA           94      5.90      3.20
+96                 9                NA           56      5.50      2.20
+97                61                NA          892      5.30      2.70
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+1       2.48      2.30      1.10      1.79      0.27      0.16     0.210
+2       2.07      2.00      0.80      1.46      0.26      0.09     0.160
+3       2.79      2.40      1.10      1.78      0.28      0.12     0.160
+4       3.44      3.20      1.30      2.12      0.20      0.14     0.160
+5       2.61      2.00      0.80      1.60      0.27      0.11     0.180
+6       2.73      3.00      1.00      1.84      0.17      0.09     0.130
+7       1.98      0.30      0.10      0.21      0.04      0.02     0.030
+8       2.21      0.50      0.10      0.23      0.03      0.10     0.024
+9       1.92      0.50      0.10      0.21      0.03      0.01     0.210
+10      1.27      0.20      0.10      0.12      0.02      0.01     0.014
+11      1.12      0.20      0.10      0.12      0.03      0.01     0.023
+12      6.50      2.70      1.30      2.08      0.09      0.04     0.059
+13      4.10      2.00      1.20      1.56      0.05      0.02     0.027
+14      4.48      2.00      1.00      1.58      0.04      0.02     0.033
+15      6.15      1.90      1.00      1.43      0.04      0.03     0.038
+16     11.22      4.00      1.00      2.36      0.15      0.06     0.103
+17      0.42      0.40      0.15      0.26      0.01      0.01     0.010
+18        NA        NA        NA        NA        NA        NA        NA
+19        NA        NA        NA        NA        NA        NA        NA
+20      4.47      1.90      0.20      1.17      0.06      0.02     0.039
+21      4.28      1.90      0.20      1.19      0.06      0.03     0.043
+22      5.42      1.70      0.80      1.26      0.08      0.02     0.056
+23      9.01      2.90      0.80      1.97      0.09      0.04     0.069
+24     10.61      2.40      0.60      1.51      0.08      0.06     0.070
+25     10.11      2.50      0.70      1.62      0.10      0.05     0.066
+26      0.43      0.50      0.20      0.32      0.02      0.01     0.012
+27      0.38      0.40      0.20      0.30      0.01      0.01     0.010
+28      0.31      0.40      0.15      0.27      0.02      0.01     0.013
+29      0.32      0.35      0.20      0.26      0.01      0.01     0.010
+30      0.44      0.50      0.25      0.38      0.02      0.01     0.017
+31      0.27      0.30      0.15      0.23      0.01      0.01     0.010
+32      0.34      0.40      0.15      0.26      0.01      0.01     0.010
+33      0.32      0.40      0.15      0.26      0.01      0.01     0.010
+34      1.60      1.00      0.40      0.68      0.01      0.01     0.010
+35      1.09      1.00      0.40      0.56      0.01      0.01     0.010
+36      1.49      0.80      0.30      0.56      0.01      0.01     0.010
+37      1.13      0.60      0.40      0.49      0.01      0.01     0.010
+38      0.57      0.40      0.20      0.29      0.01      0.01     0.010
+39      0.67      0.50      0.25      0.36      0.01      0.01     0.010
+40      0.56      0.50      0.15      0.32      0.01      0.01     0.010
+41      1.16      0.65      0.30      0.49      0.01      0.01     0.010
+42      1.07      0.80      0.25      0.49      0.01      0.01     0.010
+43     10.28      2.00      0.80      1.61      0.08      0.04     0.058
+44      9.17      2.30      1.00      1.63      0.07      0.05     0.059
+45      7.67      1.90      1.10      1.60      0.06      0.04     0.054
+46      6.20      0.80      0.40      0.57      0.04      0.03     0.032
+47      5.88      0.50      0.20      0.32      0.04      0.02     0.024
+48      5.56      0.50      0.15      0.36      0.03      0.02     0.025
+49      7.83      1.00      0.40      0.67      0.07      0.04     0.053
+50      7.94      0.90      0.35      0.59      0.08      0.50     0.060
+51      7.47      0.60      0.30      0.47      0.06      0.03     0.051
+52      9.00      1.00      0.40      0.62      0.08      0.05     0.066
+53        NA        NA        NA        NA        NA        NA        NA
+54        NA        NA        NA        NA        NA        NA        NA
+55        NA        NA        NA        NA        NA        NA        NA
+56        NA        NA        NA        NA        NA        NA        NA
+57      2.93      2.00      1.00      1.52      0.16      0.10     0.120
+58      2.57      2.20      1.00      1.53      0.17      0.12     0.130
+59      2.41      1.80      0.90      1.36      0.24      0.14     0.207
+60        NA        NA        NA        NA        NA        NA        NA
+61        NA        NA        NA        NA        NA        NA        NA
+62        NA        NA        NA        NA        NA        NA        NA
+63        NA        NA        NA        NA        NA        NA        NA
+64        NA        NA        NA        NA        NA        NA        NA
+65        NA        NA        NA        NA        NA        NA        NA
+66        NA        NA        NA        NA        NA        NA        NA
+67        NA        NA        NA        NA        NA        NA        NA
+68        NA        NA        NA        NA        NA        NA        NA
+69        NA        NA        NA        NA        NA        NA        NA
+70     12.40     19.00      8.00     13.00      0.10      0.08     0.084
+71      8.80     12.00      8.00      9.00      0.07      0.11     0.090
+72     14.50     55.00     11.00     25.80      0.05      0.10     0.068
+73     11.90     22.00     14.00     17.80      0.08      0.06     0.070
+74     14.00     16.00     11.00     13.60      0.10      0.06     0.082
+75     14.04     47.00     30.00     39.60      0.07      0.10     0.080
+76     11.60     24.00     13.00     19.60      0.07      0.05     0.056
+77        NA        NA        NA        NA        NA        NA        NA
+78        NA        NA        NA        NA        NA        NA        NA
+79      9.30      1.10      0.40      0.89      0.06      0.02     0.046
+80      9.41      1.50      0.30      0.90      0.06      0.03     0.042
+81      7.59      3.00      0.90      2.13      0.05      0.03     0.032
+82      5.64      2.30      0.70      1.57      0.03      0.02     0.027
+83      4.18      1.50      0.20      1.08      0.02      0.01     0.019
+84      3.64      1.20      0.20      0.75      0.03      0.01     0.019
+85      3.22      1.40      0.70      1.04      0.03      0.02     0.024
+86      3.90      1.90      1.10      1.56      0.04      0.02     0.030
+87      3.10      0.70      0.25      0.53      0.03      0.01     0.022
+88      3.20      1.00      0.40      0.71      0.04      0.02     0.031
+89      2.38      0.90      0.40      0.58      0.03      0.02     0.027
+90      2.71      0.90      0.50      0.70      0.03      0.02     0.023
+91      3.00      1.50      0.30      0.76      0.04      0.02     0.024
+92      2.18      0.90      0.30      0.58      0.03      0.01     0.024
+93      3.89      3.70      1.60      2.74      0.06      0.05     0.054
+94      4.79      4.30      1.60      3.17      0.10      0.05     0.078
+95      4.73      3.80      2.20      3.14      0.07      0.05     0.057
+96      3.99      3.70      1.50      2.31      0.07      0.03     0.056
+97      4.10      4.00      2.00      2.98      0.08      0.05     0.071
+   Biomass Measurement_location
+1     3.34                field
+2     1.46                field
+3     1.36                field
+4    11.79                field
+5    14.45                field
+6    29.83                field
+7     0.73                field
+8     0.50                field
+9     0.35                field
+10    0.21                field
+11    1.14                field
+12    0.31                field
+13    0.05                field
+14    0.03                field
+15    0.03                field
+16    2.35                  lab
+17    0.01                  lab
+18  302.54            field/lab
+19  261.54            field/lab
+20    0.09                  lab
+21    0.10                  lab
+22    0.40                  lab
+23    0.66                  lab
+24    1.22                  lab
+25    1.01                  lab
+26    0.24                  lab
+27    0.08                  lab
+28    0.01                  lab
+29    0.01                  lab
+30    1.63                  lab
+31    0.49                  lab
+32    0.13                  lab
+33    0.12                  lab
+34    0.24                  lab
+35    0.01                  lab
+36    0.15                  lab
+37    0.12                  lab
+38    0.02                  lab
+39    0.01                  lab
+40    0.00                  lab
+41    0.02                  lab
+42    0.05                  lab
+43    5.25                  lab
+44    6.66                  lab
+45    6.20                  lab
+46    1.17                  lab
+47    0.71                  lab
+48    0.31                  lab
+49   27.27                  lab
+50   20.90                  lab
+51    9.61                  lab
+52   72.53                  lab
+53  274.96                field
+54   96.98                field
+55  193.03                field
+56  138.54                field
+57    6.69                field
+58   12.18                field
+59    6.75                field
+60 2083.04                field
+61  114.86                field
+62   64.38                field
+63  761.40                field
+64 2059.46                field
+65   19.59                field
+66   14.55                field
+67   92.60                field
+68   85.03                field
+69  395.36                field
+70   27.43                  lab
+71   13.95                  lab
+72   86.63                  lab
+73   28.76                  lab
+74  166.61            field/lab
+75  385.97                field
+76  102.65                field
+77  268.56                field
+78 2350.90                field
+79  154.68            field/lab
+80  135.22            field/lab
+81    0.47                 &lt;NA&gt;
+82    0.25                 &lt;NA&gt;
+83    0.14                 &lt;NA&gt;
+84    0.07                 &lt;NA&gt;
+85    0.04                 &lt;NA&gt;
+86    0.09                 &lt;NA&gt;
+87    0.08                 &lt;NA&gt;
+88    0.21                 &lt;NA&gt;
+89    0.51                 &lt;NA&gt;
+90    0.39                 &lt;NA&gt;
+91    0.18                 &lt;NA&gt;
+92    0.13                 &lt;NA&gt;
+93   49.58                 &lt;NA&gt;
+94  556.47                 &lt;NA&gt;
+95   55.20                 &lt;NA&gt;
+96   36.56                 &lt;NA&gt;
+97 1172.31                 &lt;NA&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redefine spec with a new list of species (excluding Festuca Mairei). </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">with</span>(d1, <span class="fu">split</span>(d1, <span class="fu">list</span>(<span class="at">Species =</span> Species)))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">lapply</span>(spec, <span class="cf">function</span>(x) x[, <span class="fu">colSums</span>(<span class="fu">is.na</span>(x)) <span class="sc">==</span> <span class="dv">0</span>])</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>spec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`Aptenia cordifolia`
+   Sample number Location   Type Treatment   Size            Species
+1              1      SME garden vegetated  small Aptenia cordifolia
+2              2      SME garden vegetated  small Aptenia cordifolia
+3              3      SME garden vegetated  small Aptenia cordifolia
+4              4      SME garden vegetated  large Aptenia cordifolia
+5              5      SME garden vegetated  large Aptenia cordifolia
+6              6      SME garden vegetated  large Aptenia cordifolia
+57            57    OSLER garden vegetated medium Aptenia cordifolia
+58            58    OSLER garden vegetated medium Aptenia cordifolia
+59            59    OSLER garden vegetated medium Aptenia cordifolia
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+1            17.5                14.0          4.50           0.430
+2            10.0                 7.5          3.17           0.400
+3            12.0                 9.5          3.75           0.350
+4            59.5                30.0         13.00           0.370
+5            44.5                22.0         11.00           0.460
+6            84.0                35.0         34.85           0.320
+57           68.0                39.0         20.10           0.336
+58           58.5                47.0         23.34           0.376
+59           32.0                24.0         11.35           0.446
+   Leaves_per_branch Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+1                8.4       3.5       1.5      2.48       2.3       1.1
+2                7.4       3.0       1.0      2.07       2.0       0.8
+3               10.5       3.8       1.8      2.79       2.4       1.1
+4               28.0       5.3       1.8      3.44       3.2       1.3
+5               18.2       3.5       1.5      2.61       2.0       0.8
+6               22.0       4.5       1.4      2.73       3.0       1.0
+57              17.0       4.0       1.6      2.93       2.0       1.0
+58              16.2       3.7       1.7      2.57       2.2       1.0
+59              21.2       3.2       1.5      2.41       1.8       0.9
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+1       1.79      0.27      0.16     0.210    3.34                field
+2       1.46      0.26      0.09     0.160    1.46                field
+3       1.78      0.28      0.12     0.160    1.36                field
+4       2.12      0.20      0.14     0.160   11.79                field
+5       1.60      0.27      0.11     0.180   14.45                field
+6       1.84      0.17      0.09     0.130   29.83                field
+57      1.52      0.16      0.10     0.120    6.69                field
+58      1.53      0.17      0.12     0.130   12.18                field
+59      1.36      0.24      0.14     0.207    6.75                field
+
+$`Artemisia californica`
+   Sample number Location    Type Treatment   Size               Species
+65            77      SME natural vegetated  small Artemisia californica
+66            78      SME natural vegetated  small Artemisia californica
+67            79      SME natural vegetated medium Artemisia californica
+68            80      SME natural vegetated medium Artemisia californica
+69            81      SME natural vegetated  large Artemisia californica
+77            88      SME natural vegetated  large Artemisia californica
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+65      shrub   31.0             36                28.5         18.05
+66      shrub   32.0             47                31.5         17.20
+67      shrub   52.5             50                51.0         44.80
+68      shrub   60.0             55                46.0         49.95
+69      shrub   66.0            100                88.0         53.10
+77      shrub   64.0             84                64.0         43.80
+   Branch_diameter Branches_per_stem Biomass Measurement_location
+65           0.207                60   19.59                field
+66           0.148                37   14.55                field
+67           0.236                63   92.60                field
+68           0.283                44   85.03                field
+69           0.256               196  395.36                field
+77           0.325                85  268.56                field
+
+$`Baccharis pilularis`
+   Sample number Location    Type Treatment   Size             Species
+70            82      SME natural vegetated  small Baccharis pilularis
+71            83      SME natural vegetated  small Baccharis pilularis
+72            84      SME natural vegetated medium Baccharis pilularis
+73            85      SME natural vegetated  small Baccharis pilularis
+74            86      SME natural vegetated medium Baccharis pilularis
+75            87      SME natural vegetated  large Baccharis pilularis
+76            89      SME natural vegetated  large Baccharis pilularis
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+70      shrub     45             34                  33          32.9
+71      shrub     30             20                  19          20.3
+72      shrub     54             45                  44          40.9
+73      shrub     49             35                  20          29.3
+74      shrub     48             74                  71          53.9
+75      shrub     52             82                  68          45.2
+76      shrub     71             72                  69          50.6
+   Branch_diameter Branches_per_stem Leaves_per_branch Leaf_lmax Leaf_lmin
+70           0.232                17              16.4      14.0       9.5
+71           0.204                14              12.2      10.0       7.5
+72           0.386                16              25.2      20.0       9.5
+73           0.290                10              20.6      14.0      10.0
+74           0.440                48              20.2      19.0      11.0
+75           0.466                40              26.2      16.5      11.7
+76           0.691                41              28.6      14.5       9.5
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+70     12.40        19         8      13.0      0.10      0.08     0.084
+71      8.80        12         8       9.0      0.07      0.11     0.090
+72     14.50        55        11      25.8      0.05      0.10     0.068
+73     11.90        22        14      17.8      0.08      0.06     0.070
+74     14.00        16        11      13.6      0.10      0.06     0.082
+75     14.04        47        30      39.6      0.07      0.10     0.080
+76     11.60        24        13      19.6      0.07      0.05     0.056
+   Biomass Measurement_location
+70   27.43                  lab
+71   13.95                  lab
+72   86.63                  lab
+73   28.76                  lab
+74  166.61            field/lab
+75  385.97                field
+76  102.65                field
+
+$`Chondropetalum tectorum`
+   Sample number Location      Type Treatment   Size                 Species
+60            70      SME biofilter vegetated  large Chondropetalum tectorum
+61            71      SME biofilter vegetated  small Chondropetalum tectorum
+62            72      SME biofilter vegetated  small Chondropetalum tectorum
+63            73      SME biofilter vegetated medium Chondropetalum tectorum
+64            74      SME biofilter vegetated medium Chondropetalum tectorum
+78            90      SME biofilter vegetated  large Chondropetalum tectorum
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+60      shrub  177.0            259                 160        158.90
+61      shrub  120.5             58                  50         76.30
+62      shrub  132.5            114                  24         83.80
+63      shrub  189.0            170                  86        151.25
+64      shrub  150.0            116                  62        141.40
+78      shrub  180.0            210                 132        167.90
+   Branch_diameter Basal_circ Stem_density Biomass Measurement_location
+60           0.456      132.0          145 2083.04                field
+61           0.466       65.0           40  114.86                field
+62           0.457       60.0           20   64.38                field
+63           0.418      131.0           60  761.40                field
+64           0.396      124.3          130 2059.46                field
+78           0.482      146.0          120 2350.90                field
+
+$`Euphorbia spp.`
+   Sample number Location      Type   Size        Species Plant type
+17            17    OSLER biofilter  small Euphorbia spp.       forb
+26            26    OSLER biofilter  large Euphorbia spp.       forb
+27            27    OSLER biofilter medium Euphorbia spp.       forb
+28            28      SIO biofilter  small Euphorbia spp.       forb
+29            29      SIO biofilter  small Euphorbia spp.       forb
+30            30      SIO biofilter  large Euphorbia spp.       forb
+31            31      SIO biofilter  large Euphorbia spp.       forb
+32            32      SIO biofilter medium Euphorbia spp.       forb
+33            33      SIO biofilter medium Euphorbia spp.       forb
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+17            3.5                 1.0          1.54           0.036
+26           13.0                10.0          4.42           0.074
+27            7.2                 4.5          2.73           0.054
+28            4.6                 2.8          2.13           0.053
+29            3.7                 1.3          1.30           0.058
+30           24.0                18.0         12.82           0.075
+31           12.5                12.5          5.80           0.054
+32            8.0                 6.2          2.83           0.051
+33            8.0                 3.7          2.38           0.059
+   Stem_diameter Stem_height Branches_per_stem Leaves_per_branch Leaf_lmax
+17          0.03         1.0                 5              7.80      0.50
+26          0.08         0.7                36             26.80      0.70
+27          0.05         0.4                13             16.20      0.60
+28          0.06         0.7                 4              9.75      0.40
+29          0.08         0.4                 4              6.50      0.45
+30          0.18         0.2               120             32.00      0.55
+31          0.13         0.7                43             32.20      0.40
+32          0.08         0.7                18             20.20      0.50
+33          0.14         0.2                15             13.40      0.50
+   Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin
+17      0.25      0.42      0.40      0.15      0.26      0.01      0.01
+26      0.20      0.43      0.50      0.20      0.32      0.02      0.01
+27      0.20      0.38      0.40      0.20      0.30      0.01      0.01
+28      0.20      0.31      0.40      0.15      0.27      0.02      0.01
+29      0.20      0.32      0.35      0.20      0.26      0.01      0.01
+30      0.30      0.44      0.50      0.25      0.38      0.02      0.01
+31      0.15      0.27      0.30      0.15      0.23      0.01      0.01
+32      0.20      0.34      0.40      0.15      0.26      0.01      0.01
+33      0.15      0.32      0.40      0.15      0.26      0.01      0.01
+   Leaf_tavg Biomass Measurement_location
+17     0.010    0.01                  lab
+26     0.012    0.24                  lab
+27     0.010    0.08                  lab
+28     0.013    0.01                  lab
+29     0.010    0.01                  lab
+30     0.017    1.63                  lab
+31     0.010    0.49                  lab
+32     0.010    0.13                  lab
+33     0.010    0.12                  lab
+
+$`Gnaphalium spp.`
+   Sample number Location      Type Treatment   Size         Species Plant type
+7              7    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+8              8    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+9              9    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+10            10    OSLER biofilter vegetated  small Gnaphalium spp.       forb
+11            11    OSLER biofilter vegetated medium Gnaphalium spp.       forb
+   Height Width_farthest Width_perpendicular Branch_length Branch_diameter
+7    23.0            4.5                 4.3          2.62           0.055
+8    28.0            3.0                 2.7          1.30           0.048
+9    20.0            4.5                 2.6          3.55           0.066
+10   15.0            6.0                 4.0          8.00           0.030
+11   18.5            9.5                 5.5          6.30           0.092
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+7           0.27       21.00            1                13           40
+8           0.19       27.50            1                10           35
+9           0.15       20.00            1                 7           60
+10          0.22        5.30            1                 3           30
+11          0.23        0.45            1                15          100
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+7        2.8       1.1      1.98       0.3       0.1      0.21      0.04
+8        3.4       1.0      2.21       0.5       0.1      0.23      0.03
+9        2.8       1.0      1.92       0.5       0.1      0.21      0.03
+10       2.4       1.0      1.27       0.2       0.1      0.12      0.02
+11       1.5       0.5      1.12       0.2       0.1      0.12      0.03
+   Leaf_tmin Leaf_tavg Biomass Measurement_location
+7       0.02     0.030    0.73                field
+8       0.10     0.024    0.50                field
+9       0.01     0.210    0.35                field
+10      0.01     0.014    0.21                field
+11      0.01     0.023    1.14                field
+
+$`Lactucca spp.`
+   Sample number Location      Type  Size       Species Plant type Height
+12            12    OSLER biofilter large Lactucca spp.       forb    2.0
+13            13    OSLER biofilter small Lactucca spp.       forb    5.0
+14            14    OSLER biofilter small Lactucca spp.       forb    3.2
+15            15    OSLER biofilter small Lactucca spp.       forb    4.0
+16            16    OSLER biofilter large Lactucca spp.       forb   29.0
+   Width_farthest Width_perpendicular Total_leaves Leaf_lmax Leaf_lmin
+12           15.0                  15           11       8.5       4.0
+13            9.0                   7            7       6.0       2.2
+14           12.0                   6            6       6.8       1.9
+15            9.5                   6            4       7.5       3.6
+16           15.0                   6           42      15.0       9.0
+   Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg
+12      6.50       2.7       1.3      2.08      0.09      0.04     0.059
+13      4.10       2.0       1.2      1.56      0.05      0.02     0.027
+14      4.48       2.0       1.0      1.58      0.04      0.02     0.033
+15      6.15       1.9       1.0      1.43      0.04      0.03     0.038
+16     11.22       4.0       1.0      2.36      0.15      0.06     0.103
+   Biomass Measurement_location
+12    0.31                field
+13    0.05                field
+14    0.03                field
+15    0.03                field
+16    2.35                  lab
+
+$`Onetheria biennis`
+   Sample number Location      Type   Treatment   Size           Species
+20            20    ACTRI biofilter unvegetated  small Onetheria biennis
+21            21    ACTRI biofilter unvegetated  small Onetheria biennis
+22            22    ACTRI biofilter unvegetated  small Onetheria biennis
+23            23    ACTRI biofilter unvegetated medium Onetheria biennis
+24            24    ACTRI biofilter unvegetated medium Onetheria biennis
+25            25    ACTRI biofilter unvegetated medium Onetheria biennis
+43            43    ACTRI biofilter unvegetated  large Onetheria biennis
+44            44    ACTRI biofilter unvegetated  large Onetheria biennis
+45            45    ACTRI biofilter unvegetated  large Onetheria biennis
+   Plant type Height Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax
+20       forb    4.0            9       7.4       1.1      4.47       1.9
+21       forb    4.2            9       7.3       0.9      4.28       1.9
+22       forb    7.0           22       8.5       2.5      5.42       1.7
+23       forb    9.5           18      17.0       2.5      9.01       2.9
+24       forb   12.5           37      16.5       3.1     10.61       2.4
+25       forb    6.5           18      18.5       2.7     10.11       2.5
+43       forb   18.0           27      14.0       4.0     10.28       2.0
+44       forb   17.0           28      14.0       4.5      9.17       2.3
+45       forb   13.0           49      10.5       4.5      7.67       1.9
+   Leaf_wmin Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+20       0.2      1.17      0.06      0.02     0.039    0.09
+21       0.2      1.19      0.06      0.03     0.043    0.10
+22       0.8      1.26      0.08      0.02     0.056    0.40
+23       0.8      1.97      0.09      0.04     0.069    0.66
+24       0.6      1.51      0.08      0.06     0.070    1.22
+25       0.7      1.62      0.10      0.05     0.066    1.01
+43       0.8      1.61      0.08      0.04     0.058    5.25
+44       1.0      1.63      0.07      0.05     0.059    6.66
+45       1.1      1.60      0.06      0.04     0.054    6.20
+   Measurement_location
+20                  lab
+21                  lab
+22                  lab
+23                  lab
+24                  lab
+25                  lab
+43                  lab
+44                  lab
+45                  lab
+
+$`Rhus integrifolia`
+   Sample number Location    Type   Size           Species Plant type Height
+93           110      SIO natural  small Rhus integrifolia      shrub     53
+94           111      SIO natural medium Rhus integrifolia      shrub     80
+95           112      SIO natural  small Rhus integrifolia      shrub     55
+96           113      SIO natural  small Rhus integrifolia      shrub     37
+97           114      SIO natural  large Rhus integrifolia      shrub    144
+   Width_farthest Width_perpendicular Branch_length Branch_diameter
+93             27                  38         27.50           0.445
+94             78                  68         40.00           0.891
+95             44                  29         21.15           0.397
+96             36                  28         17.00           0.371
+97            126                 104         69.15           1.146
+   Stem_diameter Stem_height Stem_density Branches_per_stem Total_leaves
+93          1.07        16.0            1                 6          104
+94          2.71        12.0            1                50          687
+95          1.28         6.5            1                11           94
+96          1.97         3.0            1                 9           56
+97          3.63         8.0            1                61          892
+   Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg Leaf_tmax
+93       5.5       2.3      3.89       3.7       1.6      2.74      0.06
+94       6.4       2.4      4.79       4.3       1.6      3.17      0.10
+95       5.9       3.2      4.73       3.8       2.2      3.14      0.07
+96       5.5       2.2      3.99       3.7       1.5      2.31      0.07
+97       5.3       2.7      4.10       4.0       2.0      2.98      0.08
+   Leaf_tmin Leaf_tavg Biomass
+93      0.05     0.054   49.58
+94      0.05     0.078  556.47
+95      0.05     0.057   55.20
+96      0.03     0.056   36.56
+97      0.05     0.071 1172.31
+
+$`Salix spp.`
+   Sample number Location      Type Treatment   Size    Species Plant type
+46            46    ACTRI biofilter vegetated  small Salix spp.       tree
+47            47    ACTRI biofilter vegetated  small Salix spp.       tree
+48            48    ACTRI biofilter vegetated  small Salix spp.       tree
+49            49    ACTRI biofilter vegetated medium Salix spp.       tree
+50            50    ACTRI biofilter vegetated medium Salix spp.       tree
+51            51    ACTRI biofilter vegetated medium Salix spp.       tree
+52            52    ACTRI biofilter vegetated  large Salix spp.       tree
+79            91    ACTRI biofilter vegetated  large Salix spp.       tree
+80            92    ACTRI biofilter vegetated  large Salix spp.       tree
+   Height Stem_diameter Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+46     50          0.21       9.0       2.6      6.20       0.8      0.40
+47     42          0.17       8.0       3.3      5.88       0.5      0.20
+48     28          0.08       7.0       4.5      5.56       0.5      0.15
+49    154          0.92      11.0       4.0      7.83       1.0      0.40
+50    144          0.77      11.5       4.5      7.94       0.9      0.35
+51    116          0.60      11.0       4.0      7.47       0.6      0.30
+52    220          1.23      12.5       5.0      9.00       1.0      0.40
+79    239          1.63      13.5       6.5      9.30       1.1      0.40
+80    248          1.85      12.0       5.0      9.41       1.5      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass Measurement_location
+46      0.57      0.04      0.03     0.032    1.17                  lab
+47      0.32      0.04      0.02     0.024    0.71                  lab
+48      0.36      0.03      0.02     0.025    0.31                  lab
+49      0.67      0.07      0.04     0.053   27.27                  lab
+50      0.59      0.08      0.50     0.060   20.90                  lab
+51      0.47      0.06      0.03     0.051    9.61                  lab
+52      0.62      0.08      0.05     0.066   72.53                  lab
+79      0.89      0.06      0.02     0.046  154.68            field/lab
+80      0.90      0.06      0.03     0.042  135.22            field/lab
+
+$`Solidago spp.`
+   Sample number Location      Type Treatment   Size       Species Plant type
+81            93  Sanford biofilter vegetated  large Solidago spp.       forb
+82            94  Sanford biofilter vegetated  large Solidago spp.       forb
+83            95  Sanford biofilter vegetated medium Solidago spp.       forb
+84            96  Sanford biofilter vegetated medium Solidago spp.       forb
+85            97  Sanford biofilter vegetated  small Solidago spp.       forb
+86            98  Sanford biofilter vegetated  small Solidago spp.       forb
+   Height Width_farthest Width_perpendicular Stem_diameter Stem_height
+81   11.5           12.5                10.0          0.08         0.4
+82    9.0           11.0                 7.0          0.12         4.5
+83    6.5            8.0                 5.0          0.07         1.5
+84    8.5            8.5                 4.5          0.09         3.0
+85    4.5            4.0                 3.5          0.09         0.8
+86    5.5            4.5                 2.0          0.09         2.3
+   Total_leaves Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin Leaf_wavg
+81            9      11.0       4.0      7.59       3.0       0.9      2.13
+82            9       8.0       3.0      5.64       2.3       0.7      1.57
+83           10       6.0       1.4      4.18       1.5       0.2      1.08
+84            8       6.0       0.9      3.64       1.2       0.2      0.75
+85            5       4.2       3.0      3.22       1.4       0.7      1.04
+86            5       5.2       2.7      3.90       1.9       1.1      1.56
+   Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+81      0.05      0.03     0.032    0.47
+82      0.03      0.02     0.027    0.25
+83      0.02      0.01     0.019    0.14
+84      0.03      0.01     0.019    0.07
+85      0.03      0.02     0.024    0.04
+86      0.04      0.02     0.030    0.09
+
+$`Unidentified shrub`
+   Sample number Location      Type Treatment   Size            Species
+18            18    OSLER    garden vegetated medium Unidentified shrub
+19            19    OSLER    garden vegetated medium Unidentified shrub
+53            53    OSLER    garden vegetated medium Unidentified shrub
+54            54    OSLER biofilter vegetated  small Unidentified shrub
+55            55    OSLER biofilter vegetated  small Unidentified shrub
+56            56    OSLER biofilter vegetated  small Unidentified shrub
+   Plant type Height Width_farthest Width_perpendicular Branch_length
+18      shrub   74.5          137.0                74.0         80.80
+19      shrub   87.0           94.0                81.0         76.35
+53      shrub   80.5          100.5                94.5         73.05
+54      shrub   50.5           87.0                61.0         52.20
+55      shrub   61.0           96.0                72.0         68.95
+56      shrub   66.0           96.0                82.0         57.65
+   Branch_diameter Basal_circ Branches_per_stem Biomass Measurement_location
+18           0.117      148.0               725  302.54            field/lab
+19           0.078       85.0               900  261.54            field/lab
+53           0.088       69.5               900  274.96                field
+54           0.078       58.0               300   96.98                field
+55           0.072       47.0               500  193.03                field
+56           0.051       37.5               350  138.54                field
+
+$`Unplanted weed`
+   Sample number Location      Type   Treatment   Size        Species
+34            34    ACTRI biofilter unvegetated  large Unplanted weed
+35            35    ACTRI biofilter unvegetated medium Unplanted weed
+36            36    ACTRI biofilter unvegetated  large Unplanted weed
+37            37    ACTRI biofilter unvegetated  large Unplanted weed
+38            38    ACTRI biofilter unvegetated  small Unplanted weed
+39            39    ACTRI biofilter unvegetated  small Unplanted weed
+40            40    ACTRI biofilter unvegetated  small Unplanted weed
+41            41    ACTRI biofilter unvegetated medium Unplanted weed
+42            42    ACTRI biofilter unvegetated medium Unplanted weed
+87           100      SIO biofilter   vegetated  small Unplanted weed
+88           101      SIO biofilter   vegetated  large Unplanted weed
+89           102      SIO biofilter   vegetated medium Unplanted weed
+90           103      SIO biofilter   vegetated  large Unplanted weed
+91           104      SIO biofilter   vegetated medium Unplanted weed
+92           105      SIO biofilter   vegetated  small Unplanted weed
+   Plant type Height Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
+34       forb   18.0       2.4      0.90      1.60      1.00      0.40
+35       forb    7.5       1.7      0.70      1.09      1.00      0.40
+36       forb   17.0       2.5      0.60      1.49      0.80      0.30
+37       forb   16.0       1.6      0.80      1.13      0.60      0.40
+38       forb    6.0       0.8      0.25      0.57      0.40      0.20
+39       forb    6.0       0.9      0.40      0.67      0.50      0.25
+40       forb    5.5       0.8      0.20      0.56      0.50      0.15
+41       forb    8.0       1.9      0.55      1.16      0.65      0.30
+42       forb   10.5       1.7      0.50      1.07      0.80      0.25
+87       forb    5.0       4.5      1.80      3.10      0.70      0.25
+88       forb    5.0       4.5      1.70      3.20      1.00      0.40
+89       forb    2.5       3.5      1.50      2.38      0.90      0.40
+90       forb    5.0       3.8      2.00      2.71      0.90      0.50
+91       forb    5.0       4.0      2.20      3.00      1.50      0.30
+92       forb    3.0       3.0      1.40      2.18      0.90      0.30
+   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
+34      0.68      0.01      0.01     0.010    0.24
+35      0.56      0.01      0.01     0.010    0.01
+36      0.56      0.01      0.01     0.010    0.15
+37      0.49      0.01      0.01     0.010    0.12
+38      0.29      0.01      0.01     0.010    0.02
+39      0.36      0.01      0.01     0.010    0.01
+40      0.32      0.01      0.01     0.010    0.00
+41      0.49      0.01      0.01     0.010    0.02
+42      0.49      0.01      0.01     0.010    0.05
+87      0.53      0.03      0.01     0.022    0.08
+88      0.71      0.04      0.02     0.031    0.21
+89      0.58      0.03      0.02     0.027    0.51
+90      0.70      0.03      0.02     0.023    0.39
+91      0.76      0.04      0.02     0.024    0.18
+92      0.58      0.03      0.01     0.024    0.13</code></pre>
+</div>
+</div>
+</section>
+<section id="save-data" class="level1">
+<h1>Save data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the clean data as processed data</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We save d1, which is a dataframe as the clean data and will convert to spec, which is a list, on analysis script for data analysis.</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>processeddata <span class="ot">&lt;-</span> d1      <span class="co"># clean data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Location to save file</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We save the clean data as RDS file, as well as a copy as .csv.</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># RDS/Rdata preserves coding like factors, characters, numeric, etc.</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>save_data_location <span class="ot">&lt;-</span> <span class="st">"../../Data/Processed_data/processeddata.rds"</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(processeddata, <span class="at">file =</span> save_data_location)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>save_data_location_csv <span class="ot">&lt;-</span> <span class="st">"../../Data/Processed_data/processeddata.csv"</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(processeddata, <span class="at">file =</span> save_data_location_csv, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

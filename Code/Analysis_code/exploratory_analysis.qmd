@@ -1,0 +1,107 @@
+---
+title: "Analysis script for identifying the best predictors of biomass for 13 plant species"
+author: "Sunyoung Park"
+date: "04/22/2023"
+output: html_document
+---
+
+
+This Quarto file loads the cleaned data and does some initial analysis. 
+
+
+
+# Analysis 
+
+In this analysis script, I am analyzing direct measurements of 11 different morphological characteristics and aboveground biomass to identify the best non-destructive indicators for the aboveground biomass of each of the 13 plant species.  
+
+I am using regression analysis to perform my analysis. 
+
+
+# Setup
+
+```{r }
+#| cache = FALSE
+knitr::read_chunk('statistical_analysis.R')
+```
+
+Load needed packages and filepaths.  
+
+```{r setup}
+#| message: FALSE
+#| warning: FALSE
+```
+
+Load custom functions.
+
+```{r functions}
+```
+
+Load the data.
+
+```{r loaddata}
+```
+
+
+
+# Results of the data analysis
+
+The results were created by the `statistical_analysis.R` script and to the `Results` folder.
+
+
+```{r testfornormality}
+``` 
+
+# 1. Aptenia cordifolia
+
+```{r linear_regression_model_A.cordifolia}
+``` 
+
+# 2. Artemisia californica
+
+```{r linear_regression_model_A.californica}
+``` 
+
+# 3. Chondropetalum tectorum
+
+```{r linear_regression_model_C.tectorum}
+``` 
+
+# 4. Gnaphalium spp.
+
+```{r linear_regression_model_Gnaphalium.spp.}
+``` 
+
+# 5. Rhus integrifolia
+
+```{r linear_regression_model_R.integrifolia}
+``` 
+
+# 6. Solidago spp.
+
+```{r linear_regression_model_Solidago.spp.}
+``` 
+
+#7. Unidentified shrub 
+
+```{r linear_regression_model_unidentifiedshrub}
+``` 
+
+# 8. Baccharis pilularis
+
+```{r linear_regression_model_B.pilularis}
+``` 
+
+# 9. Euphorbia spp.
+
+```{r linear_regression_model_Euphorbia.spp.}
+``` 
+
+# 10. Lactucca spp.
+
+```{r linear_regression_model_Lactucca.spp.}
+``` 
+
+# 11. Onetheria biennis
+
+```{r linear_regression_model_O.biennis}
+``` 

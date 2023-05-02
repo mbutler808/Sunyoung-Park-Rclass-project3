@@ -1,6 +1,15 @@
+# Sunyoung's Final Project for ZOOL 710
+
+This repository contains a dataset of direct measurements of 11 different morphological characteristics and aboveground biomass for 14 plant species found in urban greenspaces of Southern California. The main goal of this research is to identify relevant measurements of each plant species to biomass, and establish a non-destructive biomass indicator for each of the 14 plant species. 
+
 # History
 
 2023-4-22 First release with Data and Code folders with materials for data cleaning and initial exploration.
+
+2023-4-24 Completed cleaning of Raw data and data dictionary, processing code and processed data
+
+2023-4- 
+
 
 # Software requirements
 
