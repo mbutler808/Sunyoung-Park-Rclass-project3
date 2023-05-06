@@ -8,7 +8,7 @@ This repository contains a dataset of direct measurements of 11 different morpho
 
 2023-4-24 Completed cleaning of Raw data and data dictionary, processing code and processed data
 
-2023-5-5 Updated all the README files, added Analysis results in the Results folder
+2023-5-5 Updated all the README files, added Analysis results in the Results folder, Added Manuscript in the Products folder
 
 
 
