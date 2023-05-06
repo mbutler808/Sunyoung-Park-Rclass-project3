@@ -1,7 +1,7 @@
 
 # Analysis 
 
-# In this analysis script, I am analyzing direct measurements of 11 different morphological characteristics and aboveground biomass to identify the best non-destructive indicators for the aboveground biomass of each of the 13 plant species.  
+# In this analysis script, I am analyzing direct measurements of 11 different morphological characteristics and aboveground biomass to identify the best non-destructive indicators for the aboveground biomass of each of the 11 plant species.  
 
 # I am using regression analysis to perform my analysis. 
 
@@ -22,6 +22,8 @@ require(ggplot2) #for plotting
 require(lattice) # for plotting
 require(magrittr) #for piping
 require(knitr) #for formatting output
+require(corrr) #for correlation analysis
+require(ggcorrplot) #for plotting correlation matrix
 
 
 
@@ -63,7 +65,7 @@ spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])
 spec
 
 
-# The below is how you test for normality by species for the 13 species we are going to study. 
+# The below is how you test for normality by species for the 11 species we are going to study. 
 
 
 for (i in 1:length(spec)) {
@@ -71,8 +73,6 @@ for (i in 1:length(spec)) {
   print(shapiro.test(spec[[i]]$Biomass))
   
 }
-
-### I'm not sure if there's a way to make this a table?
 
 
 # Or this, to test for normality for each species individually one at a time. 
@@ -88,15 +88,14 @@ print(shapiro.test(spec[["Onetheria biennis"]]$Biomass))
 print(shapiro.test(spec[["Rhus integrifolia"]]$Biomass))
 print(shapiro.test(spec[["Salix spp."]]$Biomass))
 print(shapiro.test(spec[["Solidago spp."]]$Biomass))
-print(shapiro.test(spec[["Unidentified shrub"]]$Biomass))
-print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
+
 
 
 # From the test, we observe: 
-# Normally distributed data (p-value > 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, Gnaphaluim spp., Rhus integrifolia, Solidago spp., Unidentified shrub
+# Normally distributed data (p-value > 0.05): Aptenia cordifolia, Artemisia californica, Chondropetalum tectorum, Gnaphaluim spp., Rhus integrifolia, Solidago spp.
 
 
-# Not normally distributed data (p-value < 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria biennis, Salix spp., Unplanted weed
+# Not normally distributed data (p-value < 0.05): Baccharis pilularis, Euphorbia spp., Lactucca spp., Onetheria biennis, Salix spp.
 
 
 
@@ -107,13 +106,31 @@ print(shapiro.test(spec[["Unplanted weed"]]$Biomass))
 
 spec
 
-# Aptenia cordifolia: test for leaves per branch measurements
 
-m1 <- lm(Biomass ~ Leaves_per_branch,
-data= spec [["Aptenia cordifolia"]])
-summary(m1)
+# We can also use covariance matrix to see the correlations between two variables in each species. This is an easier way to see which characteristics have the highest correlation with biomass. In our case we will only focus on the relationship the biomass measurements have with each variable of the morphological characteristics.
 
-# R-squared value is 0.3025 and p-value is 0.07236, which means that the model doesn't explain the variation of the data and it is also not significant.
+# Covariance matrix
+# We create new data with only the numeric columns.
+
+numerical_data <- spec[["Aptenia cordifolia"]][, 8:21]
+
+
+# This is to normalize the new data we just created.
+
+data_normalized <- scale(numerical_data)
+head(data_normalized)
+
+
+# We use this to compute the correlation matrix and plot it using ggplot.
+
+corr_matrix <- cor(data_normalized)
+ggcorrplot(corr_matrix)
+
+# Higher value means there's positive correlation between the two variables
+# Value closer to -1 means they are more negatively correlated. 
+
+# Branch length shows the darkest red, meaning it has the highest value closer to 1. So now I use regression analysis to check for its R-squared value.
+
 
 
 # Aptenia cordifolia: test for branch length measurements
@@ -148,7 +165,34 @@ ggsave(filename = addpath("1_A.cordifolia_branchlength.png", results_path), a.co
 
 
 
+
 ## ---- linear_regression_model_A.californica ----
+
+
+# Covariance matrix
+# We create new data with only the numeric columns.
+
+numerical_data <- spec[["Artemisia californica"]][, 8:14]
+
+
+# This is to normalize the new data we just created.
+
+data_normalized <- scale(numerical_data)
+head(data_normalized)
+
+
+# We use this to compute the correlation matrix and plot it using ggplot.
+
+corr_matrix <- cor(data_normalized)
+ggcorrplot(corr_matrix)
+
+# Higher value means there's positive correlation between the two variables
+# Value closer to -1 means they are more negatively correlated. 
+
+# Width farthest and width perpendicular show the darkest red, meaning they have the highest values closer to 1. So now I use regression analysis to check for its R-squared value.
+
+
+
 
 # Artemisia californica: test for width farthest measurements
 
@@ -183,20 +227,35 @@ ggsave(filename = addpath("2_A.californica_width.png", results_path), a.californ
 
 
 
-## Artemisia californica: now we test if using multiple morphological characteristics as biomass indicators will increase the R-squared value.  
-
-
-m1 <- lm(Biomass ~ Width_perpendicular + Width_farthest + Branches_per_stem,
-data= spec[["Artemisia californica"]])
-summary(m1)
-
-# R-squared value is 0.9733 and p-value is 0.01599, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. These three morphological characteristics can be used together as better biomass indicators for Artemisia californica than one individual characteristic, since it has a higher R-squared value.
-
-
-
-
 
 ## ---- linear_regression_model_C.tectorum ----
+
+
+
+
+# Covariance matrix
+# We create new data with only the numeric columns.
+
+numerical_data <- spec[["Chondropetalum tectorum"]][, 8:15]
+
+
+# This is to normalize the new data we just created.
+
+data_normalized <- scale(numerical_data)
+head(data_normalized)
+
+
+# We use this to compute the correlation matrix and plot it using ggplot.
+
+corr_matrix <- cor(data_normalized)
+ggcorrplot(corr_matrix)
+
+# Higher value means there's positive correlation between the two variables
+# Value closer to -1 means they are more negatively correlated. 
+
+# Stem density shows the darkest red, meaning it has the highest values closer to 1. So now I use regression analysis to check for its R-squared value.
+
+
 
 # Chondropetalum tectorum : test for stem density measurements
 
@@ -234,6 +293,31 @@ ggsave(filename = addpath("3_C.tectorum_density.png", results_path), c.tectorum)
 
 ## ---- linear_regression_model_Gnaphalium.spp. ----
 
+
+# Covariance matrix
+# We create new data with only the numeric columns.
+
+numerical_data <- spec[["Gnaphalium spp."]][, 8:27]
+
+
+# This is to normalize the new data we just created.
+
+data_normalized <- scale(numerical_data)
+head(data_normalized)
+
+
+# We use this to compute the correlation matrix and plot it using ggplot.
+
+corr_matrix <- cor(data_normalized)
+ggcorrplot(corr_matrix)
+
+# Higher value means there's positive correlation between the two variables
+# Value closer to -1 means they are more negatively correlated. 
+
+# Branches per stem shows the darkest red, meaning it has the highest values closer to 1. So now I use regression analysis to check for its R-squared value.
+
+
+
 # Gnaphalium spp. : test for branch per stem measurements
 
 m1 <- lm(Biomass ~ Branches_per_stem,
@@ -267,6 +351,31 @@ ggsave(filename = addpath("4_Gnaphalium_branchperstem.png", results_path), gnaph
 
 
 ## ---- linear_regression_model_R.integrifolia ----
+
+
+# Covariance matrix
+# We create new data with only the numeric columns.
+
+numerical_data <- spec[["Rhus integrifolia"]][, 7:26]
+
+
+# This is to normalize the new data we just created.
+
+data_normalized <- scale(numerical_data)
+head(data_normalized)
+
+
+# We use this to compute the correlation matrix and plot it using ggplot.
+
+corr_matrix <- cor(data_normalized)
+ggcorrplot(corr_matrix)
+
+# Higher value means there's positive correlation between the two variables
+# Value closer to -1 means they are more negatively correlated. 
+
+# Multiple variables show the darkest red, meaning they have higher values closer to 1. So now I use regression analysis to check for its R-squared value.
+
+
 
 # Rhus integrifolia : test for branch length measurements
 
@@ -304,8 +413,32 @@ ggsave(filename = addpath("5_R.integrifolia_branchlength.png", results_path), R.
 
 
 
-
 ## ---- linear_regression_model_Solidago.spp. ----
+
+
+# Covariance matrix
+# We create new data with only the numeric columns.
+
+numerical_data <- spec[["Solidago spp."]][, 8:23]
+
+
+# This is to normalize the new data we just created.
+
+data_normalized <- scale(numerical_data)
+head(data_normalized)
+
+
+# We use this to compute the correlation matrix and plot it using ggplot.
+
+corr_matrix <- cor(data_normalized)
+ggcorrplot(corr_matrix)
+
+# Higher value means there's positive correlation between the two variables
+# Value closer to -1 means they are more negatively correlated. 
+
+# Multiple variables show the darkest red, meaning they have higher values closer to 1. So now I use regression analysis to check for its R-squared value.
+
+
 
 # Solidago spp. : test for average leaf length measurements
 
@@ -345,50 +478,12 @@ ggsave(filename = addpath("6_Solidago_avgleaflength.png", results_path), solidag
 
 
 
-## ---- linear_regression_model_unidentifiedshrub ----
-
-# Unidentified shrub  : test for branch length measurements
-
-m1 <- lm(Biomass ~ Branch_length,
-data= spec[["Unidentified shrub"]])
-summary(m1)
-
-# R-squared value is 0.9454 and p-value is 0.0007269, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Unidentified shrub since it has the highest R-squared value.
-
-
-# ggplot to plot it
-
-ggplot(data=subset(dat,Species=="Unidentified shrub"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +
- stat_smooth(method = "lm", formula = y ~ x,
-              geom = "smooth", se = FALSE) +
-xlab("Branch Length (cm)") + 
-  ylab("Biomass (g)") +
-  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Unidentified shrub"))))
-            
-
-# plot to .png file
-
-unidentifiedshrub <-  ggplot(data=subset(dat,Species=="Unidentified shrub"), aes(x=Branch_length, y=Biomass), na.rm=TRUE) + geom_point() +
- stat_smooth(method = "lm", formula = y ~ x,
-              geom = "smooth", se = FALSE) +
-xlab("Branch Length (cm)") + 
-  ylab("Biomass (g)") +
-  ggtitle("Branch Length vs. Biomass for", substitute(paste(italic("Unidentified shrub"))))
-
-
-ggsave(filename = addpath("7_unidentifiedshrub_branchlength.png", results_path), unidentifiedshrub)
-
-
-
-
-
 ## ---- linear_regression_model_B.pilularis ----
 
 
 # For non-normally distributed data (where the response variable, biomass, is not normally distributed), we use a generalized linear model (glm). 
 # We can also use a log transformation to transform the data to a more normally distributed dataset.
 # For our analysis, we will use a log transformation before. 
-
 
 
 spec[["Baccharis pilularis"]]$log <- log(spec[["Baccharis pilularis"]]$Biomass)
@@ -431,7 +526,7 @@ xlab("Width (cm)") +
   ggtitle("Width vs. Biomass for", substitute(paste(italic("Baccharis pilularis"))))
 
 
-ggsave(filename = addpath("8_B.pilularis_width.png", results_path), b.pilularis)
+ggsave(filename = addpath("7_B.pilularis_width.png", results_path), b.pilularis)
 
 
 
@@ -470,7 +565,7 @@ xlab("Width (cm)") +
   ggtitle("Width vs. Biomass for", substitute(paste(italic("Euphorbia spp."))))
 
 
-ggsave(filename = addpath("9_Euphorbia_width.png", results_path), euphorbia)
+ggsave(filename = addpath("8_Euphorbia_width.png", results_path), euphorbia)
 
 
 
@@ -511,7 +606,7 @@ xlab("Total Leaves (n)") +
   ggtitle("Total Leaves vs. Biomass for", substitute(paste(italic("Lactucca spp."))))
 
 
-ggsave(filename = addpath("10_Lactucca_totalleaves.png", results_path), lactucca)
+ggsave(filename = addpath("9_Lactucca_totalleaves.png", results_path), lactucca)
 
 
 
@@ -562,7 +657,57 @@ xlab("Height (cm)") +
   ggtitle("Height vs. Biomass for", substitute(paste(italic("Onetheria biennis"))))
 
 
-ggsave(filename = addpath("11_O.biennis_height.png", results_path), o.biennis)
+ggsave(filename = addpath("10_O.biennis_height.png", results_path), o.biennis)
+
+
+
+
+
+
+
+## ---- linear_regression_model_Salix spp. ----
+
+
+spec[["Salix spp."]]$log <- log(spec[["Salix spp."]]$Biomass)
+
+print(shapiro.test(spec[["Salix spp."]]$log))
+
+y <- rnorm(spec[["Salix spp."]]$log)
+qqnorm(y); qqline(y)
+
+
+# Salix spp.: test for height measurements 
+
+m1 <- lm(log ~ Height,
+       data = spec[["Salix spp."]])
+summary(m1)
+
+# R-squared value is 0.9634 and p-value is 1.728e-06, which means that the model does explain the variation of the data (fits the regression model) and it is also significant. This morphological characteristic might be a good biomass indicator for Salix spp. since it has the highest R-squared value.
+
+
+
+# ggplot to plot it
+
+ggplot(data=subset(dat,Species=="Salix spp."), aes(x=Height, y=Biomass), na.rm=TRUE) + geom_point() +
+ stat_smooth(method = "lm", formula = y ~ x,
+              geom = "smooth", se = FALSE) +
+xlab("Height (cm)") + 
+  ylab("Biomass (g)") +
+  ggtitle("Height vs. Biomass for", substitute(paste(italic("Salix spp."))))
+            
+
+# plot to .png file
+
+salix <-  ggplot(data=subset(dat,Species=="Salix spp."), aes(x=Height, y=Biomass), na.rm=TRUE) + geom_point() +
+ stat_smooth(method = "lm", formula = y ~ x,
+              geom = "smooth", se = FALSE) +
+xlab("Height (cm)") + 
+  ylab("Biomass (g)") +
+  ggtitle("Height vs. Biomass for", substitute(paste(italic("Salix spp."))))
+            
+
+ggsave(filename = addpath("11_Salix_height.png", results_path), salix)
+
 
 
 

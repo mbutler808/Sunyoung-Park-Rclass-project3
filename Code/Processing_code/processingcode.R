@@ -85,6 +85,8 @@ d1[d1=="n/a"] <- NA
 num <- c(8:29)
 d1[,num] <- apply(d1[,num], 2, function(x) as.numeric(as.character(x)))
 
+
+
 skimr::skim(d1)
 
 
@@ -94,7 +96,7 @@ skimr::skim(d1)
 
 d1$Species <- as.character(d1$Species)
 
-# We want to separate the measurements by species so we can look at morph measurements that correlate with the biomass of each species. 
+# We want to separate the measurements by species so we can look at morph measurements that correlate with the biomass of each species separately. 
 
 # We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. 
 spec <- with(d1, split(d1, list(Species = Species)))
@@ -107,13 +109,17 @@ spec
 
 # Look at each species and their morph measurements
 # Since Festuca Mairei only has three samples, we are going to eliminate it from the sample species, due to not enough sample size.
+# We are also going to eliminate Unplanted weed and Unidentified shrub due to lack of identification on these species. 
 
-Rows <- which(grepl("Festuca Mairei", d1$Species))
-d1 <- d1[-c(Rows),]
+Rows1 <- which(grepl("Festuca Mairei", d1$Species)) 
+Rows2 <- which(grepl("Unplanted weed", d1$Species)) 
+Rows3 <- which(grepl("Unidentified shrub", d1$Species)) 
+
+d1 <- d1[-c(Rows1, Rows2, Rows3),]
 d1
 
 
-# Redefine spec with a new list of species (excluding Festuca Mairei). 
+# Redefine spec with a new list of species (excluding Festuca Mairei, Unplanted weed and Unidentified shrub). 
 spec <- with(d1, split(d1, list(Species = Species)))
 spec <- lapply(spec, function(x) x[, colSums(is.na(x)) == 0])
 

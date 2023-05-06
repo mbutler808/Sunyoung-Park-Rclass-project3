@@ -1,0 +1,201 @@
+---
+title: "Developing non-destructive indicators of aboveground plant biomass" 
+subtitle: ""
+author: Sunyoung Park
+date: "`r Sys.Date()`"
+format:
+  docx:
+    toc: false
+    number-sections: true
+    highlight-style: github 
+---
+
+
+
+
+# Abstract
+
+Plants, as primary producers, absorb carbon dioxide from the atmosphere to fix and store as biomass. Because atmospheric carbon dioxide is one of the largest contributors to anthropogenic climate change, plant’s ability to sequester emissions is becoming more important than ever. In order to understand how different plant species contribute to beneficial roles in ecosystem functions and services, we need to be able to measure their biomass. This paper develops a model to estimate aboveground plant biomass non-destructively using their morphological characteristics. We made direct measurements of 11 different morphological characteristics and aboveground biomass, which were then used for regression analysis. Our findings show that each species has different best predictors of biomass, which are related to its morphology. The results from this study will be used in a larger study of greenhouse gas fluxes in different urban greenspaces, and can be used to assess aboveground biomass for similar species.
+
+
+{{< pagebreak >}}
+
+
+
+# Introduction
+
+## Description of data and data source
+
+Here we describe an analysis of 11 different morphological and biomass measurements for 11 plant species from San Diego, California. Data was collected by Sunyoung Park. 
+
+
+## Hypotheses to be addressed
+
+Each species has different best predictors of biomass, which are related to its morphology. 
+
+
+{{< pagebreak >}}
+
+
+
+# Methods 
+
+## Data acquisition
+Data was collected by Sunyoung Park from four different land cover types of five sites in La Jolla, California. The 14 species selected for the study were based on how commonly they were found in these five different sites. 
+
+
+## Data import and cleaning
+The raw data `plant_measurement_raw.csv` is located in the raw data folder `../../Data/Raw_data/` and this raw data is used for cleaning and processing before use for analysis. The clean data file is named `processeddata.rds` and also saved in `.csv` formats as `processeddata.csv`.
+
+The cleaning of raw data includes, deleting variables that are not needed for analysis, replacing blank or missing measurements to NA, and eliminating Festuca Mairei, Unplanted weed and Unidentified shrub from the list of 14 species.
+
+
+## Statistical analysis
+The `processeddata.rds`is used for statistical analysis and the code is saves in the analysis code folder `../../Code/Analysis_code/`. Linear regression analysis was performed to find the best fit correlation between biomass and different morphological measurements. 
+
+
+{{< pagebreak >}}
+
+
+
+# Results
+
+## Exploratory/Descriptive analysis
+
+Here, I present linear regression models for all 11 plant species. 
+
+
+
+For Aptenia cordifolia, we found that branch length is the best indicator for its biomass (@fig-1_A.cordifolia_branchlength, R-squared value = 0.7172 and p-value < 0.05).
+
+```{r}
+#| label: fig-1_A.cordifolia_branchlength
+#| fig-cap: "Branch Length vs. Biomass for Aptenia cordifolia."
+#| echo: FALSE
+knitr::include_graphics("../../Results/1_A.cordifolia_branchlength.png")
+```
+
+{{< pagebreak >}}
+
+
+For Artemisia californica, we found that width is the best indicator for its biomass (@fig-2_A.californica_width, R-squared value = 0.9594 and p-value < 0.05).
+
+```{r}
+#| label: fig-2_A.californica_width
+#| fig-cap: "Width vs. Biomass for Artemisia californica."
+#| echo: FALSE
+knitr::include_graphics("../../Results/2_A.californica_width.png")
+```
+{{< pagebreak >}}
+
+
+For Chondropetalum tectorum, we found that stem density is the best indicator for its biomass (@fig-3_C.tectorum_density, R-squared value = 0.9177 and p-value < 0.05).
+
+```{r}
+#| label: fig-3_C.tectorum_density
+#| fig-cap: "Stem Density vs. Biomass for Chondropetalum tectorum."
+#| echo: FALSE
+knitr::include_graphics("../../Results/3_C.tectorum_density.png")
+```
+{{< pagebreak >}}
+
+
+For Gnaphalium spp., we found that branches per stem is the best indicator for its biomass (@fig-4_Gnaphalium_branchperstem, R-squared value = 0.8425 and p-value < 0.05).
+
+```{r}
+#| label: fig-4_Gnaphalium_branchperstem
+#| fig-cap: "Branches per stem vs. Biomass for Gnaphalium spp."
+#| echo: FALSE
+knitr::include_graphics("../../Results/4_Gnaphalium_branchperstem.png")
+```
+{{< pagebreak >}}
+
+
+For Rhus integrifolia, we found that branch length is the best indicator for its biomass (@fig-5_R.integrifolia_branchlength, R-squared value = 0.955 and p-value < 0.05).
+
+```{r}
+#| label: fig-5_R.integrifolia_branchlength
+#| fig-cap: "Branch Length vs. Biomass for Rhus integrifolia."
+#| echo: FALSE
+knitr::include_graphics("../../Results/5_R.integrifolia_branchlength.png")
+```
+{{< pagebreak >}}
+
+
+For Solidago spp., we found that average leaf length is the best indicator for its biomass (@fig-6_Solidago_avgleaflength, R-squared value = 0.9923 and p-value < 0.05).
+
+```{r}
+#| label: fig-6_Solidago_avgleaflength
+#| fig-cap: "Average leaf length vs. Biomass for Solidago spp."
+#| echo: FALSE
+knitr::include_graphics("../../Results/6_Solidago_avgleaflength.png")
+```
+{{< pagebreak >}}
+
+
+For Baccharis pilularis, we found that width is the best indicator for its biomass (@fig-7_B.pilularis_width, R-squared value = 0.8904 and p-value < 0.05).
+
+```{r}
+#| label: fig-7_B.pilularis_width
+#| fig-cap: "Width vs. Biomass for Baccharis pilularis."
+#| echo: FALSE
+knitr::include_graphics("../../Results/7_B.pilularis_width.png")
+```
+{{< pagebreak >}}
+
+
+For Euphorbia spp., we found that width is the best indicator for its biomass (@fig-8_Euphorbia_width, R-squared value = 0.8814 and p-value < 0.05).
+
+```{r}
+#| label: fig-8_Euphorbia_width
+#| fig-cap: "Width vs. Biomass for Euphorbia spp."
+#| echo: FALSE
+knitr::include_graphics("../../Results/8_Euphorbia_width.png")
+```
+{{< pagebreak >}}
+
+
+For Lactucca spp., we found that total leaves is the best indicator for its biomass (@fig-9_Lactucca_totalleaves, R-squared value = 0.9937 and p-value < 0.05).
+
+```{r}
+#| label: fig-9_Lactucca_totalleaves
+#| fig-cap: "Total Leaves vs. Biomass for Lactucca spp."
+#| echo: FALSE
+knitr::include_graphics("../../Results/9_Lactucca_totalleaves.png")
+```
+{{< pagebreak >}}
+
+
+For Onetheria biennis, we found that height is the best indicator for its biomass (@fig-10_O.biennis_height, R-squared value = 0.8394 and p-value < 0.05).
+
+```{r}
+#| label: fig-10_O.biennis_height
+#| fig-cap: "Height vs. Biomass for Onetheria biennis."
+#| echo: FALSE
+knitr::include_graphics("../../Results/10_O.biennis_height.png")
+```
+{{< pagebreak >}}
+
+
+For Salix spp., we found that height is the best indicator for its biomass (@fig-11_Salix_height, R-squared value = 0.9634 and p-value < 0.05).
+
+```{r}
+#| label: fig-11_Salix_height
+#| fig-cap: "Height vs. Biomass for Salix spp."
+#| echo: FALSE
+knitr::include_graphics("../../Results/11_Salix_height.png")
+```
+
+
+{{< pagebreak >}}
+
+
+# Discussion
+
+## Summary and Interpretation
+
+In this study, we examined several non-destructive morphological indicators for aboveground plant biomass. Even within each morphological category with common characteristics, there were differences in the models which highlights the large amount of both inter- and intra-species variability in morphology. However, plant species with less differences in their morphological characteristics have more overlapping biomass indicators. Plant species with similar morphologies have common indicators; for instance, Lactucca spp. and O. biennis both have long and distinctly separated leaves that are right adjacent to the ground. These findings support my hypothesis that different species have different biomass indicators according to their morphological characteristics.
+
+
+
+{{< pagebreak >}}

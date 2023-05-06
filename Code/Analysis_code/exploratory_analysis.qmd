@@ -1,5 +1,5 @@
 ---
-title: "Analysis script for identifying the best predictors of biomass for 13 plant species"
+title: "Analysis script for identifying the best predictors of biomass for 11 plant species"
 author: "Sunyoung Park"
 date: "04/22/2023"
 output: html_document
@@ -12,7 +12,7 @@ This Quarto file loads the cleaned data and does some initial analysis.
 
 # Analysis 
 
-In this analysis script, I am analyzing direct measurements of 11 different morphological characteristics and aboveground biomass to identify the best non-destructive indicators for the aboveground biomass of each of the 13 plant species.  
+In this analysis script, I am analyzing direct measurements of 11 different morphological characteristics and aboveground biomass to identify the best non-destructive indicators for the aboveground biomass of each of the 11 plant species.  
 
 I am using regression analysis to perform my analysis. 
 
@@ -81,27 +81,28 @@ The results were created by the `statistical_analysis.R` script and to the `Resu
 ```{r linear_regression_model_Solidago.spp.}
 ``` 
 
-#7. Unidentified shrub 
 
-```{r linear_regression_model_unidentifiedshrub}
-``` 
-
-# 8. Baccharis pilularis
+# 7. Baccharis pilularis
 
 ```{r linear_regression_model_B.pilularis}
 ``` 
 
-# 9. Euphorbia spp.
+# 8. Euphorbia spp.
 
 ```{r linear_regression_model_Euphorbia.spp.}
 ``` 
 
-# 10. Lactucca spp.
+# 9. Lactucca spp.
 
 ```{r linear_regression_model_Lactucca.spp.}
 ``` 
 
-# 11. Onetheria biennis
+# 10. Onetheria biennis
 
 ```{r linear_regression_model_O.biennis}
+``` 
+
+# 11. Salix spp.
+
+```{r linear_regression_model_Salix spp.}
 ``` 

@@ -1,5 +1,5 @@
 ---
-title: "Cleaning R script for identifying the best predictors of biomass for 13 plant species"
+title: "Cleaning R script for identifying the best predictors of biomass for 11 plant species"
 author: "Sunyoung Park"
 date: "2023-04-21"
 output: html_document
@@ -9,7 +9,6 @@ output: html_document
 
 This quarto file documents the data cleaning of the raw data `plant_measurement_raw.csv` in the raw data folder `../../Data/Raw_data/`. The clean data file is named `processeddata.rds` and also saved in `.csv` formats.
 
-To run this code, run `quarto preview processingfile.qmd` from the Processing code directory `project_root/Code/Processing_code`.  Alternatively, you can prepend the relative path to the file from your current working directory. To generate the `.html` output, change  `quarto preview` to `quarto render`.
 
 # Setup
 

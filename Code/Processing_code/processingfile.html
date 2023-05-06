@@ -9,7 +9,7 @@
 <meta name="author" content="Sunyoung Park">
 <meta name="dcterms.date" content="2023-04-21">
 
-<title>Cleaning R script for identifying best predictors of biomass for 13 plant species</title>
+<title>Cleaning R script for identifying the best predictors of biomass for 11 plant species</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Cleaning R script for identifying best predictors of biomass for 13 plant species</h1>
+<h1 class="title">Cleaning R script for identifying the best predictors of biomass for 11 plant species</h1>
 </div>
 
 
@@ -140,7 +140,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="processing-script-data-cleaning-with-code-pulled-in-from-script" class="level1">
 <h1>Processing script (data cleaning) with code pulled in from script</h1>
 <p>This quarto file documents the data cleaning of the raw data <code>plant_measurement_raw.csv</code> in the raw data folder <code>../../Data/Raw_data/</code>. The clean data file is named <code>processeddata.rds</code> and also saved in <code>.csv</code> formats.</p>
-<p>To run this code, run <code>quarto preview processingfile.qmd</code> from the Processing code directory <code>project_root/Code/Processing_code</code>. Alternatively, you can prepend the relative path to the file from your current working directory. To generate the <code>.html</code> output, change <code>quarto preview</code> to <code>quarto render</code>.</p>
 </section>
 <section id="setup" class="level1">
 <h1>Setup</h1>
@@ -1443,7 +1442,7 @@ $ `leaf: branch (single branch; biomass)` &lt;chr&gt; "", "", "", "", "", "", ""
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>d1<span class="sc">$</span>Species <span class="ot">&lt;-</span> <span class="fu">as.character</span>(d1<span class="sc">$</span>Species)</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># We want to separate the measurements by species so we can look at morph measurements that correlate with the biomass of each species. </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># We want to separate the measurements by species so we can look at morph measurements that correlate with the biomass of each species separately. </span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We split the plant (d1) dataframe into a list of dataframes (aka spec) by species. </span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">with</span>(d1, <span class="fu">split</span>(d1, <span class="fu">list</span>(<span class="at">Species =</span> Species)))</span>
@@ -1918,10 +1917,14 @@ $`Unplanted weed`
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at each species and their morph measurements</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Since Festuca Mairei only has three samples, we are going to eliminate it from the sample species, due to not enough sample size.</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>Rows <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">grepl</span>(<span class="st">"Festuca Mairei"</span>, d1<span class="sc">$</span>Species))</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> d1[<span class="sc">-</span><span class="fu">c</span>(Rows),]</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>d1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We are also going to eliminate Unplanted weed and Unidentified shrub due to lack of identification on these species. </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>Rows1 <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">grepl</span>(<span class="st">"Festuca Mairei"</span>, d1<span class="sc">$</span>Species)) </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>Rows2 <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">grepl</span>(<span class="st">"Unplanted weed"</span>, d1<span class="sc">$</span>Species)) </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>Rows3 <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">grepl</span>(<span class="st">"Unidentified shrub"</span>, d1<span class="sc">$</span>Species)) </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> d1[<span class="sc">-</span><span class="fu">c</span>(Rows1, Rows2, Rows3),]</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>d1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Sample number Location      Type   Treatment   Size                 Species
 1              1      SME    garden   vegetated  small      Aptenia cordifolia
@@ -1941,8 +1944,6 @@ $`Unplanted weed`
 15            15    OSLER biofilter        &lt;NA&gt;  small           Lactucca spp.
 16            16    OSLER biofilter        &lt;NA&gt;  large           Lactucca spp.
 17            17    OSLER biofilter   vegetated  small          Euphorbia spp.
-18            18    OSLER    garden   vegetated medium      Unidentified shrub
-19            19    OSLER    garden   vegetated medium      Unidentified shrub
 20            20    ACTRI biofilter unvegetated  small       Onetheria biennis
 21            21    ACTRI biofilter unvegetated  small       Onetheria biennis
 22            22    ACTRI biofilter unvegetated  small       Onetheria biennis
@@ -1957,15 +1958,6 @@ $`Unplanted weed`
 31            31      SIO biofilter        &lt;NA&gt;  large          Euphorbia spp.
 32            32      SIO biofilter        &lt;NA&gt; medium          Euphorbia spp.
 33            33      SIO biofilter        &lt;NA&gt; medium          Euphorbia spp.
-34            34    ACTRI biofilter unvegetated  large          Unplanted weed
-35            35    ACTRI biofilter unvegetated medium          Unplanted weed
-36            36    ACTRI biofilter unvegetated  large          Unplanted weed
-37            37    ACTRI biofilter unvegetated  large          Unplanted weed
-38            38    ACTRI biofilter unvegetated  small          Unplanted weed
-39            39    ACTRI biofilter unvegetated  small          Unplanted weed
-40            40    ACTRI biofilter unvegetated  small          Unplanted weed
-41            41    ACTRI biofilter unvegetated medium          Unplanted weed
-42            42    ACTRI biofilter unvegetated medium          Unplanted weed
 43            43    ACTRI biofilter unvegetated  large       Onetheria biennis
 44            44    ACTRI biofilter unvegetated  large       Onetheria biennis
 45            45    ACTRI biofilter unvegetated  large       Onetheria biennis
@@ -1976,10 +1968,6 @@ $`Unplanted weed`
 50            50    ACTRI biofilter   vegetated medium              Salix spp.
 51            51    ACTRI biofilter   vegetated medium              Salix spp.
 52            52    ACTRI biofilter   vegetated  large              Salix spp.
-53            53    OSLER    garden   vegetated medium      Unidentified shrub
-54            54    OSLER biofilter   vegetated  small      Unidentified shrub
-55            55    OSLER biofilter   vegetated  small      Unidentified shrub
-56            56    OSLER biofilter   vegetated  small      Unidentified shrub
 57            57    OSLER    garden   vegetated medium      Aptenia cordifolia
 58            58    OSLER    garden   vegetated medium      Aptenia cordifolia
 59            59    OSLER    garden   vegetated medium      Aptenia cordifolia
@@ -2010,12 +1998,6 @@ $`Unplanted weed`
 84            96  Sanford biofilter   vegetated medium           Solidago spp.
 85            97  Sanford biofilter   vegetated  small           Solidago spp.
 86            98  Sanford biofilter   vegetated  small           Solidago spp.
-87           100      SIO biofilter   vegetated  small          Unplanted weed
-88           101      SIO biofilter   vegetated  large          Unplanted weed
-89           102      SIO biofilter   vegetated medium          Unplanted weed
-90           103      SIO biofilter   vegetated  large          Unplanted weed
-91           104      SIO biofilter   vegetated medium          Unplanted weed
-92           105      SIO biofilter   vegetated  small          Unplanted weed
 93           110      SIO   natural        &lt;NA&gt;  small       Rhus integrifolia
 94           111      SIO   natural        &lt;NA&gt; medium       Rhus integrifolia
 95           112      SIO   natural        &lt;NA&gt;  small       Rhus integrifolia
@@ -2039,8 +2021,6 @@ $`Unplanted weed`
 15       forb    4.0            9.5                 6.0            NA
 16       forb   29.0           15.0                 6.0         11.00
 17       forb    3.0            3.5                 1.0          1.54
-18      shrub   74.5          137.0                74.0         80.80
-19      shrub   87.0           94.0                81.0         76.35
 20       forb    4.0            9.0                 6.5            NA
 21       forb    4.2            8.8                 8.3            NA
 22       forb    7.0           12.2                11.0            NA
@@ -2055,15 +2035,6 @@ $`Unplanted weed`
 31       forb     NA           12.5                12.5          5.80
 32       forb     NA            8.0                 6.2          2.83
 33       forb     NA            8.0                 3.7          2.38
-34       forb   18.0            9.0                 8.0          3.71
-35       forb    7.5             NA                  NA            NA
-36       forb   17.0             NA                  NA          3.47
-37       forb   16.0             NA                  NA          3.53
-38       forb    6.0             NA                  NA            NA
-39       forb    6.0             NA                  NA            NA
-40       forb    5.5             NA                  NA            NA
-41       forb    8.0             NA                  NA            NA
-42       forb   10.5             NA                  NA            NA
 43       forb   18.0             NA                  NA            NA
 44       forb   17.0             NA                  NA            NA
 45       forb   13.0             NA                  NA            NA
@@ -2074,10 +2045,6 @@ $`Unplanted weed`
 50       tree  144.0             NA                  NA         28.67
 51       tree  116.0             NA                  NA          7.10
 52       tree  220.0             NA                  NA         24.70
-53      shrub   80.5          100.5                94.5         73.05
-54      shrub   50.5           87.0                61.0         52.20
-55      shrub   61.0           96.0                72.0         68.95
-56      shrub   66.0           96.0                82.0         57.65
 57       &lt;NA&gt;    9.0           68.0                39.0         20.10
 58       &lt;NA&gt;    3.0           58.5                47.0         23.34
 59       &lt;NA&gt;     NA           32.0                24.0         11.35
@@ -2108,12 +2075,6 @@ $`Unplanted weed`
 84       forb    8.5            8.5                 4.5            NA
 85       forb    4.5            4.0                 3.5            NA
 86       forb    5.5            4.5                 2.0            NA
-87       forb    5.0            5.0                 4.5            NA
-88       forb    5.0           12.5                11.0            NA
-89       forb    2.5            9.0                 5.5            NA
-90       forb    5.0           11.0                10.5            NA
-91       forb    5.0            7.5                 7.5            NA
-92       forb    3.0            6.0                 6.0            NA
 93      shrub   53.0           27.0                38.0         27.50
 94      shrub   80.0           78.0                68.0         40.00
 95      shrub   55.0           44.0                29.0         21.15
@@ -2137,8 +2098,6 @@ $`Unplanted weed`
 15              NA       6.50            NA          NA           NA
 16           0.420         NA            NA          NA           NA
 17           0.036         NA          0.03        1.00           NA
-18           0.117     148.00            NA          NA           NA
-19           0.078      85.00            NA          NA           NA
 20              NA         NA          0.18        1.30            1
 21              NA         NA          0.21        0.90            1
 22              NA         NA            NA          NA            1
@@ -2153,15 +2112,6 @@ $`Unplanted weed`
 31           0.054         NA          0.13        0.70           NA
 32           0.051         NA          0.08        0.70            1
 33           0.059         NA          0.14        0.20            1
-34           0.070         NA          0.02       13.00            1
-35              NA         NA          0.07        7.00           NA
-36           0.052         NA          0.15       12.00            1
-37           0.051         NA          0.12        8.90            1
-38              NA         NA          0.03        5.50           NA
-39              NA         NA          0.04        5.50           NA
-40              NA         NA          0.04        5.30           NA
-41              NA         NA          0.05        6.50           NA
-42              NA         NA          0.08        9.50            1
 43              NA         NA          1.13          NA           NA
 44              NA         NA          1.59          NA           NA
 45              NA         NA          2.30          NA           NA
@@ -2172,10 +2122,6 @@ $`Unplanted weed`
 50           0.209         NA          0.77          NA           NA
 51           0.111         NA          0.60          NA           NA
 52           0.230         NA          1.23          NA           NA
-53           0.088      69.50            NA          NA           NA
-54           0.078      58.00            NA          NA           NA
-55           0.072      47.00            NA          NA           NA
-56           0.051      37.50            NA          NA           NA
 57           0.336         NA          0.27        6.00           NA
 58           0.376         NA          0.38        9.00           NA
 59           0.446         NA          0.90        5.00           NA
@@ -2206,12 +2152,6 @@ $`Unplanted weed`
 84              NA         NA          0.09        3.00           NA
 85              NA         NA          0.09        0.80           NA
 86              NA         NA          0.09        2.30           NA
-87              NA         NA          0.13          NA           NA
-88              NA         NA          1.10          NA           NA
-89              NA         NA          0.08          NA           NA
-90              NA         NA          0.19          NA           NA
-91              NA         NA          0.12          NA           NA
-92              NA         NA            NA          NA           NA
 93           0.445         NA          1.07       16.00            1
 94           0.891         NA          2.71       12.00            1
 95           0.397         NA          1.28        6.50            1
@@ -2235,8 +2175,6 @@ $`Unplanted weed`
 15                NA                NA            4      7.50      3.60
 16                 2              4.50           42     15.00      9.00
 17                 5              7.80           NA      0.50      0.25
-18               725                NA           NA        NA        NA
-19               900                NA           NA        NA        NA
 20                NA                NA            9      7.40      1.10
 21                NA                NA            9      7.30      0.90
 22                NA                NA           22      8.50      2.50
@@ -2251,15 +2189,6 @@ $`Unplanted weed`
 31                43             32.20           NA      0.40      0.15
 32                18             20.20           NA      0.50      0.20
 33                15             13.40           NA      0.50      0.15
-34                16             17.80           NA      2.40      0.90
-35                NA                NA           14      1.70      0.70
-36                16              7.80           NA      2.50      0.60
-37                11             10.00           NA      1.60      0.80
-38                NA                NA           17      0.80      0.25
-39                NA                NA           16      0.90      0.40
-40                NA                NA           12      0.80      0.20
-41                NA                NA           16      1.90      0.55
-42                NA                NA           23      1.70      0.50
 43                NA                NA           27     14.00      4.00
 44                NA                NA           28     14.00      4.50
 45                NA                NA           49     10.50      4.50
@@ -2270,10 +2199,6 @@ $`Unplanted weed`
 50                 9              8.80           NA     11.50      4.50
 51                 7             11.40           NA     11.00      4.00
 52                16             15.60           NA     12.50      5.00
-53               900                NA           NA        NA        NA
-54               300                NA           NA        NA        NA
-55               500                NA           NA        NA        NA
-56               350                NA           NA        NA        NA
 57                12             17.00           NA      4.00      1.60
 58                32             16.20           NA      3.70      1.70
 59                16             21.20           NA      3.20      1.50
@@ -2304,12 +2229,6 @@ $`Unplanted weed`
 84                NA                NA            8      6.00      0.90
 85                NA                NA            5      4.20      3.00
 86                NA                NA            5      5.20      2.70
-87                NA                NA           17      4.50      1.80
-88                NA                NA           95      4.50      1.70
-89                NA                NA           54      3.50      1.50
-90                NA                NA           99      3.80      2.00
-91                NA                NA           33      4.00      2.20
-92                NA                NA           44      3.00      1.40
 93                 6                NA          104      5.50      2.30
 94                50                NA          687      6.40      2.40
 95                11                NA           94      5.90      3.20
@@ -2333,8 +2252,6 @@ $`Unplanted weed`
 15      6.15      1.90      1.00      1.43      0.04      0.03     0.038
 16     11.22      4.00      1.00      2.36      0.15      0.06     0.103
 17      0.42      0.40      0.15      0.26      0.01      0.01     0.010
-18        NA        NA        NA        NA        NA        NA        NA
-19        NA        NA        NA        NA        NA        NA        NA
 20      4.47      1.90      0.20      1.17      0.06      0.02     0.039
 21      4.28      1.90      0.20      1.19      0.06      0.03     0.043
 22      5.42      1.70      0.80      1.26      0.08      0.02     0.056
@@ -2349,15 +2266,6 @@ $`Unplanted weed`
 31      0.27      0.30      0.15      0.23      0.01      0.01     0.010
 32      0.34      0.40      0.15      0.26      0.01      0.01     0.010
 33      0.32      0.40      0.15      0.26      0.01      0.01     0.010
-34      1.60      1.00      0.40      0.68      0.01      0.01     0.010
-35      1.09      1.00      0.40      0.56      0.01      0.01     0.010
-36      1.49      0.80      0.30      0.56      0.01      0.01     0.010
-37      1.13      0.60      0.40      0.49      0.01      0.01     0.010
-38      0.57      0.40      0.20      0.29      0.01      0.01     0.010
-39      0.67      0.50      0.25      0.36      0.01      0.01     0.010
-40      0.56      0.50      0.15      0.32      0.01      0.01     0.010
-41      1.16      0.65      0.30      0.49      0.01      0.01     0.010
-42      1.07      0.80      0.25      0.49      0.01      0.01     0.010
 43     10.28      2.00      0.80      1.61      0.08      0.04     0.058
 44      9.17      2.30      1.00      1.63      0.07      0.05     0.059
 45      7.67      1.90      1.10      1.60      0.06      0.04     0.054
@@ -2368,10 +2276,6 @@ $`Unplanted weed`
 50      7.94      0.90      0.35      0.59      0.08      0.50     0.060
 51      7.47      0.60      0.30      0.47      0.06      0.03     0.051
 52      9.00      1.00      0.40      0.62      0.08      0.05     0.066
-53        NA        NA        NA        NA        NA        NA        NA
-54        NA        NA        NA        NA        NA        NA        NA
-55        NA        NA        NA        NA        NA        NA        NA
-56        NA        NA        NA        NA        NA        NA        NA
 57      2.93      2.00      1.00      1.52      0.16      0.10     0.120
 58      2.57      2.20      1.00      1.53      0.17      0.12     0.130
 59      2.41      1.80      0.90      1.36      0.24      0.14     0.207
@@ -2402,12 +2306,6 @@ $`Unplanted weed`
 84      3.64      1.20      0.20      0.75      0.03      0.01     0.019
 85      3.22      1.40      0.70      1.04      0.03      0.02     0.024
 86      3.90      1.90      1.10      1.56      0.04      0.02     0.030
-87      3.10      0.70      0.25      0.53      0.03      0.01     0.022
-88      3.20      1.00      0.40      0.71      0.04      0.02     0.031
-89      2.38      0.90      0.40      0.58      0.03      0.02     0.027
-90      2.71      0.90      0.50      0.70      0.03      0.02     0.023
-91      3.00      1.50      0.30      0.76      0.04      0.02     0.024
-92      2.18      0.90      0.30      0.58      0.03      0.01     0.024
 93      3.89      3.70      1.60      2.74      0.06      0.05     0.054
 94      4.79      4.30      1.60      3.17      0.10      0.05     0.078
 95      4.73      3.80      2.20      3.14      0.07      0.05     0.057
@@ -2431,8 +2329,6 @@ $`Unplanted weed`
 15    0.03                field
 16    2.35                  lab
 17    0.01                  lab
-18  302.54            field/lab
-19  261.54            field/lab
 20    0.09                  lab
 21    0.10                  lab
 22    0.40                  lab
@@ -2447,15 +2343,6 @@ $`Unplanted weed`
 31    0.49                  lab
 32    0.13                  lab
 33    0.12                  lab
-34    0.24                  lab
-35    0.01                  lab
-36    0.15                  lab
-37    0.12                  lab
-38    0.02                  lab
-39    0.01                  lab
-40    0.00                  lab
-41    0.02                  lab
-42    0.05                  lab
 43    5.25                  lab
 44    6.66                  lab
 45    6.20                  lab
@@ -2466,10 +2353,6 @@ $`Unplanted weed`
 50   20.90                  lab
 51    9.61                  lab
 52   72.53                  lab
-53  274.96                field
-54   96.98                field
-55  193.03                field
-56  138.54                field
 57    6.69                field
 58   12.18                field
 59    6.75                field
@@ -2500,19 +2383,13 @@ $`Unplanted weed`
 84    0.07                 &lt;NA&gt;
 85    0.04                 &lt;NA&gt;
 86    0.09                 &lt;NA&gt;
-87    0.08                 &lt;NA&gt;
-88    0.21                 &lt;NA&gt;
-89    0.51                 &lt;NA&gt;
-90    0.39                 &lt;NA&gt;
-91    0.18                 &lt;NA&gt;
-92    0.13                 &lt;NA&gt;
 93   49.58                 &lt;NA&gt;
 94  556.47                 &lt;NA&gt;
 95   55.20                 &lt;NA&gt;
 96   36.56                 &lt;NA&gt;
 97 1172.31                 &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redefine spec with a new list of species (excluding Festuca Mairei). </span></span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Redefine spec with a new list of species (excluding Festuca Mairei, Unplanted weed and Unidentified shrub). </span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">with</span>(d1, <span class="fu">split</span>(d1, <span class="fu">list</span>(<span class="at">Species =</span> Species)))</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>spec <span class="ot">&lt;-</span> <span class="fu">lapply</span>(spec, <span class="cf">function</span>(x) x[, <span class="fu">colSums</span>(<span class="fu">is.na</span>(x)) <span class="sc">==</span> <span class="dv">0</span>])</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2892,80 +2769,7 @@ $`Solidago spp.`
 83      0.02      0.01     0.019    0.14
 84      0.03      0.01     0.019    0.07
 85      0.03      0.02     0.024    0.04
-86      0.04      0.02     0.030    0.09
-
-$`Unidentified shrub`
-   Sample number Location      Type Treatment   Size            Species
-18            18    OSLER    garden vegetated medium Unidentified shrub
-19            19    OSLER    garden vegetated medium Unidentified shrub
-53            53    OSLER    garden vegetated medium Unidentified shrub
-54            54    OSLER biofilter vegetated  small Unidentified shrub
-55            55    OSLER biofilter vegetated  small Unidentified shrub
-56            56    OSLER biofilter vegetated  small Unidentified shrub
-   Plant type Height Width_farthest Width_perpendicular Branch_length
-18      shrub   74.5          137.0                74.0         80.80
-19      shrub   87.0           94.0                81.0         76.35
-53      shrub   80.5          100.5                94.5         73.05
-54      shrub   50.5           87.0                61.0         52.20
-55      shrub   61.0           96.0                72.0         68.95
-56      shrub   66.0           96.0                82.0         57.65
-   Branch_diameter Basal_circ Branches_per_stem Biomass Measurement_location
-18           0.117      148.0               725  302.54            field/lab
-19           0.078       85.0               900  261.54            field/lab
-53           0.088       69.5               900  274.96                field
-54           0.078       58.0               300   96.98                field
-55           0.072       47.0               500  193.03                field
-56           0.051       37.5               350  138.54                field
-
-$`Unplanted weed`
-   Sample number Location      Type   Treatment   Size        Species
-34            34    ACTRI biofilter unvegetated  large Unplanted weed
-35            35    ACTRI biofilter unvegetated medium Unplanted weed
-36            36    ACTRI biofilter unvegetated  large Unplanted weed
-37            37    ACTRI biofilter unvegetated  large Unplanted weed
-38            38    ACTRI biofilter unvegetated  small Unplanted weed
-39            39    ACTRI biofilter unvegetated  small Unplanted weed
-40            40    ACTRI biofilter unvegetated  small Unplanted weed
-41            41    ACTRI biofilter unvegetated medium Unplanted weed
-42            42    ACTRI biofilter unvegetated medium Unplanted weed
-87           100      SIO biofilter   vegetated  small Unplanted weed
-88           101      SIO biofilter   vegetated  large Unplanted weed
-89           102      SIO biofilter   vegetated medium Unplanted weed
-90           103      SIO biofilter   vegetated  large Unplanted weed
-91           104      SIO biofilter   vegetated medium Unplanted weed
-92           105      SIO biofilter   vegetated  small Unplanted weed
-   Plant type Height Leaf_lmax Leaf_lmin Leaf_lavg Leaf_wmax Leaf_wmin
-34       forb   18.0       2.4      0.90      1.60      1.00      0.40
-35       forb    7.5       1.7      0.70      1.09      1.00      0.40
-36       forb   17.0       2.5      0.60      1.49      0.80      0.30
-37       forb   16.0       1.6      0.80      1.13      0.60      0.40
-38       forb    6.0       0.8      0.25      0.57      0.40      0.20
-39       forb    6.0       0.9      0.40      0.67      0.50      0.25
-40       forb    5.5       0.8      0.20      0.56      0.50      0.15
-41       forb    8.0       1.9      0.55      1.16      0.65      0.30
-42       forb   10.5       1.7      0.50      1.07      0.80      0.25
-87       forb    5.0       4.5      1.80      3.10      0.70      0.25
-88       forb    5.0       4.5      1.70      3.20      1.00      0.40
-89       forb    2.5       3.5      1.50      2.38      0.90      0.40
-90       forb    5.0       3.8      2.00      2.71      0.90      0.50
-91       forb    5.0       4.0      2.20      3.00      1.50      0.30
-92       forb    3.0       3.0      1.40      2.18      0.90      0.30
-   Leaf_wavg Leaf_tmax Leaf_tmin Leaf_tavg Biomass
-34      0.68      0.01      0.01     0.010    0.24
-35      0.56      0.01      0.01     0.010    0.01
-36      0.56      0.01      0.01     0.010    0.15
-37      0.49      0.01      0.01     0.010    0.12
-38      0.29      0.01      0.01     0.010    0.02
-39      0.36      0.01      0.01     0.010    0.01
-40      0.32      0.01      0.01     0.010    0.00
-41      0.49      0.01      0.01     0.010    0.02
-42      0.49      0.01      0.01     0.010    0.05
-87      0.53      0.03      0.01     0.022    0.08
-88      0.71      0.04      0.02     0.031    0.21
-89      0.58      0.03      0.02     0.027    0.51
-90      0.70      0.03      0.02     0.023    0.39
-91      0.76      0.04      0.02     0.024    0.18
-92      0.58      0.03      0.01     0.024    0.13</code></pre>
+86      0.04      0.02     0.030    0.09</code></pre>
 </div>
 </div>
 </section>

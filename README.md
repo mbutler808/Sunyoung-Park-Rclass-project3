@@ -8,7 +8,8 @@ This repository contains a dataset of direct measurements of 11 different morpho
 
 2023-4-24 Completed cleaning of Raw data and data dictionary, processing code and processed data
 
-2023-4- 
+2023-5-5 Updated all the README files, added Analysis results in the Results folder
+
 
 
 # Software requirements
@@ -29,7 +30,7 @@ This template lays out a data analysis project and report writing using R, Quart
 
 Please see the `README.md` files in each folder for more details.
 
-* The repo has morphological measurement data of 13 plants species in the `Raw_data` folder. 
+* The repo has morphological measurement data of 14 plants species in the `Raw_data` folder. 
 * The `Processing_code` folder contains several files that load the raw data, perform a bit of cleaning, and save the result in the `Processed_data` folder. 
 * The `Analysis_code` folder contains several files that load the processed data, do an exploratory analysis, and fit a simple model. These files produce figures and some numeric output (tables), which are saved to the `results` folder.
 * The `Products` folder contains an example `bibtex` and CSL style files for references. Those files are used by the example manuscript and slides.
