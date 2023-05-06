@@ -8,7 +8,7 @@ This repository contains a dataset of direct measurements of 11 different morpho
 
 2023-4-24 Completed cleaning of Raw data and data dictionary, processing code and processed data
 
-2023-5-5 Updated all the README files, added Analysis results in the Results folder, Added Manuscript in the Products folder
+2023-5-5 Updated all the README files, added Analysis results in the Results folder, added Manuscript in the Products folder
 
 
 
@@ -33,8 +33,7 @@ Please see the `README.md` files in each folder for more details.
 * The repo has morphological measurement data of 14 plants species in the `Raw_data` folder. 
 * The `Processing_code` folder contains several files that load the raw data, perform a bit of cleaning, and save the result in the `Processed_data` folder. 
 * The `Analysis_code` folder contains several files that load the processed data, do an exploratory analysis, and fit a simple model. These files produce figures and some numeric output (tables), which are saved to the `results` folder.
-* The `Products` folder contains an example `bibtex` and CSL style files for references. Those files are used by the example manuscript and slides.
-* The  `Manuscript` folder contains a template for a report written as Quarto file.
+* The `Products` folder contains the Manuscript folder. `Manuscript` folder contains a report written as Quarto file.
 
 
 # Getting started
@@ -43,5 +42,5 @@ The project can be reproduced by executing the code in the following order:
 
 1.  First run the processing code, which will produce the processed data. 
 2.  Then run the analysis scripts, which will take the processed data and produce some results. 
-3.  Then you can run the manuscript, poster and slides example files in any order. Those files pull in the generated results and display them. These files also pull in references from the `bibtex` file and format them according to the CSL style.
+3.  Then you can run the manuscript. Those files pull in the generated results and display them. 
 
